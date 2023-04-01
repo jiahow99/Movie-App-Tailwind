@@ -71,15 +71,11 @@
         <div class="container mx-auto px-4 py-16">
             <h2 class="text-4xl font-semibold">Screenshots</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap:0 xl:gap-10">
-
-                @foreach (array_reverse($movie['images']['backdrops']) as $image)
-                    @if ($loop->index < 6)
-                        <div class="mt-8">
-                            <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="parasite_thumbnail">
-                        </div>
-                    @endif
-                @endforeach
-                
+                <div class="mt-8">
+                    <a href="#">
+                        <img src="https://image.tmdb.org/t/p/w500/{{ $movie['videos']['backdrops']['file_path'] }}" alt="parasite_thumbnail">
+                    </a>
+                </div>
             </div>
         </div>
     </div>

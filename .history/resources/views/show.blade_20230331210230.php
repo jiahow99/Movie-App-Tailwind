@@ -34,11 +34,11 @@
                 </div>
 
                 <div class="mt-12">
-                    <a href="https://www.youtube.com/watch?v={{ $movie['videos']['results'][0]['key'] }}" class="flex items-center bg-orange-500 text-gray-900 rounded font-semibold px-10 py-4 
-                    hover:bg-orange-600 transition ease-in-out duration-300 space-x-3 w-fit" target="_blank">
+                    <button class="flex items-center bg-orange-500 text-gray-900 rounded font-semibold px-10 py-4 
+                    hover:bg-orange-600 transition ease-in-out duration-300 space-x-3">
                         <i class="fa-solid fa-circle-play"></i>
                         <span class="font-bold">Play</span>
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -71,15 +71,36 @@
         <div class="container mx-auto px-4 py-16">
             <h2 class="text-4xl font-semibold">Screenshots</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap:0 xl:gap-10">
-
-                @foreach (array_reverse($movie['images']['backdrops']) as $image)
-                    @if ($loop->index < 6)
-                        <div class="mt-8">
-                            <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="parasite_thumbnail">
-                        </div>
-                    @endif
-                @endforeach
-                
+                <div class="mt-8">
+                    <a href="#">
+                        <img src="{{ asset('image/image1.jpg') }}" alt="parasite_thumbnail">
+                    </a>
+                </div>
+                <div class="mt-8">
+                    <a href="#">
+                        <img src="{{ asset('image/image2.jpg') }}" alt="parasite_thumbnail">
+                    </a>
+                </div>
+                <div class="mt-8">
+                    <a href="#">
+                        <img src="{{ asset('image/image3.jpg') }}" alt="parasite_thumbnail">
+                    </a>
+                </div>
+                <div class="mt-8">
+                    <a href="#">
+                        <img src="{{ asset('image/image4.jpg') }}" alt="parasite_thumbnail">
+                    </a>
+                </div>
+                <div class="mt-8">
+                    <a href="#">
+                        <img src="{{ asset('image/image5.jpg') }}" alt="parasite_thumbnail">
+                    </a>
+                </div>
+                <div class="mt-8">
+                    <a href="#">
+                        <img src="{{ asset('image/image6.jpg') }}" alt="parasite_thumbnail">
+                    </a>
+                </div>
             </div>
         </div>
     </div>
