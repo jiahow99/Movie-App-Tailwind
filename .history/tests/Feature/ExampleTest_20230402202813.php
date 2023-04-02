@@ -15,7 +15,7 @@ class ExampleTest extends TestCase
     public function test_mainpage_show_correct_info(): void
     {
         Http::fake([
-            'https://api.themoviedb.org/3/movie/popular/' => $this->fakePopularMovies(),
+            'https://api.themoviedb.org/3/movie/popular' => $this->fakePopularMovies(),
             'https://api.themoviedb.org/3/genre/movie/list' => $this->fakeGenres(),
             'https://api.themoviedb.org/3/movie/now_playing' => $this->fakeNowPlaying(),
         ]);
@@ -23,6 +23,7 @@ class ExampleTest extends TestCase
         $response = $this->get(route('movies.index'));
 
         $response->assertStatus(200);
+        $response->assertSee("Now Playing");
     }
 
 

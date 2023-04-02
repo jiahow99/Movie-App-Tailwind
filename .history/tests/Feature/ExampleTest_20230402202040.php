@@ -15,7 +15,7 @@ class ExampleTest extends TestCase
     public function test_mainpage_show_correct_info(): void
     {
         Http::fake([
-            'https://api.themoviedb.org/3/movie/popular/' => $this->fakePopularMovies(),
+            'https://api.themoviedb.org/3/movie/popular' => $this->fakePopularMovies(),
             'https://api.themoviedb.org/3/genre/movie/list' => $this->fakeGenres(),
             'https://api.themoviedb.org/3/movie/now_playing' => $this->fakeNowPlaying(),
         ]);
@@ -36,7 +36,7 @@ class ExampleTest extends TestCase
                     "genre_ids" => [878, 12, 28],
                     "id" => 76600,
                     "original_language" => "en",
-                    "original_title" => "Fake Avatar",
+                    "original_title" => "Avatar: The Way of Water",
                     "overview" =>
                         "Set more than a decade after the events of the first film, learn the story of the Sully family (Jake, Neytiri, and their kids), the trouble that follows them, the lengths they go to keep each other safe, the battles they fight to stay alive, and the tragedies they endure.",
                     "popularity" => 10224.28,
@@ -444,7 +444,7 @@ class ExampleTest extends TestCase
             ],
             "total_pages" => 82,
             "total_results" => 1624,
-        ], 200);
+        ], 200)
     }
 
 }

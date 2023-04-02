@@ -15,9 +15,7 @@ class ExampleTest extends TestCase
     public function test_mainpage_show_correct_info(): void
     {
         Http::fake([
-            'https://api.themoviedb.org/3/movie/popular/' => $this->fakePopularMovies(),
-            'https://api.themoviedb.org/3/genre/movie/list' => $this->fakeGenres(),
-            'https://api.themoviedb.org/3/movie/now_playing' => $this->fakeNowPlaying(),
+            'https://api.themoviedb.org/3/movie/popular' => $this->fakePopularMovies(),
         ]);
 
         $response = $this->get(route('movies.index'));
@@ -36,7 +34,7 @@ class ExampleTest extends TestCase
                     "genre_ids" => [878, 12, 28],
                     "id" => 76600,
                     "original_language" => "en",
-                    "original_title" => "Fake Avatar",
+                    "original_title" => "Avatar: The Way of Water",
                     "overview" =>
                         "Set more than a decade after the events of the first film, learn the story of the Sully family (Jake, Neytiri, and their kids), the trouble that follows them, the lengths they go to keep each other safe, the battles they fight to stay alive, and the tragedies they endure.",
                     "popularity" => 10224.28,
@@ -375,76 +373,4 @@ class ExampleTest extends TestCase
             "total_results" => 754113,
         ], 200);
     }
-
-    private function fakeGenres(){
-        return Http::response([
-            "genres" => [
-                ["id" => 28, "name" => "Action"],
-                ["id" => 12, "name" => "Adventure"],
-                ["id" => 16, "name" => "Animation"],
-                ["id" => 35, "name" => "Comedy"],
-                ["id" => 80, "name" => "Crime"],
-                ["id" => 99, "name" => "Documentary"],
-                ["id" => 18, "name" => "Drama"],
-                ["id" => 10751, "name" => "Family"],
-                ["id" => 14, "name" => "Fantasy"],
-                ["id" => 36, "name" => "History"],
-                ["id" => 27, "name" => "Horror"],
-                ["id" => 10402, "name" => "Music"],
-                ["id" => 9648, "name" => "Mystery"],
-                ["id" => 10749, "name" => "Romance"],
-                ["id" => 878, "name" => "Science Fiction"],
-                ["id" => 10770, "name" => "TV Movie"],
-                ["id" => 53, "name" => "Thriller"],
-                ["id" => 10752, "name" => "War"],
-                ["id" => 37, "name" => "Western"],
-            ],
-        ], 200);
-    }
-    
-    private function fakeNowPlaying(){
-        return Http::response([
-            "dates" => ["maximum" => "2023-04-07", "minimum" => "2023-02-18"],
-            "page" => 1,
-            "results" => [
-                [
-                    "adult" => false,
-                    "backdrop_path" => "/gslT8t964rYXyqRcqrxFh77ikyb.jpg",
-                    "genre_ids" => [12, 878, 35],
-                    "id" => 640146,
-                    "original_language" => "en",
-                    "original_title" => "Ant-Man and the Wasp: Quantumania",
-                    "overview" =>
-                        "Super-Hero partners Scott Lang and Hope van Dyne, along with with Hope\'s parents Janet van Dyne and Hank Pym, and Scott\'s daughter Cassie Lang, find themselves exploring the Quantum Realm, interacting with strange new creatures and embarking on an adventure that will push them beyond the limits of what they thought possible.",
-                    "popularity" => 676.499,
-                    "poster_path" => "/ngl2FKBlU4fhbdsrtdom9LVLBXw.jpg",
-                    "release_date" => "2023-02-15",
-                    "title" => "Ant-Man and the Wasp: Quantumania",
-                    "video" => false,
-                    "vote_average" => 6.3,
-                    "vote_count" => 1140,
-                ],
-                [
-                    "adult" => false,
-                    "backdrop_path" => "/2rVkDZFLN6DI5PAoraoe9m4IRMN.jpg",
-                    "genre_ids" => [12, 14, 35],
-                    "id" => 493529,
-                    "original_language" => "en",
-                    "original_title" => "Dungeons & Dragons: Honor Among Thieves",
-                    "overview" =>
-                        "A charming thief and a band of unlikely adventurers undertake an epic heist to retrieve a lost relic, but things go dangerously awry when they run afoul of the wrong people.",
-                    "popularity" => 702.523,
-                    "poster_path" => "/6LuXaihVIoJ5FeSiFb7CZMtU7du.jpg",
-                    "release_date" => "2023-03-23",
-                    "title" => "Dungeons & Dragons: Honor Among Thieves",
-                    "video" => false,
-                    "vote_average" => 7.6,
-                    "vote_count" => 109,
-                ],
-            ],
-            "total_pages" => 82,
-            "total_results" => 1624,
-        ], 200);
-    }
-
 }

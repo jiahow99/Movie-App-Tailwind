@@ -33,7 +33,7 @@
                 </li>
             </ul>
             <div class="flex flex-col lg:flex-row items-center mt-3 lg:mt-0">
-                <livewire:search-dropdown />
+                {{-- <livewire:search-dropdown /> --}}
                 <div class="ml-4 mt-3 lg:mt-0">
                     <a href="#" class="">
                         <i class="fa-solid fa-user rounded-full border-white border-2 p-1"></i>
