@@ -9,12 +9,14 @@
     videoSrc: 'https://www.youtube.com/embed/{{ $movie['videos']['results'][0]['key'] }}?autoplay=',
 }">
     {{-- Video Modal --}}
-    <div class="fixed w-full h-full inset-x-0 " 
-    x-show:="isOpen" 
-    x-transition.duration.500ms.ease-in-out.origin-top
-    >
-        <div class="mx-auto relative 2xl:mt-14 2xl:w-[900px] 2xl:h-[500px] -translate-y-5 xl:mt-0 lg:w-[950px] lg:h-[600px] lg:mt-60 md:w-[700px] md:h-[400px] w-[350px] h-[200px]" 
-        @click.outside="isOpen = autoplay = false;">
+    <div class="fixed w-full h-full inset-x-0" x-show:="isOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-90">
+        <div class="
+        mx-auto relative
+        2xl:mt-14 2xl:w-[900px] 2xl:h-[500px] -translate-y-5
+        xl:mt-0
+        lg:w-[950px] lg:h-[600px] lg:mt-60
+        md:w-[700px] md:h-[400px]
+        w-[350px] h-[200px]">
             <iframe class="w-full h-full" x-bind:src="videoSrc+autoplay" 
             allow="autoplay; encrypted-media" allowfullscreen ></iframe>
         </div>

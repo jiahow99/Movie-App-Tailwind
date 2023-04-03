@@ -11,10 +11,9 @@
     {{-- Video Modal --}}
     <div class="fixed w-full h-full inset-x-0 " 
     x-show:="isOpen" 
-    x-transition.duration.500ms.ease-in-out.origin-top
-    >
-        <div class="mx-auto relative 2xl:mt-14 2xl:w-[900px] 2xl:h-[500px] -translate-y-5 xl:mt-0 lg:w-[950px] lg:h-[600px] lg:mt-60 md:w-[700px] md:h-[400px] w-[350px] h-[200px]" 
-        @click.outside="isOpen = autoplay = false;">
+    x-transition.duration.500ms.ease-in-out.origin-top>
+
+        <div class="mx-auto relative 2xl:mt-14 2xl:w-[900px] 2xl:h-[500px] -translate-y-5 xl:mt-0 lg:w-[950px] lg:h-[600px] lg:mt-60 md:w-[700px] md:h-[400px] w-[350px] h-[200px]">
             <iframe class="w-full h-full" x-bind:src="videoSrc+autoplay" 
             allow="autoplay; encrypted-media" allowfullscreen ></iframe>
         </div>

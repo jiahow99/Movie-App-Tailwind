@@ -1,25 +1,6 @@
 @extends('layouts.main')
 
 @section('content')
-<div x-data="{
-    isMobile: window.innerWidth < 1280,
-    isDesktop: window.innerWidth >= 1280,
-    isOpen: false,
-    autoplay: 0,
-    videoSrc: 'https://www.youtube.com/embed/{{ $movie['videos']['results'][0]['key'] }}?autoplay=',
-}">
-    {{-- Video Modal --}}
-    <div class="fixed w-full h-full inset-x-0 " 
-    x-show:="isOpen" 
-    x-transition.duration.500ms.ease-in-out.origin-top
-    >
-        <div class="mx-auto relative 2xl:mt-14 2xl:w-[900px] 2xl:h-[500px] -translate-y-5 xl:mt-0 lg:w-[950px] lg:h-[600px] lg:mt-60 md:w-[700px] md:h-[400px] w-[350px] h-[200px]" 
-        @click.outside="isOpen = autoplay = false;">
-            <iframe class="w-full h-full" x-bind:src="videoSrc+autoplay" 
-            allow="autoplay; encrypted-media" allowfullscreen ></iframe>
-        </div>
-    </div>
-
     <div class="movie-info border-b border-gray-800">
         <div class="container mx-auto px-4 py-16 flex flex-col xl:flex-row xl:mx-0">
             <img src="{{ "https://image.tmdb.org/t/p/w500/".$movie['poster_path'] }}" class="w-96 mx-auto xl:mx-0" alt="parasite">
@@ -53,32 +34,26 @@
                 </div>
 
                 <div class="mt-12">
-                    {{-- Desktop "Play Trailer" --}}
-                    <span 
-                    class="flex items-center bg-orange-500 text-gray-900 rounded font-semibold px-10 py-4 
-                    hover:bg-orange-600 transition ease-in-out duration-300 space-x-3 w-fit" 
-                    x-show="isDesktop"
-                    x-on:click="isOpen=true; autoplay=true"
-                    >
+                    <a href="https://www.youtube.com/watch?v={{ $movie['videos']['results'][0]['key'] }}" class="flex items-center bg-orange-500 text-gray-900 rounded font-semibold px-10 py-4 
+                    hover:bg-orange-600 transition ease-in-out duration-300 space-x-3 w-fit" target="_blank">
                         <i class="fa-solid fa-circle-play"></i>
-                        <span class="font-bold">Play Trailer</span>
-                    </span>
-                    {{-- Mobile "Play Trailer" --}}
-                    <a 
-                    href="https://www.youtube.com/watch?v={{ $movie['videos']['results'][0]['key'] }}" 
-                    class="flex items-center bg-orange-500 text-gray-900 rounded font-semibold px-10 py-4 
-                    hover:bg-orange-600 transition ease-in-out duration-300 space-x-3 w-fit" 
-                    x-show="isMobile"
-                    target="_blank">
-                        <i class="fa-solid fa-circle-play"></i>
-                        <span class="font-bold">Play Trailer</span>
+                        <span class="font-bold">Play</span>
                     </a>
                 </div>
             </div>
         </div>
     </div>
 
-    
+    {{-- Video Modal --}}
+    <div class="fixed w-full h-full inset-x-0">
+        <iframe 
+        class="mx-auto 
+        2xl:mt-14 2xl:w-[1300px] 2xl:h-[800px] 
+        lg:w-[950px] lg:h-[600px] lg:mt-60
+        md:w-[800px]  md:h-[400px]" 
+        src="https://www.youtube.com/embed/{{ $movie['videos']['results'][0]['key'] }}?autoplay=1" 
+        allow="autoplay; encrypted-media" autoplay allowfullscreen></iframe>
+    </div>
 
     <div class="movie-cast border-b border-gray-800">
         <div class="container mx-auto px-4 py-16">
@@ -119,8 +94,4 @@
             </div>
         </div>
     </div>
-</div>
-
-    
-
 @endsection

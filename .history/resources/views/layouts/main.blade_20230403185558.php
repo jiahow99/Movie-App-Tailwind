@@ -16,7 +16,7 @@
     
 </head>
 
-<body class="relative font-sans bg-gray-900 text-white">
+<body class="font-sans bg-gray-900 text-white">
     <nav class="border-b border-gray-800">
         <div class="container mx-auto flex flex-col lg:flex-row items-center justify-between px-4 py-6">
             <ul class="flex flex-col lg:flex-row items-center">
