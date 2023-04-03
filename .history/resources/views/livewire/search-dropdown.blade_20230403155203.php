@@ -1,6 +1,7 @@
 <div 
 class="relative" 
 x-data="{ isOpen: true }" 
+x-on:click="isOpen = true" 
 @click.away="isOpen = false"
 >
     <i class="fa-solid fa-magnifying-glass text-white absolute mt-2 ml-3 py-auto text-sm"></i>
@@ -9,10 +10,8 @@ x-data="{ isOpen: true }"
     type="text" 
     class="bg-gray-800 rounded-full w-64 pl-10 py-1" 
     placeholder="Search"
-    x-on:click="isOpen = true"
-    x-on:keydown="isOpen = true"
+    x-on:focus="isOpen = true"
     @keydown.escape.window="isOpen = false"
-    @keydown.shift.tab="isOpen = false"
     >
     {{-- Spinner --}}
     <div wire:loading class="spinner absolute top-0 right-0 mt-4 mr-7"></div>
@@ -23,16 +22,7 @@ x-data="{ isOpen: true }"
             @if (strlen($search) >= 2)
                 @if ($searchResults->isNotEmpty())
                     @foreach ($searchResults as $result)
-                        <li 
-                        class="border-b border-gray-700" 
-                        x-show="isOpen"
-                        x-transition:enter="transition ease-out duration-300"
-                        x-transition:enter-start="opacity-0 scale-90"
-                        x-transition:enter-end="opacity-100 scale-100"
-                        x-transition:leave="transition ease-in duration-300"
-                        x-transition:leave-start="opacity-100 scale-100"
-                        x-transition:leave-end="opacity-0 scale-90"
-                        >
+                        <li class="border-b border-gray-700" x-show="isOpen">
                             <a href="{{ route('movie.show', $result['id']) }}" class="hover:bg-gray-800 px-3 py-3
                             duration-200 flex items-center">
                                 <img src="

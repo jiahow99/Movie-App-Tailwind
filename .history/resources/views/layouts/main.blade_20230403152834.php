@@ -10,10 +10,6 @@
     {{-- FontAwesome icon --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @livewireStyles
-
-    {{-- Alpine Js --}}
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    
 </head>
 
 <body class="font-sans bg-gray-900 text-white">
@@ -49,5 +45,6 @@
 
     @yield('content')
     @livewireScripts
+    <script src="//unpkg.com/alpinejs" defer></script>
 </body>
 </html>

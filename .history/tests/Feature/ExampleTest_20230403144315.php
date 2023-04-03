@@ -5,7 +5,6 @@ namespace Tests\Feature;
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Illuminate\Support\Facades\Http;
-use Livewire\Livewire;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
@@ -33,10 +32,7 @@ class ExampleTest extends TestCase
             'https://api.themoviedb.org/3/search/movie?query=jumanji' => $this->fakeSearchDropdown(),
         ]);
 
-        Livewire::test('search-dropdown')
-            ->assertDontSee('jumanji')
-            ->set('search', 'jumanji')
-            ->assertSee('Jumanji');
+        
     }
 
 

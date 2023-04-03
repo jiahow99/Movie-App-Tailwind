@@ -20,7 +20,5 @@ module.exports = {
       },
     }),
   },
-  plugins: [
-    require('tailwindcss-spinner')({ className: 'spinner', themeKey: 'spinner' }),
-  ],
+  plugins: [],
 }

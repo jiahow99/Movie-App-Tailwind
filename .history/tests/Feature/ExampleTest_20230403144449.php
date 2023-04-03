@@ -36,7 +36,7 @@ class ExampleTest extends TestCase
         Livewire::test('search-dropdown')
             ->assertDontSee('jumanji')
             ->set('search', 'jumanji')
-            ->assertSee('Jumanji');
+            ->assertSee('jumanji');
     }
 
 

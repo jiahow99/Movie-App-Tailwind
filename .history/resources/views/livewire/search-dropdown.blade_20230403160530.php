@@ -26,12 +26,7 @@ x-data="{ isOpen: true }"
                         <li 
                         class="border-b border-gray-700" 
                         x-show="isOpen"
-                        x-transition:enter="transition ease-out duration-300"
-                        x-transition:enter-start="opacity-0 scale-90"
-                        x-transition:enter-end="opacity-100 scale-100"
-                        x-transition:leave="transition ease-in duration-300"
-                        x-transition:leave-start="opacity-100 scale-100"
-                        x-transition:leave-end="opacity-0 scale-90"
+                        x-transition
                         >
                             <a href="{{ route('movie.show', $result['id']) }}" class="hover:bg-gray-800 px-3 py-3
                             duration-200 flex items-center">

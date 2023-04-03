@@ -1,38 +1,17 @@
-<div 
-class="relative" 
-x-data="{ isOpen: true }" 
-@click.away="isOpen = false"
->
+<div class="relative">
     <i class="fa-solid fa-magnifying-glass text-white absolute mt-2 ml-3 py-auto text-sm"></i>
-    <input 
-    wire:model.debounce.500ms="search"  
-    type="text" 
-    class="bg-gray-800 rounded-full w-64 pl-10 py-1" 
-    placeholder="Search"
-    x-on:click="isOpen = true"
-    x-on:keydown="isOpen = true"
-    @keydown.escape.window="isOpen = false"
-    @keydown.shift.tab="isOpen = false"
-    >
-    {{-- Spinner --}}
-    <div wire:loading class="spinner absolute top-0 right-0 mt-4 mr-7"></div>
-    <div class="search-results absolute w-72 bg-gray-800 rounded-lg mt-2 z-50" >
+    <input wire:model.debounce.500ms="search" type="text" class="bg-gray-800 rounded-full w-64 pl-10 py-1" placeholder="Search">
+    <div class="search-results absolute w-72 bg-gray-800 rounded-lg mt-2 z-50">
+        <div class="animate-spin">
+            <?xml version="1.0" ?><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g><path d="M0 0h24v24H0z" fill="none"/><path d="M18.364 5.636L16.95 7.05A7 7 0 1 0 19 12h2a9 9 0 1 1-2.636-6.364z"/></g></svg>
+        </div>
         <ul class="bg-gray-700">
-            
+
             {{-- Search results --}}
-            @if (strlen($search) >= 2)
+            @if ($search >= 2)
                 @if ($searchResults->isNotEmpty())
                     @foreach ($searchResults as $result)
-                        <li 
-                        class="border-b border-gray-700" 
-                        x-show="isOpen"
-                        x-transition:enter="transition ease-out duration-300"
-                        x-transition:enter-start="opacity-0 scale-90"
-                        x-transition:enter-end="opacity-100 scale-100"
-                        x-transition:leave="transition ease-in duration-300"
-                        x-transition:leave-start="opacity-100 scale-100"
-                        x-transition:leave-end="opacity-0 scale-90"
-                        >
+                        <li class="border-b border-gray-700">
                             <a href="{{ route('movie.show', $result['id']) }}" class="hover:bg-gray-800 px-3 py-3
                             duration-200 flex items-center">
                                 <img src="
@@ -47,7 +26,7 @@ x-data="{ isOpen: true }"
                         </li>
                     @endforeach
                 @else
-                    <li class="border-b border-gray-700" x-show="isOpen">
+                    <li class="border-b border-gray-700">
                         <span class="block px-3 py-3">No results for "{{ $search }}"</span> 
                     </li>
                 @endif
