@@ -11,7 +11,7 @@
 
     {{-- Video Modal --}}
     <div class="fixed w-full h-full inset-x-0 " 
-    x-show="isOpen" 
+    x-show:="isOpen" 
     x-transition.duration.500ms.ease-in-out.origin-top
     >
         <div class="mx-auto relative 2xl:mt-14 2xl:w-[900px] 2xl:h-[500px] -translate-y-5 xl:mt-0 lg:w-[950px] lg:h-[600px] lg:mt-60 md:w-[700px] md:h-[400px] w-[350px] h-[200px]" 
@@ -104,19 +104,14 @@
         </div>
     </div>
 
-    <div class="Thumbnail border-b border-gray-800" 
-    x-data="{ imageModalOpen: false, imageSrc: '' }">
+    <div class="Thumbnail border-b border-gray-800" x-data="imageModalOpen: false, imageSrc: ''">
         <div class="container mx-auto px-4 py-16">
             <h2 class="text-4xl font-semibold">Screenshots</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap:0 xl:gap-10">
 
                 @foreach (array_reverse($movie['images']['backdrops']) as $image)
                     @if ($loop->index < 6)
-                        <div class="mt-8 cursor-pointer" 
-                        x-on:click=" 
-                        imageSrc = 'https://image.tmdb.org/t/p/original/{{ $image['file_path'] }}';
-                        imageModalOpen = true;
-                        ">
+                        <div class="mt-8">
                             <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="parasite_thumbnail">
                         </div>
                     @endif
@@ -125,17 +120,16 @@
             </div>
         </div>
 
-        {{-- Thumbnail Modal --}}
-        <div class="fixed inset-0 flex justify-center items-center z-20 bg-black/70" x-show="imageModalOpen" x-transition>
-            <div class="absolute top-5 right-12 z-20 cursor-pointer text-4xl ">
-                <i class="fa-sharp fa-solid fa-xmark hover:rotate-90 hover:scale-150 duration-300" x-on:click="imageModalOpen = false"></i>
-            </div>
-            <div class="w-[1000px] h-auto">
-                <img :src='imageSrc' class="max-w-full max-h-full" @click.away="imageModalOpen = false" @keydown.escape.window="imageModalOpen = false">
+        <div class="fixed inset-0 flex justify-center items-center z-20 bg-black/20">
+            <div class="w-[950px] h-auto relative">
+                <div class="absolute top-3 right-8 z-20 cursor-pointer">X</div>
+                <img src="{{ asset('image/image1.jpg') }}" alt="{{ $movie['title'] }}_thumbnail" class="max-w-full max-h-full pointer-events-none">
             </div>
         </div>
     </div>
 </div>
+
+{{-- Thumbnail modal --}}
 
 
 @endsection

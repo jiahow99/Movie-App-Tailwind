@@ -8,7 +8,7 @@ x-data="{ isOpen: true }"
     wire:model.debounce.500ms="search"  
     type="text" 
     class="bg-gray-800 rounded-full w-64 pl-10 py-1" 
-    placeholder='Press / to search'
+    placeholder='/ to search'
     x-ref="search"
     x-on:click="isOpen = true"
     x-on:keydown="isOpen = true"

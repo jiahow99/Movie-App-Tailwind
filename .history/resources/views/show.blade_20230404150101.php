@@ -131,7 +131,7 @@
                 <i class="fa-sharp fa-solid fa-xmark hover:rotate-90 hover:scale-150 duration-300" x-on:click="imageModalOpen = false"></i>
             </div>
             <div class="w-[1000px] h-auto">
-                <img :src='imageSrc' class="max-w-full max-h-full" @click.away="imageModalOpen = false" @keydown.escape.window="imageModalOpen = false">
+                <img :src='imageSrc' class="max-w-full max-h-full" @click.away="imageModalOpen = false">
             </div>
         </div>
     </div>

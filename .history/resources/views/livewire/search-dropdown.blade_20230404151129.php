@@ -8,16 +8,14 @@ x-data="{ isOpen: true }"
     wire:model.debounce.500ms="search"  
     type="text" 
     class="bg-gray-800 rounded-full w-64 pl-10 py-1" 
-    placeholder='Press / to search'
+    placeholder="Search"
     x-ref="search"
     x-on:click="isOpen = true"
     x-on:keydown="isOpen = true"
-    @keydown.window="
-    if(event.keyCode === 191) {
-        event.preventDefault();
-        $refs.search.focus();
-    }
-    "
+    @keydown.tab.window="
+    if(event.keycode === 191){
+        alert('1');
+    }"
     @keydown.escape.window="isOpen = false"
     @keydown.shift.tab="isOpen = false"
     >

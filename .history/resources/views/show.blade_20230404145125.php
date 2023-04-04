@@ -113,10 +113,7 @@
                 @foreach (array_reverse($movie['images']['backdrops']) as $image)
                     @if ($loop->index < 6)
                         <div class="mt-8 cursor-pointer" 
-                        x-on:click=" 
-                        imageSrc = 'https://image.tmdb.org/t/p/original/{{ $image['file_path'] }}';
-                        imageModalOpen = true;
-                        ">
+                        x-on:click=" imageSrc = 'https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}' ">
                             <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="parasite_thumbnail">
                         </div>
                     @endif
@@ -126,12 +123,12 @@
         </div>
 
         {{-- Thumbnail Modal --}}
-        <div class="fixed inset-0 flex justify-center items-center z-20 bg-black/70" x-show="imageModalOpen" x-transition>
+        <div class="fixed inset-0 flex justify-center items-center z-20 bg-black/70" x-show="imageModalOpen">
             <div class="absolute top-5 right-12 z-20 cursor-pointer text-4xl ">
-                <i class="fa-sharp fa-solid fa-xmark hover:rotate-90 hover:scale-150 duration-300" x-on:click="imageModalOpen = false"></i>
+                <i class="fa-sharp fa-solid fa-xmark hover:rotate-90 hover:scale-150 duration-300"></i>
             </div>
             <div class="w-[1000px] h-auto">
-                <img :src='imageSrc' class="max-w-full max-h-full" @click.away="imageModalOpen = false" @keydown.escape.window="imageModalOpen = false">
+                <img :src='imageSrc' class="max-w-full max-h-full pointer-events-none">
             </div>
         </div>
     </div>

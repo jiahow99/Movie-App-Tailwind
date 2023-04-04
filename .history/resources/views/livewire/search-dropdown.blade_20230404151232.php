@@ -8,18 +8,14 @@ x-data="{ isOpen: true }"
     wire:model.debounce.500ms="search"  
     type="text" 
     class="bg-gray-800 rounded-full w-64 pl-10 py-1" 
-    placeholder='Press / to search'
+    placeholder="Search"
     x-ref="search"
     x-on:click="isOpen = true"
     x-on:keydown="isOpen = true"
-    @keydown.window="
-    if(event.keyCode === 191) {
-        event.preventDefault();
-        $refs.search.focus();
-    }
-    "
+    @keydown.tab.window="$refs.search.focus()"
     @keydown.escape.window="isOpen = false"
     @keydown.shift.tab="isOpen = false"
+    focus
     >
     {{-- Spinner --}}
     <div wire:loading class="spinner absolute top-0 right-0 mt-4 mr-7"></div>
