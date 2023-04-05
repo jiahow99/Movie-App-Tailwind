@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.spinner{
+    position: absolute;
+    pointer-events: none;
+}
+
+/******** Swiper ********/
+.Thumbnail .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Thumbnail .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.Thumbnail .swiper img {
+    outline: none;
+}
+
+.Thumbnail .swiper img:focus {
+    box-shadow: 0 0 0 2px #999;
+}
+/******** Swiper ********/
