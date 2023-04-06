@@ -24,7 +24,7 @@ class MovieController extends Controller
             ->get('https://api.themoviedb.org/3/movie/now_playing')
             ->json()['results'])->chunk(10);
 
-        // dump($nowPlaying);
+        dump($nowPlaying);
 
         // id => genre (map)
         $genres = collect($genresArray)->mapWithKeys(function ($genre){

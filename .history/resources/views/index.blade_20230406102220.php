@@ -52,7 +52,7 @@
         </div>
 
 
-        <div class="now-playing mt-10">
+        <div class="now-playing">
             <div class="flex justify-between">
                 <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mb-4">Now Playing</h2>
                 <div class="swiper-buttons my-auto select-none">
@@ -63,7 +63,7 @@
             {{-- Swiper --}}
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                    @foreach ($nowPlaying[0] as $movie)
+                    @foreach ($popularMovies[0] as $movie)
                     <div class="swiper-slide">
                         <x-movie-card :movie="$movie" :genres="$genres"/>
                     </div>
@@ -72,7 +72,7 @@
             </div>
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                    @foreach ($nowPlaying[1] as $movie)
+                    @foreach ($popularMovies[1] as $movie)
                     <div class="swiper-slide">
                         <x-movie-card :movie="$movie" :genres="$genres"/>
                     </div>

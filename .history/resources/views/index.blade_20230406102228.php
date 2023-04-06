@@ -52,7 +52,7 @@
         </div>
 
 
-        <div class="now-playing mt-10">
+        <div class="now-playing">
             <div class="flex justify-between">
                 <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mb-4">Now Playing</h2>
                 <div class="swiper-buttons my-auto select-none">
