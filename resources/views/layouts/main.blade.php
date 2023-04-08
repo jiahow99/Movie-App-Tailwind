@@ -31,13 +31,13 @@
                     </a> 
                 </li>
                 <li class="lg:ml-16 mt-3 lg:mt-0">
-                    <a href="#" class="hover:text-gray-300">Movies</a>
+                    <a href="{{ route('movies.index') }}" class="hover:text-gray-300">Movies</a>
                 </li>
                 <li class="lg:ml-6 mt-3 lg:mt-0">
                     <a href="#" class="hover:text-gray-300">TV Shows</a>
                 </li>
                 <li class="lg:ml-6 mt-3 lg:mt-0">
-                    <a href="#" class="hover:text-gray-300">Actors</a>
+                    <a href="{{ route('actors.index') }}" class="hover:text-gray-300">Actors</a>
                 </li>
             </ul>
             <div class="flex flex-col lg:flex-row items-center mt-3 lg:mt-0">
