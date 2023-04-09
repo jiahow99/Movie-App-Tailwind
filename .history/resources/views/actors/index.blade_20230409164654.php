@@ -5,11 +5,12 @@
     <div class="popular-actors">
         <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mb-4">Popular Movies</h2>
         <div class="grid grid-cols-5 gap-8">
+            {{ dd($popular_actors) }}
             @foreach ($popular_actors as $actor)
                 <div class="actor mt-8">
                     {{-- profile image --}}
                     <a href="{{ route('actor.show', $actor['id']) }}">
-                        <img src="{{ $actor['profile_path'] }}" class="transition ease-in-out duration-500 hover:scale-105 hover:opacity-60" alt="actor_image">
+                        <img src="{{ asset('image/actor1.jpg') }}" class="transition ease-in-out duration-500 hover:scale-105 hover:opacity-60" alt="actor_image">
                     </a>
                     {{-- name --}}
                     <div class="mt-2">

@@ -14,13 +14,15 @@ class ActorController extends Controller
      */
     public function index()
     {
-        $popular_actors = Http::withToken(config('services.tmdb.token'))
+        $popularActors = Http::withToken(config('services.tmdb.token'))
             ->get('https://api.themoviedb.org/3/person/popular?language=en')
             ->json()['results'];
 
-        $view_model = new ActorViewModel($popular_actors);
+        dump($popularActors);
 
-        return view('actors.index', $view_model);
+        $viewModel = new ActorViewModel($popularActors);
+
+        return view('actors.index', $viewModel);
     }
 
     /**
