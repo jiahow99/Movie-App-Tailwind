@@ -5,32 +5,24 @@ namespace App\Http\Controllers;
 use App\ViewModels\ActorViewModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use App\ViewModels\ActorsViewModel;
+
 
 class ActorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index($page = 1)
+    public function index()
     {
-        // Get data from API
-        $data = Http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/person/popular?language=en&page='.$page)
-            ->json();
+        $popular_actors = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/person/popular?language=en')
+            ->json()['results'];
 
-<<<<<<< HEAD
+        dump($popular_actors);
 
-        $popular_actors = $data['results'];
-        $total_pages = intval($data['total_pages']);
+        $viewModel = new ActorViewModel($popular_actors);
 
-        $view_model = new ActorsViewModel($popular_actors, $total_pages, intval($page));
-
-=======
-        $view_model = new ActorViewModel($popular_actors);
-
->>>>>>> 92227ce6351aa1695ef1ddf2943bccba7ee704bc
-        return view('actors.index', $view_model);
+        return view('actors.index', $viewModel);
     }
 
     /**
