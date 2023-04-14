@@ -14,7 +14,7 @@
                     {{-- name --}}
                     <div class="mt-2">
                         <a href="#" class="text-lg hover:text-gray-300">{{ $actor['name'] }}</a>
-                        <div class="text-sm truncate text-gray-400">{{ $actor['known_for'] }}</div>
+                        <div class="text-sm truncate text-gray-400">Iron Man, Avengers, Avengers: Infinity Wardasdasdsaadasdasdadas</div>
                     </div>
                 </div>
             @endforeach
@@ -35,11 +35,6 @@
 
 
     <!-- Loading (infinite scroll) -->
-    <div class="page-load-status text-center py-8">
-        <p class="infinite-scroll-request"><i class="fas fa-spinner fa-spin fa-4x"></i></p>
-        <p class="infinite-scroll-last text-2xl">End of content</p>
-        <p class="infinite-scroll-error text-2xl">No more pages to load</p>
-    </div>
 
 
 </div>
@@ -47,19 +42,23 @@
 
 
 @section('scripts')
+<!-- infinite scroll CDN -->
+<script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
+<script>
+    let elem = document.querySelector('.grid');
+    let infScroll = new InfiniteScroll( elem, {
+    // options
+    path: '.pagination__next',
+    append: '.post',
+    history: false,
+    });
 
-    <!-- infinite scroll CDN -->
-    <script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
-
-    <script>
-        let elem = document.querySelector('.grid');
-        let infScroll = new InfiniteScroll( elem, {
-            // options
-            path: '/actors/page/@{{#}}',
-            append: '.actor',
-            status: '.page-load-status',
-        });
-    </script>
+    // element argument can be a selector string
+    //   for an individual element
+    let infScroll = new InfiniteScroll( '.container', {
+    // options
+    });
+</script>
 
 
 @endsection

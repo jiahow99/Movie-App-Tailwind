@@ -21,9 +21,7 @@ class ActorsViewModel extends ViewModel
     
     public function popular_actors(){
         $formatted_popular_actors = array_map(function($actor){
-            $actor['profile_path'] = $actor['profile_path']
-            ? "https://image.tmdb.org/t/p/w500/" . $actor['profile_path']
-            : asset('image/avatar-placeholder.png');
+            $actor['profile_path'] = "https://image.tmdb.org/t/p/w500/" . $actor['profile_path'];
             $actor['known_for'] = collect($actor['known_for'])->where('media_type', 'movie')->pluck('title')->union(
                 collect($actor['known_for'])->where('media_type', 'movie')->pluck('name')
             )->implode(', ');
@@ -31,7 +29,7 @@ class ActorsViewModel extends ViewModel
             return $actor;
         }, $this->popular_actors);
 
-        return $formatted_popular_actors;
+        return collect($formatted_popular_actors)->dump();
     }
 
 

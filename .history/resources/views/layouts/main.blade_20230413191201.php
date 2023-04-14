@@ -53,7 +53,7 @@
 
     @yield('content')
 
-    @yield('scripts')
+
     @livewireScripts
 </body>
 </html>

@@ -14,7 +14,7 @@
                     {{-- name --}}
                     <div class="mt-2">
                         <a href="#" class="text-lg hover:text-gray-300">{{ $actor['name'] }}</a>
-                        <div class="text-sm truncate text-gray-400">{{ $actor['known_for'] }}</div>
+                        <div class="text-sm truncate text-gray-400">Iron Man, Avengers, Avengers: Infinity Wardasdasdsaadasdasdadas</div>
                     </div>
                 </div>
             @endforeach
@@ -24,14 +24,14 @@
 
 
     <!-- Pagination (click) -->
-    <div class="pagination flex justify-between my-12">
+    {{-- <div class="pagination flex justify-between my-12">
         @if ($previous)
             <a href="/actors/page/{{ $previous }}" >Prev</a>
         @endif
         @if ($next)
             <a href="/actors/page/{{ $next }}" >Next</a>
         @endif
-    </div>
+    </div> --}}
 
 
     <!-- Loading (infinite scroll) -->
@@ -47,19 +47,18 @@
 
 
 @section('scripts')
-
-    <!-- infinite scroll CDN -->
-    <script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
-
-    <script>
-        let elem = document.querySelector('.grid');
-        let infScroll = new InfiniteScroll( elem, {
-            // options
-            path: '/actors/page/@{{#}}',
-            append: '.actor',
-            status: '.page-load-status',
-        });
-    </script>
+<!-- infinite scroll CDN -->
+<script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
+<script>
+    let elem = document.querySelector('.grid');
+    let infScroll = new InfiniteScroll( elem, {
+        // options
+        path: '/actors/page/@{{#}}',
+        append: '.actor',
+        status: '.page-load-status',
+    });
+    
+</script>
 
 
 @endsection

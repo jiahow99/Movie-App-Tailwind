@@ -23,7 +23,7 @@ class ActorsViewModel extends ViewModel
         $formatted_popular_actors = array_map(function($actor){
             $actor['profile_path'] = $actor['profile_path']
             ? "https://image.tmdb.org/t/p/w500/" . $actor['profile_path']
-            : asset('image/avatar-placeholder.png');
+            : asset('image/avatar_placeholder.png');
             $actor['known_for'] = collect($actor['known_for'])->where('media_type', 'movie')->pluck('title')->union(
                 collect($actor['known_for'])->where('media_type', 'movie')->pluck('name')
             )->implode(', ');

@@ -24,14 +24,14 @@
 
 
     <!-- Pagination (click) -->
-    <div class="pagination flex justify-between my-12">
+    {{-- <div class="pagination flex justify-between my-12">
         @if ($previous)
             <a href="/actors/page/{{ $previous }}" >Prev</a>
         @endif
         @if ($next)
             <a href="/actors/page/{{ $next }}" >Next</a>
         @endif
-    </div>
+    </div> --}}
 
 
     <!-- Loading (infinite scroll) -->

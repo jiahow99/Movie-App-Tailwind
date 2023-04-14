@@ -25,6 +25,8 @@ class ActorController extends Controller
 
         $view_model = new ActorsViewModel($popular_actors, $total_pages, intval($page));
 
+        $view_model = new ActorViewModel($popular_actors);
+
         return view('actors.index', $view_model);
     }
 
