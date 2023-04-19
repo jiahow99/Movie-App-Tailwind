@@ -8,7 +8,7 @@
 <div class="container mx-auto px-4 pt-16">
     <div class="popular-actors">
         <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mb-4">Popular Movies</h2>
-        <div class="grid grid-cols-5 gap-8">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 gap-8">
             @foreach ($popular_actors as $actor)
                 <div class="actor mt-8">
                     {{-- profile image --}}

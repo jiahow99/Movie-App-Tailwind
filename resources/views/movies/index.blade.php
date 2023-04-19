@@ -90,9 +90,7 @@
     <script>
         // Swiper for "Popular Movies"
         var popularSwiper = new Swiper(".popularMovies", {
-            slidesPerView: 5,
             rewind: true,
-            slidesPerGroup: 5,
             spaceBetween: 30,
             pagination: {
                 el: ".swiper-pagination",
@@ -102,6 +100,20 @@
                 nextEl: ".popular-next",
                 prevEl: ".popular-prev",
             },
+            breakpoints: {
+                1280: {
+                    slidesPerView: 5,
+                    slidesPerGroup: 5
+                },
+                768: {
+                    slidesPerView: 3,
+                    slidesPerGroup: 3
+                },
+                320: {
+                    slidesPerView: 2,
+                    slidesPerGroup: 2
+                }
+            }
         });
 
         // Swiper for "Now Playing"
@@ -118,6 +130,20 @@
                 nextEl: ".nowPlaying-next",
                 prevEl: ".nowPlaying-prev",
             },
+            breakpoints: {
+                1280: {
+                    slidesPerView: 5,
+                    slidesPerGroup: 5
+                },
+                768: {
+                    slidesPerView: 3,
+                    slidesPerGroup: 3
+                },
+                320: {
+                    slidesPerView: 2,
+                    slidesPerGroup: 2
+                }
+            }
         });
 
         
