@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Route;
 
 // Movies
 Route::get('/', [MovieController::class, 'index'])->name('movies.index');
-Route::get('/movies/{movie}', [MovieController::class, 'show'])->name('movie.show');
+Route::get('/movies/movie/{movie}', [MovieController::class, 'show'])->name('movie.show');
+Route::get('/movies/popular', [MovieController::class, 'popular'])->name('movies.popular');
 
 
 // Actors

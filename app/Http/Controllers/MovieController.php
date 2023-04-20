@@ -4,53 +4,31 @@ namespace App\Http\Controllers;
 
 use App\ViewModels\MoviesViewModel;
 use App\ViewModels\MovieViewModel;
+use App\ViewModels\popularMovieViewModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Services\MovieApiService;
+
 
 class MovieController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        // Initialioze popular movie array
-        $popularMovies = [];
-        $nowPlaying = [];
+    protected $movieApi;
 
+    public function index(MovieApiService $movieApi)
+    {
         // Fetch how many page
         $max_page = 2;
-
-        // Get popular movies
-        for ($page=1; $page <= $max_page; $page++) { 
-            $response = Http::withToken(config('services.tmdb.token'))
-                ->get('https://api.themoviedb.org/3/movie/popular?page='.$page);
-
-            if($response->getStatusCode() === 200){
-                $data = $response->json()['results'];
-                $popularMovies = array_merge($popularMovies, $data);
-            }else{
-                abort($response->getStatusCode());
-            }
-        }
         
-        // Get now playing movies
-        for ($page=1; $page <= 2; $page++) { 
-            $response = Http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/movie/now_playing?page='.$page);
-
-            if($response->getStatusCode() === 200){
-                $data = $response->json()['results'];
-                $nowPlaying = array_merge($nowPlaying, $data);
-            }else{
-                abort($response->getStatusCode());
-            }
-        }
+        $popularMovies = $movieApi->fetchPopularMovies($max_page);
+        
+        $nowPlaying = $movieApi->fetchNowPlaying($max_page);
 
         $genresArray = Http::withToken(config('services.tmdb.token'))
             ->get('https://api.themoviedb.org/3/genre/movie/list')
             ->json()['genres'];
-
 
 
         $viewModel = new MoviesViewModel($popularMovies, $nowPlaying, $genresArray);
@@ -60,25 +38,17 @@ class MovieController extends Controller
 
 
     /**
-     * Show the form for creating a new resource.
+     * Show popular movies
      */
-    public function create()
+    public function popular()
     {
-        //
+        $view_model = new popularMovieViewModel($this->popularMovies);
+        dd($this->popularMovies);
+        return view('movies.popular', $view_model);
     }
 
-
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-
-    /**
-     * Display the specified resource.
+     * Display the specified movie
      */
     public function show(string $id)
     {
