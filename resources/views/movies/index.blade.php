@@ -158,7 +158,7 @@
             });
             }, {
             // Set bottom margin to 50% of viewport height
-            rootMargin: '0px 0px -200px 0px'
+            rootMargin: '0px 0px -100px 0px'
         });
 
         var lazyImages = document.querySelectorAll('.movie_poster');

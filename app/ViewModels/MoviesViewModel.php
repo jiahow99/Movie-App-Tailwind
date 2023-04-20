@@ -58,7 +58,7 @@ class MoviesViewModel extends ViewModel
         }, $movie);
         
         // Chunk 30 items each array
-        return collect($newMovieArray)->chunk(30);
+        return collect($newMovieArray)->chunk(20);
         // dd(collect($newMovieArray)->chunk(30));
     }
 

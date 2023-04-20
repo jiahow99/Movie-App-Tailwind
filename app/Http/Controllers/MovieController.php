@@ -18,8 +18,11 @@ class MovieController extends Controller
         $popularMovies = [];
         $nowPlaying = [];
 
+        // Fetch how many page
+        $max_page = 2;
+
         // Get popular movies
-        for ($page=1; $page <= 3; $page++) { 
+        for ($page=1; $page <= $max_page; $page++) { 
             $response = Http::withToken(config('services.tmdb.token'))
                 ->get('https://api.themoviedb.org/3/movie/popular?page='.$page);
 
@@ -32,7 +35,7 @@ class MovieController extends Controller
         }
         
         // Get now playing movies
-        for ($page=1; $page <= 3; $page++) { 
+        for ($page=1; $page <= 2; $page++) { 
             $response = Http::withToken(config('services.tmdb.token'))
             ->get('https://api.themoviedb.org/3/movie/now_playing?page='.$page);
 
