@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ViewModels\MoviesViewModel;
 use App\ViewModels\MovieViewModel;
-use App\ViewModels\popularMovieViewModel;
+use App\ViewModels\popularMoviesViewModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Services\MovieApiService;
@@ -26,9 +26,7 @@ class MovieController extends Controller
         
         $nowPlaying = $movieApi->fetchNowPlaying($max_page);
 
-        $genresArray = Http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/genre/movie/list')
-            ->json()['genres'];
+        $genresArray = $movieApi->fetchGenres();
 
 
         $viewModel = new MoviesViewModel($popularMovies, $nowPlaying, $genresArray);
@@ -43,11 +41,29 @@ class MovieController extends Controller
     public function popular(MovieApiService $movieApi)
     {
         $popularMovies = $movieApi->fetchPopularMovies();
+
+        $genresList = $movieApi->fetchGenres();
         
-        $view_model = new popularMovieViewModel($popularMovies);
+        $view_model = new popularMoviesViewModel($popularMovies, $genresList);
 
         return view('movies.popular', $view_model);
     }
+
+
+    /**
+     * Popular movies infinite scrolling
+     */
+    public function popularLoadMore(MovieApiService $movieApi, $page = 3)
+    {
+        $popularMovies = $movieApi->popularLoadMore( $page );
+
+        $genresList = $movieApi->fetchGenres();
+        
+        $view_model = new popularMoviesViewModel($popularMovies, $genresList);
+
+        return view('movies.popular', $view_model);
+    }
+
 
     /**
      * Display the specified movie

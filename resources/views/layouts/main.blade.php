@@ -91,7 +91,7 @@
             setTimeout(() => {  
                 var loader = document.querySelector('#loader');
                 loader.classList.add("hide");
-            }, 200);
+            }, 500);
             
             
             loader.addEventListener("transitionend", () => {

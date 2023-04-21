@@ -6,7 +6,7 @@
 </div>
 
 <div class="container mx-auto px-4 pt-16">
-    <div class="popular-actors">
+    <div class="popular-movies">
         <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mb-4">Popular Movies</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 gap-8">
             @foreach ($popularMovies as $movie)
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-
+    
     <!-- Loading (infinite scroll) -->
     <div class="page-load-status text-center py-8">
         <p class="infinite-scroll-request"><i class="fas fa-spinner fa-spin fa-4x"></i></p>
@@ -28,18 +28,54 @@
 
 @section('scripts')
 
-    {{-- <!-- infinite scroll CDN -->
+    <!-- infinite scroll CDN -->
     <script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
 
     <script>
+        // Lazy loading image
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.src = entry.target.dataset.image;
+                    observer.unobserve(entry.target);
+                }
+            });
+            }, {
+            rootMargin: '0px 0px -200px 0px'
+        });
+
+        var lazyImages = document.querySelectorAll('.movie_poster');
+
+        lazyImages.forEach(function(image) {
+            observer.observe(image);
+        });
+
+        // Infinite scroll
         let elem = document.querySelector('.grid');
         let infScroll = new InfiniteScroll( elem, {
             // options
-            path: '/actors/page/@{{#}}',
-            append: '.actor',
+            path: '/movies/popular/page/@{{#}}',
+            append: '.movie',
+            startPage: 3,
             status: '.page-load-status',
         });
-    </script> --}}
+        
+        // After added new item, lazy load them
+        infScroll.on( 'append', function( body, path, items, response ) {
+            var lazyImages = document.querySelectorAll('.movie_poster');
+        
+            lazyImages.forEach(function(image) {
+                observer.observe(image);
+            });
+        });
 
+    
+
+        
+
+    </script>
+    
+
+    
 
 @endsection

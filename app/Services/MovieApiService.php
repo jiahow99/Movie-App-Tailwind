@@ -40,6 +40,22 @@ class MovieApiService
     }
 
 
+    /**
+     * Fetch popular movies.
+     */
+    public function popularLoadMore($page)
+    {
+        $response = Http::withToken(config('services.tmdb.token'))
+                ->get('https://api.themoviedb.org/3/movie/popular?page='.$page);
+
+        if($response->getStatusCode() === 200){
+            return $response->json()['results'];
+        }else{
+            abort($response->getStatusCode());
+        }
+
+    }
+
 
     /**
      * Fetch popular movies.
@@ -69,6 +85,19 @@ class MovieApiService
 
         // Return 20 "Now Playing" movies
         return Session::get('nowPlaying');
+    }
+
+
+    /**
+     * Fetch genres.
+     */
+    public function fetchGenres(){
+        $response = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/genre/movie/list');
+
+        if($response->getStatusCode() === 200){
+            return $response->json()['genres'];
+        }
     }
 }
 

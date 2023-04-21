@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [MovieController::class, 'index'])->name('movies.index');
 Route::get('/movies/movie/{movie}', [MovieController::class, 'show'])->name('movie.show');
 Route::get('/movies/popular', [MovieController::class, 'popular'])->name('movies.popular');
+Route::get('/movies/popular/page/{page?}', [MovieController::class, 'popularLoadMore'])->name('movies.popular.load');
 
 
 // Actors
