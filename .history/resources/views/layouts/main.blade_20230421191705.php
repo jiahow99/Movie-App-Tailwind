@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 
     <!-- AOS Css -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    {{-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"> --}}
 
     <!-- AOS script -->
     {{-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> --}}
@@ -95,9 +95,7 @@
             
             
             loader.addEventListener("transitionend", () => {
-                AOS.init({
-                    once: true
-                })
+                AOS.init();
                 
                 loader.style.zIndex  = "0";
                 loader.style.display = "none";

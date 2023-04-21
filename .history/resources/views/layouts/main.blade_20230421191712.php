@@ -95,9 +95,7 @@
             
             
             loader.addEventListener("transitionend", () => {
-                AOS.init({
-                    once: true
-                })
+                AOS.init();
                 
                 loader.style.zIndex  = "0";
                 loader.style.display = "none";

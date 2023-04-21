@@ -21,7 +21,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <!-- AOS script -->
-    {{-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> --}}
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     @yield('style')
 </head>
@@ -95,9 +95,7 @@
             
             
             loader.addEventListener("transitionend", () => {
-                AOS.init({
-                    once: true
-                })
+                AOS.init();
                 
                 loader.style.zIndex  = "0";
                 loader.style.display = "none";
