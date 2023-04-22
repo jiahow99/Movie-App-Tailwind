@@ -23,9 +23,9 @@
         <div class="popular-movies">
             <div class="flex justify-between">
                 <a href="{{ route('movies.popular') }}">
-                    <h2 class="relative uppercase tracking-wider text-orange-500 text-lg font-semibold mb-4 after:content-[''] 
+                    <h2 class="relative uppercase tracking-wider text-orange-500 text-lg font-bold mb-4 after:content-[''] 
                     after:bg-[rgb(2,0,36)] after:bg-gradient-to-r after:from-red-800 after:via-yellow-600 after:to-yellow-500 after:w-[0%] after:left-0 after:-bottom-[3px] 
-                    after:h-[4px] after:absolute transition-all after:duration-300 hover:after:w-[100%]">Popular Movies</h2>
+                    after:h-[4px] after:absolute transition-all after:duration-300 hover:after:w-[100%] bg-gradient-to-r  from-amber-500 to-pink-500 bg-clip-text text-transparent">Popular Movies</h2>
                 </a>
                 <div class="swiper-buttons my-auto select-none">
                     <div class="w-1/12 inline mr-3"><i class="fa-solid fa-caret-left text-black text-xl md:text-2xl xl:text-3xl cursor-pointer rounded-full bg-slate-600 px-1 xl:px-2 hover:text-white hover:bg-slate-700 duration-150 popular-prev"></i></div>

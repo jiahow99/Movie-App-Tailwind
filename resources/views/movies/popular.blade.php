@@ -1,13 +1,23 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="fixed bottom-5 right-10 rounded-full bg-slate-700 px-5 py-5 z-50 pointer-events-none animate-bounce">
-    <i class="fa-solid fa-arrow-down-long text-4xl"></i>
+<!-- Scroll down -->
+<div class="fixed top-1/2 right-5 animate-bounce duration-500">
+    <div id="scroll-down">
+        <span class="arrow-down">
+        <!-- css generated icon -->
+        </span>
+        <span id="scroll-title" class="transform rotate-[90deg] pb-10 -translate-y-24">
+          Scroll down
+        </span>
+    </div>
 </div>
 
 <div class="container mx-auto px-4 pt-16">
     <div class="popular-movies">
-        <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mb-4">Popular Movies</h2>
+        <h2 class="uppercase tracking-wider text-orange-500 text-lg font-bold mb-4 bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-transparent">
+            Popular Movies
+        </h2>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 gap-8">
             @foreach ($popularMovies as $movie)
                 <x-movie-card :movie="$movie" />
@@ -57,6 +67,7 @@
             path: '/movies/popular/page/@{{#}}',
             append: '.movie',
             startPage: 3,
+            history: false,
             status: '.page-load-status',
         });
         

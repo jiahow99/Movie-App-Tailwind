@@ -284,8 +284,67 @@ body{
   width: 100vw;
   background: radial-gradient(at center, #111, black);
 }
-
 /******** Preloader ********/
+
+
+/******** Scroll Down ********/
+#scroll-down {
+  display: block;
+  position: relative;
+  padding-top: 129px;
+  text-align: center;
+}
+.arrow-down {
+  display: block;
+  margin: 0 auto;
+  width: 9px;
+  height: 5px;
+}
+.arrow-down:after {
+  content: '';
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid #d9d1d2;
+  border-right: 2px solid #d9d1d2;
+  behavior: url(-ms-transform.htc);
+  -moz-transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+#scroll-title {
+  display: block;
+  text-transform: uppercase;
+  color: #d9d1d2;
+  font-family: Helvetica Neue, Helvetica, Arial;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+}
+#scroll-down::before {
+  -webkit-animation: elasticus 1.2s cubic-bezier(1, 0, 0, 1) infinite;
+  /* Safari 4+ */
+  -moz-animation: elasticus 1.2s cubic-bezier(1, 0, 0, 1) infinite;
+  /* Fx 5+ */
+  -o-animation: elasticus 1.2s cubic-bezier(1, 0, 0, 1) infinite;
+  /* Opera 12+ */
+  animation: elasticus 1.2s cubic-bezier(1, 0, 0, 1) infinite;
+  /* IE 10+, Fx 29+ */
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  margin-left: -1px;
+  width: 2px;
+  height: 130px;
+  background: #d9d1d2;
+  content: ' ';
+}
+/******** Scroll Down ********/
+
 
 
 

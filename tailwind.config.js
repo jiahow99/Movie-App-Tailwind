@@ -9,7 +9,7 @@ module.exports = {
     extend: {
       width: {
         '96': '24rem',
-      }
+      },
     },
     spinner: (theme) => ({
       default: {
@@ -22,5 +22,6 @@ module.exports = {
   },
   plugins: [
     require('tailwindcss-spinner')({ className: 'spinner', themeKey: 'spinner' }),
+    
   ],
 }

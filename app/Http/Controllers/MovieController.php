@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\ViewModels\MoviesViewModel;
-use App\ViewModels\MovieViewModel;
-use App\ViewModels\popularMoviesViewModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use App\Services\MovieApiService;
+use App\ViewModels\MovieViewModel;
+use App\ViewModels\MoviesViewModel;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
+use App\ViewModels\popularMoviesViewModel;
 
 
 class MovieController extends Controller
@@ -17,7 +18,7 @@ class MovieController extends Controller
      */
     protected $movieApi;
 
-    public function index(MovieApiService $movieApi)
+    public function index(Request $request, MovieApiService $movieApi)
     {
         // Fetch how many page
         $max_page = 2;
@@ -28,10 +29,19 @@ class MovieController extends Controller
 
         $genresArray = $movieApi->fetchGenres();
 
-
         $viewModel = new MoviesViewModel($popularMovies, $nowPlaying, $genresArray);
 
+        $currentUrl = $request->fullUrl();
+        $previousUrl = url()->previous();
+
+        if ($currentUrl == $previousUrl) {
+            dd("Page refreshed");
+        } else {
+            // The user has navigated to this page from a different page
+        }
+
         return view('movies.index', $viewModel);
+
     }
 
 
@@ -39,8 +49,8 @@ class MovieController extends Controller
      * Show popular movies
      */
     public function popular(MovieApiService $movieApi)
-    {
-        $popularMovies = $movieApi->fetchPopularMovies();
+    {        
+        $popularMovies =  array_slice($movieApi->fetchPopularMovies(), 0, 20);
 
         $genresList = $movieApi->fetchGenres();
         
@@ -53,7 +63,7 @@ class MovieController extends Controller
     /**
      * Popular movies infinite scrolling
      */
-    public function popularLoadMore(MovieApiService $movieApi, $page = 3)
+    public function popularLoadMore(MovieApiService $movieApi, $page = 4)
     {
         $popularMovies = $movieApi->popularLoadMore( $page );
 
