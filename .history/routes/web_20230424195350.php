@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ActorController;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,7 +19,5 @@ Route::get('/actors/{actor}', [ActorController::class, 'show'])->name('actor.sho
 
 
 Route::get('/redis', function(){
-    Redis::set("key", "Test Key");
-
-    return Redis::get("key");
+    
 });

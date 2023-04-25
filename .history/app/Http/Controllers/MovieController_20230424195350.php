@@ -35,6 +35,7 @@ class MovieController extends Controller
         $previousUrl = url()->previous();
 
         return view('movies.index', $viewModel);
+
     }
 
 
