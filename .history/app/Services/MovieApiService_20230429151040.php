@@ -145,7 +145,7 @@ class MovieApiService
             $url = "https://api.themoviedb.org/3/movie/" . $id . "?append_to_response=" . implode(',', $appendToResponse);
             
             // Call API
-            $movie = $this->fetch($url, 1, null, true);
+            $movie = $this->fetch( $url , $appendToResponse=true );
 
             // Store in Redis
             $json_encoded = json_encode( $movie );
@@ -167,9 +167,10 @@ class MovieApiService
     {
         // Fetch url with bearer token
         $response = $appendToResponse
-            ? Http::withToken(config('services.tmdb.token'))->get( $url )
+            ? Http::withToken(config('services.tmdb.token'))->get( $url.'&page='.$page )
             : Http::withToken(config('services.tmdb.token'))->get( $url.'?page='.$page ) ;
-            
+
+        dd($response);
 
         // Check response OK
         if($response->getStatusCode() === 200)

@@ -102,7 +102,7 @@ class MovieController extends Controller
      */
     public function show(MovieApiService $movieApi, string $id)
     {
-        $movie = $movieApi->fetchMovie($id, 'images', 'videos', 'credits');
+        $movie = $movieApi->fetchMovie($id, 'credits', 'videos', 'images');
             
         $genresList = $movieApi->fetchGenres();
 

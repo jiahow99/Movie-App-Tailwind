@@ -33,6 +33,7 @@ class MovieController extends Controller
 
         $viewModel = new MoviesViewModel($popularMovies, $nowPlaying, $genresArray);
 
+        // dd($nowPlaying);
         return view('movies.index', $viewModel);
     }
 
@@ -100,11 +101,16 @@ class MovieController extends Controller
     /**
      * Display the specified movie
      */
-    public function show(MovieApiService $movieApi, string $id)
+    public function show(string $id)
     {
-        $movie = $movieApi->fetchMovie($id, 'images', 'videos', 'credits');
+        $movie = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/movie/'.$id.'?append_to_response=credits,videos,images')
+            ->json();
             
-        $genresList = $movieApi->fetchGenres();
+        $genresList = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/genre/movie/list')
+            ->json()['genres'];
+
 
         $viewModel = new MovieViewModel($movie, $genresList);
 

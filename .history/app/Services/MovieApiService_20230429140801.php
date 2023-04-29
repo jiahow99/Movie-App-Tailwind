@@ -134,7 +134,7 @@ class MovieApiService
     /**
      * Fetch specific movie.
      */
-    public function fetchMovie(string $id, ... $appendToResponse)
+    public function fetchMovie(string $id, string $url, ... $appendToResponse)
     {
         // Cache movie
         $movieCache = "movie:" . $id;
@@ -142,20 +142,14 @@ class MovieApiService
         if( !Redis::exists($movieCache) )
         {
             // Append to base url
-            $url = "https://api.themoviedb.org/3/movie/" . $id . "?append_to_response=" . implode(',', $appendToResponse);
-            
+            $url .= '?append_to_response=' . implode(',', $appendToResponse);
+
             // Call API
-            $movie = $this->fetch($url, 1, null, true);
+            $movie = $this->fetch( $url );
 
-            // Store in Redis
             $json_encoded = json_encode( $movie );
-            Redis::set( $movieCache, $json_encoded, 'EX', 1800 );   // Expire in 30 mins
+            Redis::set( $movieCache )
         }
-
-        // Return movie
-        $movie = json_decode( Redis::get($movieCache), true );
-
-        return $movie;
     }
 
 
@@ -163,13 +157,11 @@ class MovieApiService
     /**
      * Fetch from URL
      */
-    private function fetch(string $url , int $page = 1, string $resultArray=null, bool $appendToResponse=false )
+    private function fetch($url , $page = 1, $resultArray=null)
     {
         // Fetch url with bearer token
-        $response = $appendToResponse
-            ? Http::withToken(config('services.tmdb.token'))->get( $url )
-            : Http::withToken(config('services.tmdb.token'))->get( $url.'?page='.$page ) ;
-            
+        $response = Http::withToken(config('services.tmdb.token'))
+            ->get( $url.'?page='.$page );
 
         // Check response OK
         if($response->getStatusCode() === 200)

@@ -169,7 +169,6 @@ class MovieApiService
         $response = $appendToResponse
             ? Http::withToken(config('services.tmdb.token'))->get( $url )
             : Http::withToken(config('services.tmdb.token'))->get( $url.'?page='.$page ) ;
-            
 
         // Check response OK
         if($response->getStatusCode() === 200)
