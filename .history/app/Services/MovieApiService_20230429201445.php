@@ -149,12 +149,11 @@ class MovieApiService
 
             // Store in Redis
             $json_encoded = json_encode( $movie );
-
-            Redis::hset('movies', $id, $json_encoded, 'EX', 1800);  // Expire in 30 mins
+            Redis::set( $movieCache, $json_encoded, 'EX', 1800 );   // Expire in 30 mins
         }
 
         // Return movie
-        $movie = json_decode( Redis::hget('movies', $id), true );
+        $movie = json_decode( Redis::get($movieCache), true );
 
         return $movie;
     }

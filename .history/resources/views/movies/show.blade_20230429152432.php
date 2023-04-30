@@ -33,13 +33,13 @@
 @endsection
 
 @section('content')
-    <div x-data="{
-        isMobile: window.innerWidth < 1280,
-        isDesktop: window.innerWidth >= 1280,
-        isOpen: false,
-        autoplay: 0,
-        videoSrc: 'https://www.youtube.com/embed/{{ $movie['youtubeURL'] }}?autoplay=',
-    }">
+<div x-data="{
+    isMobile: window.innerWidth < 1280,
+    isDesktop: window.innerWidth >= 1280,
+    isOpen: false,
+    autoplay: 0,
+    videoSrc: 'https://www.youtube.com/embed/{{ $movie['youtubeURL'] }}?autoplay=',
+}">
 
     <!-- Video Modal -->
     <div class="fixed w-full h-full inset-x-0 " 
