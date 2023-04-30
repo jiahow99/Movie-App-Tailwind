@@ -89,7 +89,7 @@
     <!-- HTML for the login modal -->
     <div class="fixed z-50 inset-0 flex items-center justify-center">
         <div class="login-box">
-            <h1 class="text-center text-2xl pb-10 tracking-widest">Login</h1>
+            <h1 class="text-center text-xl">Login</h1>
             <form>
               <div class="user-box">
                 <input type="text" name="" required="">

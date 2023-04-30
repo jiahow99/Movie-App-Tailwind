@@ -37,9 +37,6 @@
     @endisset
 
 
-    
-
-
     <!-- Start Navbar -->
     <nav id="navbar" class="border-b border-gray-800 z-50">
         <div class="container mx-auto flex flex-col lg:flex-row items-center justify-between px-4 py-6">
@@ -60,15 +57,15 @@
                     <a href="{{ route('actors.index') }}" class="hover:text-gray-300">Actors</a>
                 </li>
             </ul>
-            <div class="flex flex-col lg:flex-row items-center mt-3 lg:mt-0 gap-4">
+            <div class="flex flex-col lg:flex-row items-center mt-3 lg:mt-0">
                 <!-- Search -->
                 <livewire:search-dropdown />
                 <!-- Login -->
-                <div class="login-btn px-7 py-1 bg-gray-700 text-gray-300">
+                <button class="relative login-btn px-3 py-2 bg-black text-white  hover:text-black">
                     Login
-                </div>
+                </button>
                 <!-- Account -->
-                <div class="xl:ml-4 mt-3 lg:mt-0">
+                <div class="ml-4 mt-3 lg:mt-0">
                     <a href="#" class="">
                         <i class="fa-solid fa-user rounded-full border-white border-2 p-1"></i>
                     </a>
@@ -78,36 +75,6 @@
     </nav>
     <!-- End Navbar -->
 
-
-
-    <!-- HTML for the background overlay -->
-    <div class="fixed inset-0 z-40">
-        <div class="absolute inset-0 bg-gray-800 opacity-80 blur"></div>
-    </div>
-
-  
-    <!-- HTML for the login modal -->
-    <div class="fixed z-50 inset-0 flex items-center justify-center">
-        <div class="login-box">
-            <h1 class="text-center text-2xl pb-10 tracking-widest">Login</h1>
-            <form>
-              <div class="user-box">
-                <input type="text" name="" required="">
-                <label>Username</label>
-              </div>
-              <div class="user-box">
-                <input type="password" name="" required="">
-                <label>Password</label>
-              </div>
-              <div class="text-center">
-                  <a href="#">
-                          SEND
-                      <span></span>
-                  </a>
-              </div>
-            </form>
-          </div>
-    </div>
      
 
     @yield('content')

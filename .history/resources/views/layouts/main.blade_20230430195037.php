@@ -99,7 +99,7 @@
                 <input type="password" name="" required="">
                 <label>Password</label>
               </div>
-              <div class="text-center">
+              <div class="text-center px-5">
                   <a href="#">
                           SEND
                       <span></span>

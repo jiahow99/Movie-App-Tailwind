@@ -89,7 +89,7 @@
     <!-- HTML for the login modal -->
     <div class="fixed z-50 inset-0 flex items-center justify-center">
         <div class="login-box">
-            <h1 class="text-center text-2xl pb-10 tracking-widest">Login</h1>
+ 
             <form>
               <div class="user-box">
                 <input type="text" name="" required="">
@@ -98,13 +98,11 @@
               <div class="user-box">
                 <input type="password" name="" required="">
                 <label>Password</label>
-              </div>
-              <div class="text-center">
-                  <a href="#">
-                          SEND
-                      <span></span>
-                  </a>
-              </div>
+              </div><center>
+              <a href="#">
+                     SEND
+                 <span></span>
+              </a></center>
             </form>
           </div>
     </div>

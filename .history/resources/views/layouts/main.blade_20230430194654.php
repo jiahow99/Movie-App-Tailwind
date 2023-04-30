@@ -82,12 +82,12 @@
 
     <!-- HTML for the background overlay -->
     <div class="fixed inset-0 z-40">
-        <div class="absolute inset-0 bg-gray-800 opacity-80 blur"></div>
+        <div class="absolute inset-0 bg-gray-800 opacity-80 blur hidden"></div>
     </div>
 
   
     <!-- HTML for the login modal -->
-    <div class="fixed z-50 inset-0 flex items-center justify-center">
+    <div class="fixed z-50 inset-0 flex items-center justify-center hidden">
         <div class="login-box">
             <h1 class="text-center text-2xl pb-10 tracking-widest">Login</h1>
             <form>

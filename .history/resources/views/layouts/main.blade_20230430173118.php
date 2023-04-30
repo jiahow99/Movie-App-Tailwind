@@ -20,7 +20,7 @@
     @yield('style')
 </head>
 
-<body class="relative font-sans bg-gray-900 text-white">
+<body class="relative font-serif bg-gray-900 text-white">
     @if (session('loader'))
         <!-- Start Preloader -->
         <div id="loader" class="fixed w-screen h-screen top-0 left-0 z-50">
@@ -35,9 +35,6 @@
         </div>
         <!-- End Preloader -->
     @endisset
-
-
-    
 
 
     <!-- Start Navbar -->
@@ -64,9 +61,9 @@
                 <!-- Search -->
                 <livewire:search-dropdown />
                 <!-- Login -->
-                <div class="login-btn px-7 py-1 bg-gray-700 text-gray-300">
-                    Login
-                </div>
+                <a href="#">
+                    <div class="login-btn px-7 py-1 bg-gray-700 text-gray-300">Login</div>
+                </a>
                 <!-- Account -->
                 <div class="xl:ml-4 mt-3 lg:mt-0">
                     <a href="#" class="">
@@ -78,36 +75,6 @@
     </nav>
     <!-- End Navbar -->
 
-
-
-    <!-- HTML for the background overlay -->
-    <div class="fixed inset-0 z-40">
-        <div class="absolute inset-0 bg-gray-800 opacity-80 blur"></div>
-    </div>
-
-  
-    <!-- HTML for the login modal -->
-    <div class="fixed z-50 inset-0 flex items-center justify-center">
-        <div class="login-box">
-            <h1 class="text-center text-2xl pb-10 tracking-widest">Login</h1>
-            <form>
-              <div class="user-box">
-                <input type="text" name="" required="">
-                <label>Username</label>
-              </div>
-              <div class="user-box">
-                <input type="password" name="" required="">
-                <label>Password</label>
-              </div>
-              <div class="text-center">
-                  <a href="#">
-                          SEND
-                      <span></span>
-                  </a>
-              </div>
-            </form>
-          </div>
-    </div>
      
 
     @yield('content')

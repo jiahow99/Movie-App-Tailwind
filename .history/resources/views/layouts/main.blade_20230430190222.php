@@ -78,36 +78,11 @@
     </nav>
     <!-- End Navbar -->
 
+    <!-- Start Login Modal -->
+    <div class="fixed inset-0 bg-gray-800 opacity-70 z-50 blur">
 
-
-    <!-- HTML for the background overlay -->
-    <div class="fixed inset-0 z-40">
-        <div class="absolute inset-0 bg-gray-800 opacity-80 blur"></div>
     </div>
-
-  
-    <!-- HTML for the login modal -->
-    <div class="fixed z-50 inset-0 flex items-center justify-center">
-        <div class="login-box">
-            <h1 class="text-center text-2xl pb-10 tracking-widest">Login</h1>
-            <form>
-              <div class="user-box">
-                <input type="text" name="" required="">
-                <label>Username</label>
-              </div>
-              <div class="user-box">
-                <input type="password" name="" required="">
-                <label>Password</label>
-              </div>
-              <div class="text-center">
-                  <a href="#">
-                          SEND
-                      <span></span>
-                  </a>
-              </div>
-            </form>
-          </div>
-    </div>
+    <!-- End Login Modal -->
      
 
     @yield('content')

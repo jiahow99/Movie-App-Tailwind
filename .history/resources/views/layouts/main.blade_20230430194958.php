@@ -99,12 +99,15 @@
                 <input type="password" name="" required="">
                 <label>Password</label>
               </div>
-              <div class="text-center">
+              {{-- <div class="text-center">
                   <a href="#">
                           SEND
                       <span></span>
                   </a>
-              </div>
+              </div> --}}
+              <div class="text-center login-btn mx-auto w-fit px-4">
+                LOG IN
+            </div>
             </form>
           </div>
     </div>

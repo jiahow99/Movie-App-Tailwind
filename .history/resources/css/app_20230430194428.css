@@ -346,45 +346,8 @@ body{
 /******** Scroll Down ********/
 
 
+
 /******** Login Btn ********/
-.login-btn {
-  border: none;
-  border-radius: 0.625em;
-  /* font-size: 20px; */
-  font-weight: bold;
-  cursor: pointer;
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-}
- 
- .login-btn:hover {
-  color: black;
- }
- 
- .login-btn:after {
-  content: "";
-  background: white;
-  position: absolute;
-  z-index: -1;
-  left: -20%;
-  right: -20%;
-  top: 0;
-  bottom: 0;
-  transform: skewX(-45deg) scale(0, 1);
-  transition: all 0.5s;
- }
- 
- .login-btn:hover:after {
-  transform: skewX(-45deg) scale(1, 1);
-  -webkit-transition: all 0.5s;
-  transition: all 0.5s;
- }
-/******** Login Btn ********/
-
-
-
-/******** Login Form ********/
 .login-box {
   position: absolute;
   top: 50%;
@@ -392,7 +355,7 @@ body{
   width: 400px;
   padding: 40px;
   transform: translate(-50%, -50%);
-  background: rgba(37, 34, 34, 0.95);
+  background: rgba(24, 20, 20, 0.658);
   box-sizing: border-box;
   box-shadow: 0 15px 25px rgba(0,0,0,.6);
   border-radius: 10px;
@@ -480,7 +443,9 @@ body{
   background: linear-gradient(90deg, transparent, #03f40f);
   animation: btn-anim1 2s linear infinite;
 }
-/******** Login Form ********/
+/******** Login Btn ********/
+
+
 
 
 

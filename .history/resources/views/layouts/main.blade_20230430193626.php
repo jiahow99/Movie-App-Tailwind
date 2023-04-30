@@ -87,27 +87,22 @@
 
   
     <!-- HTML for the login modal -->
-    <div class="fixed z-50 inset-0 flex items-center justify-center">
-        <div class="login-box">
-            <h1 class="text-center text-2xl pb-10 tracking-widest">Login</h1>
-            <form>
-              <div class="user-box">
-                <input type="text" name="" required="">
-                <label>Username</label>
-              </div>
-              <div class="user-box">
-                <input type="password" name="" required="">
-                <label>Password</label>
-              </div>
-              <div class="text-center">
-                  <a href="#">
-                          SEND
-                      <span></span>
-                  </a>
-              </div>
-            </form>
-          </div>
+<div class="fixed z-50 inset-0 flex items-center justify-center">
+    <div class="bg-slate-600 bg-opacity-90 rounded-2xl shadow-2xl p-6 w-4/12 h-fit text-white">
+      <h2 class=" text-2xl mb-4">Login</h2>
+      <form class="space-y-4">
+        <div>
+          <label for="email" class="block ">Email</label>
+          <input type="email" id="email" name="email" class="mt-2 w-full border border-gray-400 py-1 pl-4 rounded-md text-black">
+        </div>
+        <div>
+          <label for="password" class="block ">Password</label>
+          <input type="password" id="password" name="password" class="w-full border border-gray-400 p-2 rounded-md">
+        </div>
+        <button type="submit" class="bg-indigo-500 text-white rounded-md py-2 px-4 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Login</button>
+      </form>
     </div>
+  </div>
      
 
     @yield('content')

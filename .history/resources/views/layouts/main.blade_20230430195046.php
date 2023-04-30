@@ -100,7 +100,7 @@
                 <label>Password</label>
               </div>
               <div class="text-center">
-                  <a href="#">
+                  <a href="#" class=" px-5">
                           SEND
                       <span></span>
                   </a>
