@@ -20,15 +20,7 @@
     @yield('style')
 </head>
 
-<body class="relative font-sans bg-gray-900 text-white" 
-    x-data="{ 
-        loginModal: false,
-        resetInput: function(){
-            $refs.username.value = '' ;
-            $refs.password.value = '' ;
-        },
-     }">
-
+<body class="relative font-sans bg-gray-900 text-white">
     @if (session('loader'))
         <!-- Start Preloader -->
         <div id="loader" class="fixed w-screen h-screen top-0 left-0 z-50">
@@ -43,6 +35,9 @@
         </div>
         <!-- End Preloader -->
     @endisset
+
+
+    
 
 
     <!-- Start Navbar -->
@@ -69,7 +64,7 @@
                 <!-- Search -->
                 <livewire:search-dropdown />
                 <!-- Login -->
-                <div class="login-btn px-7 py-1 bg-gray-700 text-gray-300" x-on:click="loginModal = true">
+                <div class="login-btn px-7 py-1 bg-gray-700 text-gray-300">
                     Login
                 </div>
                 <!-- Account -->
@@ -84,86 +79,59 @@
     <!-- End Navbar -->
 
 
+
     <!-- Background overlay -->
-    <div class="fixed inset-0 z-40" x-show="loginModal" style="display: none">
+    <div class="fixed inset-0 z-40">
         <div class="absolute inset-0 bg-gray-800 opacity-80 blur"></div>
     </div>
 
-    
+  
     <!-- login modal -->
-    <div class="login-modal fixed z-50 inset-0 flex items-center justify-center" x-show="loginModal" style="display: none" >
-        <div class="login-box" x-on:click.outside="loginModal = false; resetInput();">
-            <!-- Close -->
-            <span class=" close fixed top-5 right-5 text-gray-300 cursor-pointer hover:rotate-90 hover:scale-150 transition duration-200" x-on:click="loginModal = false; resetInput();">
-                <i class="fa-solid fa-xmark fa-2xl"></i>
-            </span>
-            <h1 class="text-center text-2xl pb-10 tracking-widest font-bold mt-7">Login</h1>
+    <div class="fixed z-50 inset-0 flex items-center justify-center">
+        <div class="login-box">
+            <h1 class="text-center text-2xl pb-10 tracking-widest">Login</h1>
             <form>
                 <!-- Username -->
                 <div class="user-box mb-5">
-                    <input type="text" name="username" required x-ref="username">
+                    <input type="text" name="username" required>
                 <label>Username</label>
                 </div>
                 <!-- Password -->
                 <div class="user-box mb-3">
-                    <input type="password" name="password" required x-ref="password">
+                    <input type="password" name="password" required>
                     <label>Password</label>
                 </div>
                 <!-- Remember me -->
-                <div class="flex items-center justify-between mt-4 mb-5">
-                    <div class="flex items-start">
+                <div class="flex items-center justify-between">
+                    <div class="flex">
                         <div class="flex items-center h-5">
-                          <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500" required="">
+                          <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="">
                         </div>
                         <div class="ml-3 text-sm">
-                          <label for="remember" class="text-white hover:cursor-pointer select-none text-center text-sm font-semibold">Remember me</label>
+                          <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
                         </div>
                     </div>
                     <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
                 </div>  
+                <!-- Sign up -->
+                <div class="text-gray-400/80 text-sm mb-7 font-semibold ">
+                    <span>Don't have an account ? Sign up</span>
+                </div>
                 <!-- Login -->
-                <div class="text-center mt-10">
-                    <div class="w-full py-1 px-10 mx-auto login-btn-2 rounded-md">
+                <div class="text-center">
+                    <div class="w-fit py-1 px-10 mx-auto login-btn-2">
                         Login
                     </div>
                 </div>
-                <!-- Sign up -->
-                <div class="text-gray-400/80 text-sm mt-5 font-semibold text-center">
-                    <span>Don't have an account ? Sign up</span>
-                </div>
                 <div class="inline-flex items-center justify-center w-full">
-                    <hr class="w-full h-px bg-gray-600 border-0 dark:bg-gray-700">
-                    <span class="absolute px-3 font-medium text-gray-600 -translate-x-1/2 bg-[#252222f2] left-1/2 ">or</span>
+                    <hr class="w-full h-px my-8 bg-gray-600 border-0 dark:bg-gray-700">
+                    <span class="absolute px-3 font-medium text-gray-600 -translate-x-1/2 bg-[#252222f2] left-1/2 dark:text-white dark:bg-gray-900">or</span>
                 </div>
                 <!-- Social media login -->
-                <a href="#">
-                    <div class="facebook w-full py-1 bg-blue-600 text-center rounded-md mt-3">
-                        <i class="fa-brands fa-facebook-f text-white mx-1"></i>
-                        <span class="text-sm">Log in with Facebook</span>
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="google w-full flex justify-center align-middle py-1 bg-white text-center rounded-md mt-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="mr-2" viewBox="0 0 48 48" width="22px"><path fill="#fbc02d" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12	s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20	s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/><path fill="#e53935" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039	l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/><path fill="#4caf50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36	c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/><path fill="#1565c0" d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/></svg>
-                        <span class="text-sm text-black">Log in with Google</span>
-                    </div>
-                </a>
             </form>
         </div>
     </div>
-
-
-    <!-- Scroll Top -->
-    <div class="scroll-to-top fixed bottom-24 right-28 z-50 hidden" x-show="window.pageYOffset > 100">
-        <div class="relative">
-            <span class="absolute p-5 bg-gray-600 rounded-full shadow-2xl z-20 cursor-pointer hover:bg-gray-700" x-on:click="window.scrollTo({ top: 0, behavior: 'smooth' })">
-                <i class="fa-solid fa-angle-up text-white m-0 p-0 fa-2xl"></i>
-            </span>
-            <span class="absolute p-5 bg-gray-600 rounded-full animate-ping z-10">
-                <i class="fa-solid fa-angle-up text-white m-0 p-0 fa-2xl"></i>
-            </span>
-        </div>
-    </div>
+     
 
     @yield('content')
 
@@ -171,11 +139,10 @@
     
     @livewireScripts
 
-    <!-- If make API call -->
     @if (session('loader'))
         <script>
-            // Preloader animation
             window.addEventListener("load", () => {
+                // Wait for a minimum amount of time before hiding the loader
                 setTimeout(() => {  
                     var loader = document.querySelector('#loader');
                     loader.classList.add("hide");
@@ -189,19 +156,6 @@
         </script>
     @endif
 
-
-    <script>
-        // Scroll to Top button
-        const scrollToTopBtn = document.querySelector(".scroll-to-top");
-
-        window.addEventListener("scroll", () => {
-            if (window.pageYOffset > 100) {
-                scrollToTopBtn.style.display = "block";
-            } else {
-                scrollToTopBtn.style.display = "none";
-            }
-        });
-    </script>
 
 </body>
 </html>

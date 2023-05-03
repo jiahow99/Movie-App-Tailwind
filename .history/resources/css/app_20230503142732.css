@@ -403,24 +403,15 @@ body{
 }
 
 .login-box .user-box input {
-  width: 100% !important;
-  padding: 10px 0 !important;
-  font-size: 16px !important;
-  color: #fff !important;
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
   /* margin-bottom: 30px; */
-  border: none !important;
-  border-bottom: 1px solid #fff !important;
-  outline: none !important;
-  background: transparent !important;
-}
-
-/* Disable Autofill overriding Css */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
-  -webkit-transition-delay: 9999s;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
 }
 
 .login-box .user-box label {
@@ -481,22 +472,4 @@ input:-webkit-autofill:active {
   transition: all 0.5s;
  }
 /******** Login Form Button ********/
-
-
-.login-modal{
-  animation: myAnim .8s ease 0s 1 normal forwards;
-}
-
-@keyframes myAnim {
-	0% {
-		opacity: 0;
-		transform: translateY(-250px);
-	}
-
-	100% {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
 

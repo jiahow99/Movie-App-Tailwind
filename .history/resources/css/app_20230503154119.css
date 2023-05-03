@@ -414,13 +414,21 @@ body{
   background: transparent !important;
 }
 
-/* Disable Autofill overriding Css */
+/* Disable autofill background color and border */
 input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
-  -webkit-transition-delay: 9999s;
+input:-webkit-autofill:hover {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    border: 1px solid #ccc !important;
+}
+
+/* Disable autofill text color */
+input:-webkit-autofill::placeholder {
+    color: #ccc !important;
+}
+
+/* Disable autofill button icon */
+input:-webkit-autofill::icon {
+    display: none !important;
 }
 
 .login-box .user-box label {
@@ -498,5 +506,3 @@ input:-webkit-autofill:active {
 		transform: translateY(0);
 	}
 }
-
-

@@ -392,7 +392,7 @@ body{
   width: 400px;
   padding: 40px;
   transform: translate(-50%, -50%);
-  background: #252222f2;
+  background: rgba(37, 34, 34, 0.95);
   box-sizing: border-box;
   box-shadow: 0 15px 25px rgba(0,0,0,.6);
   border-radius: 10px;
@@ -403,24 +403,15 @@ body{
 }
 
 .login-box .user-box input {
-  width: 100% !important;
-  padding: 10px 0 !important;
-  font-size: 16px !important;
-  color: #fff !important;
-  /* margin-bottom: 30px; */
-  border: none !important;
-  border-bottom: 1px solid #fff !important;
-  outline: none !important;
-  background: transparent !important;
-}
-
-/* Disable Autofill overriding Css */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
-  -webkit-transition-delay: 9999s;
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
 }
 
 .login-box .user-box label {
@@ -445,11 +436,12 @@ input:-webkit-autofill:active {
 
 
 
-/******** Login Form Button ********/
+
 .login-btn-2 {
-  background: white;
-  color: black;
+  background: black;
+  color: white;
   border: none;
+  border-radius: 0.625em;
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
@@ -459,12 +451,12 @@ input:-webkit-autofill:active {
  }
  
  .login-btn-2:hover {
-  color: white;
+  color: black;
  }
  
  .login-btn-2:after {
   content: "";
-  background: black;
+  background: white;
   position: absolute;
   z-index: -1;
   left: -20%;
@@ -480,23 +472,4 @@ input:-webkit-autofill:active {
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
  }
-/******** Login Form Button ********/
-
-
-.login-modal{
-  animation: myAnim .8s ease 0s 1 normal forwards;
-}
-
-@keyframes myAnim {
-	0% {
-		opacity: 0;
-		transform: translateY(-250px);
-	}
-
-	100% {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
 

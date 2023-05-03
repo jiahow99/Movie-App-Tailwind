@@ -154,7 +154,7 @@
 
 
     <!-- Scroll Top -->
-    <div class="scroll-to-top fixed bottom-24 right-28 z-50 hidden" x-show="window.pageYOffset > 100">
+    <div class="scroll-to-top fixed bottom-24 right-28 z-50" x-show="window.pageYOffset > 100">
         <div class="relative">
             <span class="absolute p-5 bg-gray-600 rounded-full shadow-2xl z-20 cursor-pointer hover:bg-gray-700" x-on:click="window.scrollTo({ top: 0, behavior: 'smooth' })">
                 <i class="fa-solid fa-angle-up text-white m-0 p-0 fa-2xl"></i>

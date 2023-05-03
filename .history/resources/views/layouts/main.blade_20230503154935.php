@@ -24,8 +24,7 @@
     x-data="{ 
         loginModal: false,
         resetInput: function(){
-            $refs.username.value = '' ;
-            $refs.password.value = '' ;
+            $refs.loginField.value = '';
         },
      }">
 
@@ -92,21 +91,21 @@
     
     <!-- login modal -->
     <div class="login-modal fixed z-50 inset-0 flex items-center justify-center" x-show="loginModal" style="display: none" >
-        <div class="login-box" x-on:click.outside="loginModal = false; resetInput();">
+        <div class="login-box" x-on:click.outside="loginModal = false">
             <!-- Close -->
-            <span class=" close fixed top-5 right-5 text-gray-300 cursor-pointer hover:rotate-90 hover:scale-150 transition duration-200" x-on:click="loginModal = false; resetInput();">
+            <span class=" close fixed top-5 right-5 text-gray-300 cursor-pointer hover:rotate-90 hover:scale-150 transition duration-200" x-on:click="loginModal = false">
                 <i class="fa-solid fa-xmark fa-2xl"></i>
             </span>
             <h1 class="text-center text-2xl pb-10 tracking-widest font-bold mt-7">Login</h1>
             <form>
                 <!-- Username -->
                 <div class="user-box mb-5">
-                    <input type="text" name="username" required x-ref="username">
+                    <input type="text" name="username" required x-ref="loginField">
                 <label>Username</label>
                 </div>
                 <!-- Password -->
                 <div class="user-box mb-3">
-                    <input type="password" name="password" required x-ref="password">
+                    <input type="password" name="password" required x-ref="loginField">
                     <label>Password</label>
                 </div>
                 <!-- Remember me -->
@@ -151,19 +150,7 @@
             </form>
         </div>
     </div>
-
-
-    <!-- Scroll Top -->
-    <div class="scroll-to-top fixed bottom-24 right-28 z-50 hidden" x-show="window.pageYOffset > 100">
-        <div class="relative">
-            <span class="absolute p-5 bg-gray-600 rounded-full shadow-2xl z-20 cursor-pointer hover:bg-gray-700" x-on:click="window.scrollTo({ top: 0, behavior: 'smooth' })">
-                <i class="fa-solid fa-angle-up text-white m-0 p-0 fa-2xl"></i>
-            </span>
-            <span class="absolute p-5 bg-gray-600 rounded-full animate-ping z-10">
-                <i class="fa-solid fa-angle-up text-white m-0 p-0 fa-2xl"></i>
-            </span>
-        </div>
-    </div>
+     
 
     @yield('content')
 
@@ -171,11 +158,10 @@
     
     @livewireScripts
 
-    <!-- If make API call -->
     @if (session('loader'))
         <script>
-            // Preloader animation
             window.addEventListener("load", () => {
+                // Wait for a minimum amount of time before hiding the loader
                 setTimeout(() => {  
                     var loader = document.querySelector('#loader');
                     loader.classList.add("hide");
@@ -189,19 +175,6 @@
         </script>
     @endif
 
-
-    <script>
-        // Scroll to Top button
-        const scrollToTopBtn = document.querySelector(".scroll-to-top");
-
-        window.addEventListener("scroll", () => {
-            if (window.pageYOffset > 100) {
-                scrollToTopBtn.style.display = "block";
-            } else {
-                scrollToTopBtn.style.display = "none";
-            }
-        });
-    </script>
 
 </body>
 </html>

@@ -154,12 +154,12 @@
 
 
     <!-- Scroll Top -->
-    <div class="scroll-to-top fixed bottom-24 right-28 z-50 hidden" x-show="window.pageYOffset > 100">
+    <div class="scroll-to-top fixed bottom-24 right-28 z-50">
         <div class="relative">
-            <span class="absolute p-5 bg-gray-600 rounded-full shadow-2xl z-20 cursor-pointer hover:bg-gray-700" x-on:click="window.scrollTo({ top: 0, behavior: 'smooth' })">
+            <span class="absolute p-5 bg-gray-700 rounded-full shadow-2xl z-20">
                 <i class="fa-solid fa-angle-up text-white m-0 p-0 fa-2xl"></i>
             </span>
-            <span class="absolute p-5 bg-gray-600 rounded-full animate-ping z-10">
+            <span class="absolute p-5 bg-gray-700 rounded-full animate-ping z-10">
                 <i class="fa-solid fa-angle-up text-white m-0 p-0 fa-2xl"></i>
             </span>
         </div>
@@ -171,11 +171,10 @@
     
     @livewireScripts
 
-    <!-- If make API call -->
     @if (session('loader'))
         <script>
-            // Preloader animation
             window.addEventListener("load", () => {
+                // Wait for a minimum amount of time before hiding the loader
                 setTimeout(() => {  
                     var loader = document.querySelector('#loader');
                     loader.classList.add("hide");
@@ -189,19 +188,6 @@
         </script>
     @endif
 
-
-    <script>
-        // Scroll to Top button
-        const scrollToTopBtn = document.querySelector(".scroll-to-top");
-
-        window.addEventListener("scroll", () => {
-            if (window.pageYOffset > 100) {
-                scrollToTopBtn.style.display = "block";
-            } else {
-                scrollToTopBtn.style.display = "none";
-            }
-        });
-    </script>
 
 </body>
 </html>
