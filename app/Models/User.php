@@ -3,10 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -21,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'guest_session_id'
     ];
 
     /**
@@ -41,4 +43,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     * Generate new session id if previous one expired.
+     *
+     */
+    public function generate_new_session_id()
+    {
+        // Get Guest Session Id
+        $request = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/authentication/guest_session/new');
+            
+        // Check if response success, else return error msg
+        if($request->getStatusCode() === 200)
+        {
+            // Set session id
+            $session_id = $request->json()['guest_session_id'];
+            $this->guest_session_id = $session_id;
+            $this->save();
+        }else{
+            // Return to intended page
+            abort( $request->getStatusCode() );
+        }
+    }
 }

@@ -8,6 +8,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -44,18 +45,8 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        // Get request token from API
-        $request = Http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/authentication/token/new')->json();
-
-        // Cache request token
-        if($request['success'])
-        {
-            $request_token = $request['request_token'];
-            Redis::set('request_token', $request_token, 'EX', '3600');
-        }
-
-        // Redirect to API authenticate request token
-        return redirect('https://www.themoviedb.org/authenticate/'.$request_token.'?redirect_to='.route('request.token.authenticate'));
+        // Generate Guest Session Id
+        $user->generate_new_session_id();
     }
+
 }

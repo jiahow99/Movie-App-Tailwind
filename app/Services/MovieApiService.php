@@ -136,10 +136,7 @@ class MovieApiService
      */
     public function fetchMovie(string $id, ... $appendToResponse)
     {
-        // Cache movie
-        $movieCache = "movie:" . $id;
-
-        if( !Redis::exists($movieCache) )
+        if( !Redis::exists('movies') || !Redis::hexists('movies', $id) )
         {
             // Append to base url
             $url = "https://api.themoviedb.org/3/movie/" . $id . "?append_to_response=" . implode(',', $appendToResponse);

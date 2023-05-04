@@ -10,9 +10,15 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 
 
+Auth::routes();
+
+
+
+/******************************** Public Route ********************************/
 // Movies
 Route::get('/', [MovieController::class, 'index'])->name('movies.index');
 Route::get('/movies/movie/{movie}', [MovieController::class, 'show'])->name('movie.show');
+Route::post('/movie/{movie}/rating/{action}', [MovieController::class, 'rate'])->name('movie.rate');
 
 // Popular movies
 Route::get('/movies/popular', [MovieController::class, 'popular'])->name('movies.popular');
@@ -29,6 +35,3 @@ Route::get('/actors/page/{page?}', [ActorController::class, 'index']);
 Route::get('/actors/{actor}', [ActorController::class, 'show'])->name('actor.show');
 
 
-Auth::routes();
-
-Route::get('/request_token/approved', [UserController::class, 'authenticate_token'])->name('request.token.authenticate');

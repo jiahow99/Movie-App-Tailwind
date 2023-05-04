@@ -57,6 +57,7 @@
         </div>
 
 
+        {{-- Now Playing Movies --}}
         <div class="now-playing mt-10">
             <div class="flex justify-between align-middle">
                 <a href="{{ route('movies.nowplaying') }}">

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\MovieApiService;
 use App\ViewModels\MovieViewModel;
 use App\ViewModels\MoviesViewModel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
 use App\ViewModels\NowPlayingViewModel;
@@ -113,11 +114,53 @@ class MovieController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
+     * Rate a movie
      */
-    public function edit(string $id)
+    public function rate(string $id, string $action)
     {
-        //
+        $user = Auth::user();
+
+        // API endpoint
+        $url = 'https://api.themoviedb.org/3/movie/'.$id.'/rating';
+
+        // Get Session Id
+        $data['guest_session_id'] = $user->guest_session_id;
+
+        // Rate good/bad
+        switch ($action) {
+            case 'good':
+                // Rating
+                $data = ['value' => 8.5];
+
+                // Post Request to API
+                $request = Http::withToken(config('services.tmdb.token'))
+                    ->post('https://api.themoviedb.org/3/movie/'.$id.'/rating', $data);
+
+                // Check response success & update "is_rated"
+                if( $request->json()['success'] )
+                {
+                    $movie = json_decode( Redis::hget('movies', $id), true);
+                    $movie['is_rated'] = true;
+                    $json_encoded = json_encode( $movie );
+                    Redis::hset('movies', $id, $json_encoded, 'EX', 1800);  // Expire in 30 mins
+
+                }else{
+                    return redirect()->back()->with('Error', 'Error rating this movie.');
+                }
+
+                // Return to movie page
+                return redirect()->back()->with('Success', 'Thank you for the feedback !');
+
+                break;
+            
+            case 'bad':
+                # code...
+                break;
+
+            default:
+                # code...
+                break;
+        }
     }
 
 

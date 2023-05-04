@@ -33,6 +33,8 @@
 @endsection
 
 @section('content')
+    
+    {{-- <div class="w-screen h-60 bg-white"></div> --}}
     <div x-data="{
         isMobile: window.innerWidth < 1280,
         isDesktop: window.innerWidth >= 1280,
@@ -58,11 +60,27 @@
             <img src="{{ $movie['poster_path'] }}" class="w-96 mx-auto xl:mx-0" alt="{{ $movie['title'] }}">
             <div class="mt-6 xl:mt-0 xl:ml-24">
                 <h2 class="text-4xl font-semibold">{{ $movie['title'] }} ({{ $movie['release_year'] }})</h2>
-                <div class="flex items-center text-gray-400">
+                <div class="flex items-center text-gray-400 mt-1">
                     <span class="text-orange-400"><i class="fa-solid fa-star"></i></span>
                     <span class="ml-1">{{ $movie['vote_average'] }}</span>
                     <span class="mx-2">|</span>
                     <span>{{ $movie['release_date'] }}</span>
+                    <!-- Rate -->
+                    <span class="ml-5 mr-3">
+                        <i onclick="document.getElementById('rate-good').submit()" class="fa-solid fa-thumbs-up fa-xl text-green-700 hover:scale-125"></i>
+                    </span>
+                    <span >
+                        <i onclick="document.getElementById('rate-bad').submit()" class="fa-solid fa-thumbs-down fa-xl text-red-500 hover:scale-125"></i>
+                    </span>
+                    <!-- Hidden Form (Post Request) -->
+                    <form id="rate-good" action="{{ route('movie.rate', [$movie['id'], 'good']) }}" method="POST" class="hidden">
+                        @csrf
+                        @method('POST')
+                    </form>
+                    <form id="rate-bad" action="{{ route('movie.rate', [$movie['id'], 'good']) }}" method="POST" class="hidden">
+                        @csrf
+                        @method('POST')
+                    </form>
                 </div>
 
                 <div class="text-gray-400 mt-2">
