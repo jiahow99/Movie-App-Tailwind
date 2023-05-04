@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\StoreUserReqeust;
+use Illuminate\Support\Facades\Request;
+
+class AuthController extends Controller
+{
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function register(StoreUserReqeust $request)
+    {
+        return view('movies.popular');
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function logout()
+    {
+        //
+    }
+
+}
