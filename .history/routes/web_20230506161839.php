@@ -10,7 +10,7 @@ Auth::routes();
 
 // Github Login
 Route::get('/login/github', [LoginController::class, 'github'])->name('github.login');
-Route::get('/login/github/redirect', [LoginController::class, 'githubRedirect']);
+Route::get('/login/github/redirect', [LoginController::class, 'githubRedirect'])->name('github.login');
 
 
 /******************************** Public Route ********************************/

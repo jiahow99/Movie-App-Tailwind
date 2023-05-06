@@ -171,7 +171,7 @@
                 </div>
 
                 <!-- Social media login -->
-                <a href="{{ route('github.login') }}">
+                <a href="#">
                     <div class="facebook w-full py-1 bg-blue-600 text-center rounded-md mt-3">
                         <i class="fa-brands fa-facebook-f text-white mx-1"></i>
                         <span class="text-sm">Log in with Github</span>

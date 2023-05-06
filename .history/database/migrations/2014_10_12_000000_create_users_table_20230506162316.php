@@ -18,10 +18,10 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('guest_session_id')->nullable();
-            $table->unsignedBigInteger('github_id')->nullable();
-            $table->unsignedBigInteger('facebook_id')->nullable();
-            $table->unsignedBigInteger('instagram_id')->nullable();
-            $table->unsignedBigInteger('google_id')->nullable();
+            $table->string('github_id')->nullable();
+            $table->string('facebook_id')->nullable();
+            $table->string('instagram_id')->nullable();
+            $table->string('facebook_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

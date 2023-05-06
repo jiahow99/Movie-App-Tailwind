@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
-use App\Providers\RouteServiceProvider;
-use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -77,15 +75,10 @@ class LoginController extends Controller
         $user = User::updateOrCreate([
             'email' => $githubUser->email,
         ], [
-            'name' => $githubUser->nickname,
-            'email' => $githubUser->email,
+            'name' => $githubUser->name,
+            'email' => $githubUser->name,
             'password' => Hash::make(Str::random(24)),
-            'github_id' => $githubUser->id,
         ]);
-
-        Auth::login($user);
-
-        return redirect('/');
     }
 
 }

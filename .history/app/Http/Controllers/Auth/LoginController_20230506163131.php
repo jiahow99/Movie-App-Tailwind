@@ -73,15 +73,16 @@ class LoginController extends Controller
         // get oauth request back from github to user
         $githubUser = Socialite::driver('github')->user();
 
+        dd($githubUser);
+
         // check if user registered, else login them
-        $user = User::updateOrCreate([
-            'email' => $githubUser->email,
-        ], [
-            'name' => $githubUser->nickname,
-            'email' => $githubUser->email,
-            'password' => Hash::make(Str::random(24)),
-            'github_id' => $githubUser->id,
-        ]);
+        // $user = User::updateOrCreate([
+        //     'email' => $githubUser->email,
+        // ], [
+        //     'name' => $githubUser->name,
+        //     'email' => $githubUser->email,
+        //     'password' => Hash::make(Str::random(24)),
+        // ]);
 
         Auth::login($user);
 
