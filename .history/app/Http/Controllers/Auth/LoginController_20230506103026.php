@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
 use App\Models\User;
-use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -56,5 +55,18 @@ class LoginController extends Controller
         $user->generate_new_session_id();
     }
 
+
+    /**
+     * Validate the user login request.
+     *
+     * @return void
+     */
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            $this->username() => 'required|string|email|exists:tmdb_movie.users.email',
+            'password' => 'required|string',
+        ]);
+    }
 
 }

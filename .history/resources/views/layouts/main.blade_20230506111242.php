@@ -81,10 +81,10 @@
                 @if (Auth::check())
                     <div class="relative mt-3 lg:mt-0 w-32 text-right select-none mr-10">
                         <div class="flex justify-end align-center gap-2">
-                            <i class="fa-solid fa-user rounded-full border-white border-2 p-1 cursor-pointer" x-on:click="account_dropdown = !account_dropdown"></i>
-                            <i class="fa-solid fa-caret-down fa-xl my-auto cursor-pointer" x-on:click="account_dropdown = !account_dropdown" ></i>
+                            <i class="fa-solid fa-user rounded-full border-white border-2 p-1" x-on:click="account_dropdown = !account_dropdown"></i>
+                            <i class="fa-solid fa-caret-down fa-xl my-auto" x-on:click="account_dropdown = !account_dropdown"></i>
                         </div>
-                        <ul class="absolute z-50 bg-gray-600 rounded-md shadow-xl text-left mt-2 w-full" style="display: none" x-show="account_dropdown" x-transition @click.outside="account_dropdown = false">
+                        <ul class="absolute z-50 bg-gray-600 rounded-md shadow-xl text-left mt-2 w-full" style="display: none" x-show="account_dropdown" x-transition>
                             <a href="#">
                                 <li class="block text-sm font-semibold pl-2 pr-2 text-white hover:bg-gray-700 py-2 rounded-md">Account setting</li>
                             </a>
@@ -119,14 +119,14 @@
                 <i class="fa-solid fa-xmark fa-2xl"></i>
             </span>
             <h1 class="text-center text-2xl pb-10 tracking-widest font-bold mt-7">Login</h1>
-            <!-- Start Login Form -->
-            <form action="{{ route('login') }}" method="POST">
+            <form action="{{ route('register') }}" method="POST">
                 @csrf
+
                 <!-- Email -->
                 <div class="user-box mb-5 @error('email') invalid @enderror">
-                    <input type="text" name="email" value="{{ old('email') }}" required x-ref="email">
+                    <input type="text" name="Email" required x-ref="email">
                     @error('email') 
-                        <span class="text-sm text-red-500 font-bold">{{ $message }}</span> 
+                        <span class="text-sm text-red-500 font-bold"></span> 
                     @enderror
                     <label>Email</label>
                 </div>
@@ -134,8 +134,8 @@
                 <!-- Password -->
                 <div class="user-box mb-3">
                     <input type="password" name="password" required x-ref="password">
-                    @error('password') 
-                        <span class="text-sm text-red-500 font-bold">{{ $message }}</span> 
+                    @error('email') 
+                        <span class="text-sm text-red-500 font-bold"></span> 
                     @enderror
                     <label>Password</label>
                 </div>
@@ -184,7 +184,6 @@
                     </div>
                 </a>
             </form>
-            <!-- End Login Form -->
         </div>
     </div>
 

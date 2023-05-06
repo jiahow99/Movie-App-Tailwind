@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
-use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
@@ -56,5 +56,30 @@ class LoginController extends Controller
         $user->generate_new_session_id();
     }
 
+
+    /**
+     * Validate the user login request.
+     *
+     * @return void
+     */
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            $this->username() => 'required|string|email|exists:tmdb_movie.users.email',
+            'password' => 'required|string',
+        ]);
+    }
+
+
+    /**
+     * Customize error message
+     *
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            $this->username() => [trans('auth.ailed')],
+        ]);
+    }
 
 }

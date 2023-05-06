@@ -57,4 +57,29 @@ class LoginController extends Controller
     }
 
 
+    /**
+     * Validate the user login request.
+     *
+     * @return void
+     */
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            $this->username() => 'required|string|email|exists:.users.email',
+            'password' => 'required|string',
+        ]);
+    }
+
+
+    /**
+     * Customize error message
+     *
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            $this->username() => [trans('auth.ailed')],
+        ]);
+    }
+
 }

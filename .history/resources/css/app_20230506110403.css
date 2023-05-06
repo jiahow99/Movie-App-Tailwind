@@ -414,10 +414,6 @@ body{
   background: transparent !important;
 }
 
-.login-box .invalid input{
-  border-bottom: 2px solid #d31414 !important;
-}
-
 /* Disable Autofill overriding Css */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -484,24 +480,7 @@ input:-webkit-autofill:active {
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
  }
-
- .login-modal{
-   animation: myAnim .8s ease 0s 1 normal forwards;
- }
- 
- @keyframes myAnim {
-   0% {
-     opacity: 0;
-     transform: translateY(-250px);
-   }
- 
-   100% {
-     opacity: 1;
-     transform: translateY(0);
-   }
- }
 /******** Login Form Button ********/
-
 
 .toast-top-center {
   margin-top: 2%;

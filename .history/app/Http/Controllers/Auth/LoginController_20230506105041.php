@@ -57,4 +57,31 @@ class LoginController extends Controller
     }
 
 
+    /**
+     * Validate the user login request.
+     *
+     * @return void
+     */
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            $this->username() => 'required|string|email|exists:e-shopper.users',
+            'password' => 'required|string',
+        ]);
+    }
+
+
+    /**
+     * Customize error message
+     *
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            // $this->username() => [trans('auth.failed')],
+            $this->username() => "This is a failed message",
+
+        ]);
+    }
+
 }

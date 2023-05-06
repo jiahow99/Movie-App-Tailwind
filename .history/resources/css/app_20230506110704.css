@@ -415,7 +415,7 @@ body{
 }
 
 .login-box .invalid input{
-  border-bottom: 2px solid #d31414 !important;
+  border-bottom: 1px solid #d31414 !important;
 }
 
 /* Disable Autofill overriding Css */

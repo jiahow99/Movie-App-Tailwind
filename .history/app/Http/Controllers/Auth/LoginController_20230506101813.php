@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
 use App\Models\User;
-use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -33,7 +32,7 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-
+    
     /**
      * Create a new controller instance.
      *
@@ -46,7 +45,7 @@ class LoginController extends Controller
 
 
     /**
-     * The user has been authenticated.
+     * Create a new controller instance.
      *
      * @return void
      */
@@ -55,6 +54,5 @@ class LoginController extends Controller
         // Generate Guest Session Id
         $user->generate_new_session_id();
     }
-
 
 }

@@ -81,10 +81,10 @@
                 @if (Auth::check())
                     <div class="relative mt-3 lg:mt-0 w-32 text-right select-none mr-10">
                         <div class="flex justify-end align-center gap-2">
-                            <i class="fa-solid fa-user rounded-full border-white border-2 p-1 cursor-pointer" x-on:click="account_dropdown = !account_dropdown"></i>
-                            <i class="fa-solid fa-caret-down fa-xl my-auto cursor-pointer" x-on:click="account_dropdown = !account_dropdown" ></i>
+                            <i class="fa-solid fa-user rounded-full border-white border-2 p-1" x-on:click="account_dropdown = !account_dropdown"></i>
+                            <i class="fa-solid fa-caret-down fa-xl my-auto" x-on:click="account_dropdown = !account_dropdown"></i>
                         </div>
-                        <ul class="absolute z-50 bg-gray-600 rounded-md shadow-xl text-left mt-2 w-full" style="display: none" x-show="account_dropdown" x-transition @click.outside="account_dropdown = false">
+                        <ul class="absolute z-50 bg-gray-600 rounded-md shadow-xl text-left mt-2 w-full" style="display: none" x-show="account_dropdown" x-transition>
                             <a href="#">
                                 <li class="block text-sm font-semibold pl-2 pr-2 text-white hover:bg-gray-700 py-2 rounded-md">Account setting</li>
                             </a>
@@ -124,7 +124,7 @@
                 @csrf
                 <!-- Email -->
                 <div class="user-box mb-5 @error('email') invalid @enderror">
-                    <input type="text" name="email" value="{{ old('email') }}" required x-ref="email">
+                    <input type="text" name="Email" value="{{ old('email') }}" required x-ref="email">
                     @error('email') 
                         <span class="text-sm text-red-500 font-bold">{{ $message }}</span> 
                     @enderror
