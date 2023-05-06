@@ -22,7 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'guest_session_id'
+        'guest_session_id',
+        'google_id',
+        'github_id',
+        'facebook_id',
     ];
 
     /**
@@ -66,5 +69,29 @@ class User extends Authenticatable
             // Return to intended page
             abort( $request->getStatusCode() );
         }
+    }
+
+
+    /**
+     * Clear guest session id.
+     *
+     */
+    public function clear_guest_session()
+    {
+        $this->update(['guest_session_id' => null]); 
+    }
+
+
+    /**
+     * Update social media ID in database.
+     *
+     */
+    public function update_social(string $provider, string $id)
+    {
+        $provider_id = $provider . '_id';
+
+        $this->$provider_id = $id;
+
+        $this->save();
     }
 }

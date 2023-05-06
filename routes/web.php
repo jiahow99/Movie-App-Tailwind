@@ -12,6 +12,14 @@ Auth::routes();
 Route::get('/login/github', [LoginController::class, 'github'])->name('github.login');
 Route::get('/login/github/redirect', [LoginController::class, 'githubRedirect']);
 
+// Google Login 
+Route::get('/login/google', [LoginController::class, 'google'])->name('google.login');
+Route::get('/login/google/redirect', [LoginController::class, 'googleRedirect']);
+
+// Facebook Login (require SSL)
+Route::get('/login/facebook', [LoginController::class, 'facebook'])->name('facebook.login');
+Route::get('/login/facebook/redirect', [LoginController::class, 'facebookRedirect']);
+
 
 /******************************** Public Route ********************************/
 // Movies

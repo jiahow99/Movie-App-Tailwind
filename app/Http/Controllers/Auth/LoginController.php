@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -61,6 +62,38 @@ class LoginController extends Controller
     }
 
 
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    public function logout(Request $request)
+    {
+        $user = Auth::user();
+
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        if ($response = $this->loggedOut($request)) {
+            return $response;
+        }
+        
+        $user->clear_guest_session();
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect('/');
+    }
+    
+
+    /**
+     * User login with github
+     *
+     */
     public function github()
     {
         // send user's request to github
@@ -68,6 +101,9 @@ class LoginController extends Controller
     }
 
 
+    /**
+     * Github login callback
+     */
     public function githubRedirect()
     {
         // get oauth request back from github to user
@@ -84,8 +120,96 @@ class LoginController extends Controller
         ]);
 
         Auth::login($user);
+        
+        $logged_user = Auth::user();
+
+        // Generate new session id (Movie API)
+        $logged_user->generate_new_session_id();
 
         return redirect('/');
+    }
+
+
+    /**
+     * User login with google
+     *
+     */
+    public function google()
+    {
+        // send user's request to google
+        return Socialite::driver('google')->redirect();        
+    }
+
+
+    /**
+     * Google login callback
+     */
+    public function googleRedirect()
+    {
+        // get oauth request back from google to user
+        $googleUser = Socialite::driver('google')->user();
+
+        // check if user registered, else login them
+        $user = User::updateOrCreate([
+            'email' => $googleUser->email,
+        ], [
+            'name' => $googleUser->name,
+            'email' => $googleUser->email,
+            'password' => Hash::make(Str::random(24)),
+            'google_id' => $googleUser->id,
+        ]);
+        
+        Auth::login($user);
+
+        $logged_user = Auth::user();
+
+        // Generate new session id (Movie API)
+        $logged_user->generate_new_session_id();
+        
+        return redirect('/');
+    }
+
+
+    /**
+     * User login with facebook (require SSL)
+     *
+     */
+    public function facebook()
+    {
+        // send user's request to facebook
+        return Socialite::driver('facebook')->redirect();
+    }
+
+
+    /**
+     * Facebook login callback
+     */
+    public function facebookRedirect()
+    {
+        // get oauth request back from facebook to user
+        $facebookUser = Socialite::driver('facebook')->user();
+
+        dd($facebookUser);
+
+        // // check if user registered, else login them
+        $user = User::updateOrCreate([
+            'email' => $facebookUser->email,
+        ], [
+            'name' => $facebookUser->nickname,
+            'email' => $facebookUser->email,
+            'password' => Hash::make(Str::random(24)),
+            'facebook_id' => $facebookUser->id,
+        ]);
+
+        Auth::login($user);
+
+        $logged_user = Auth::user();
+
+        // Generate new session id (Movie API)
+        $logged_user->generate_new_session_id();
+
+        return redirect('/');
+
     }
 
 }
