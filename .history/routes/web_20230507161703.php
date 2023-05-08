@@ -10,7 +10,7 @@ Auth::routes([
     'verify' => true
 ]);
 
-Route::middleware(['verified'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [MovieController::class, 'index'])->name('movies.index');
 });
 

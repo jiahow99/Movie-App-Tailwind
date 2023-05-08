@@ -10,10 +10,6 @@ Auth::routes([
     'verify' => true
 ]);
 
-Route::middleware(['verified'])->group(function () {
-    Route::get('/', [MovieController::class, 'index'])->name('movies.index');
-});
-
 // Github Login
 Route::get('/login/github', [LoginController::class, 'github'])->name('github.login');
 Route::get('/login/github/redirect', [LoginController::class, 'githubRedirect']);
@@ -29,7 +25,7 @@ Route::get('/login/facebook/redirect', [LoginController::class, 'facebookRedirec
 
 /******************************** Public Route ********************************/
 // Movies
-// Route::get('/', [MovieController::class, 'index'])->name('movies.index');
+Route::get('/', [MovieController::class, 'index'])->name('movies.index');
 Route::get('/movies/movie/{movie}', [MovieController::class, 'show'])->name('movie.show');
 
 // Popular movies

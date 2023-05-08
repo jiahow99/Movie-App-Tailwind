@@ -8,10 +8,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -83,4 +81,17 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->update(['guest_session_id' => null]); 
     }
 
+
+    /**
+     * Update social media ID in database.
+     *
+     */
+    public function update_social(string $provider, string $id)
+    {
+        $provider_id = $provider . '_id';
+
+        $this->$provider_id = $id;
+
+        $this->save();
+    }
 }

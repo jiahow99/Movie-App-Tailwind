@@ -10,7 +10,7 @@ Auth::routes([
     'verify' => true
 ]);
 
-Route::middleware(['verified'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [MovieController::class, 'index'])->name('movies.index');
 });
 
@@ -29,7 +29,6 @@ Route::get('/login/facebook/redirect', [LoginController::class, 'facebookRedirec
 
 /******************************** Public Route ********************************/
 // Movies
-// Route::get('/', [MovieController::class, 'index'])->name('movies.index');
 Route::get('/movies/movie/{movie}', [MovieController::class, 'show'])->name('movie.show');
 
 // Popular movies
