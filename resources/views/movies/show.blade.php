@@ -4,32 +4,37 @@
 
 <!-- Toastr Link -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fslightbox@1.7.6/dist/fslightbox.min.css">
+<script src="https://cdn.jsdelivr.net/npm/fslightbox@1.7.6/dist/fslightbox.min.js"></script>
 
 <style>
-.swiper-screenshots .swiper-slide {
-    text-align: center;
-    background: transparent;
-    height: calc((80% - 30px) / 2) !important;
-}
-
-.testing-swiper {
-      width: 100%;
-      height: 100%;
-      margin-left: auto;
-      margin-right: auto;
+    .swiper-screenshots .swiper-slide {
+        text-align: center;
+        background: transparent;
+        height: calc((80% - 30px) / 2) !important;
     }
 
-    .testing-swiper .swiper-slide {
+    .swiper {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide {
       text-align: center;
       font-size: 18px;
       background: #fff;
-      height: calc((100% - 30px) / 2) !important;
-
-      /* Center slide text vertically */
       display: flex;
       justify-content: center;
       align-items: center;
     }
+
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
 </style>
 
     
@@ -56,9 +61,12 @@
         </div>
     </div>
 
+
+    <!-- Start Movie Info -->
     <div class="movie-info border-b border-gray-800">
         <div class="container mx-auto px-4 py-16 flex flex-col xl:flex-row">
-            <img src="{{ $movie['poster_path'] }}" class="w-96 mx-auto xl:mx-0" alt="{{ $movie['title'] }}">
+            <!-- Poster -->
+            <img src="{{ $movie['poster_path'] }}" class="w-96 h-fit mx-auto xl:mx-0" alt="{{ $movie['title'] }}">
             <div class="mt-6 xl:mt-0 xl:ml-24">
                 <h2 class="text-4xl font-semibold">{{ $movie['title'] }} ({{ $movie['release_year'] }})</h2>
                 <div class="flex items-center text-gray-400 mt-1">
@@ -66,9 +74,8 @@
                     <span class="ml-1">{{ $movie['vote_average'] }}</span>
                     <span class="mx-2">|</span>
                     <span>{{ $movie['release_date'] }}</span>
-                    
+                    <!-- Rated -->
                     @isset( $movie['is_rated'] )
-                        <!-- Rated -->
                         <span class="ml-5 mr-3">
                             <!-- Rate good -->
                             <i class="fa-solid fa-thumbs-up fa-xl @if ($movie['is_rated'] === 'good') text-green-700 scale-125 @else text-gray-700 pointer-events-none @endif"></i>
@@ -77,8 +84,8 @@
                             <!-- Rate bad -->
                             <i class="fa-solid fa-thumbs-down fa-xl @if ($movie['is_rated'] === 'bad') text-red-500 scale-125 @else text-gray-700 pointer-events-none @endif"></i>
                         </span>
+                    <!-- Not Rated Yet -->
                     @else
-                        <!-- Not Rated Yet -->
                         <span class="ml-5 mr-3">
                             <!-- Rate good -->
                             <i onclick="document.getElementById('rate-good').submit()" class="fa-solid fa-thumbs-up fa-xl text-green-700 hover:scale-125 cursor-pointer"></i>
@@ -88,7 +95,6 @@
                             <i onclick="document.getElementById('rate-bad').submit()" class="fa-solid fa-thumbs-down fa-xl text-red-500 hover:scale-125 cursor-pointer"></i>
                         </span>
                     @endisset
-                    
                     <!-- Hidden Form (Post Request) -->
                     <form id="rate-good" action="{{ route('movie.rate', [$movie['id'], 'good']) }}" method="POST" class="hidden">
                         @csrf
@@ -99,15 +105,15 @@
                         @method('POST')
                     </form>
                 </div>
-
+                <!-- Genres -->
                 <div class="text-gray-400 mt-2">
                     {{ $movie['genres'] }}
                 </div>
-
+                <!-- Overview -->
                 <p class="text-gray-300 mt-8">
                     {{ $movie['overview'] }}
                 </p>
-
+                <!-- Crew -->
                 <div class="mt-12">
                     <div class="text-white font-semibold">Featured Cast</div>
                     <div class="flex mt-4">
@@ -123,9 +129,9 @@
 
                     </div>
                 </div>
-
+                <!-- "Play trailer" -->
                 <div class="mt-12">
-                    {{-- Desktop "Play Trailer" --}}
+                    <!-- Desktop -->
                     <span 
                     class="flex items-center bg-orange-500 text-gray-900 rounded font-semibold px-10 py-4 
                     hover:bg-orange-600 transition ease-in-out duration-300 space-x-3 w-fit" 
@@ -135,7 +141,7 @@
                         <i class="fa-solid fa-circle-play"></i>
                         <span class="font-bold">Play Trailer</span>
                     </span>
-                    {{-- Mobile "Play Trailer" --}}
+                    <!-- Mobile -->
                     <a 
                     href="https://www.youtube.com/watch?v={{ $movie['youtubeURL'] }}" 
                     class="flex items-center bg-orange-500 text-gray-900 rounded font-semibold px-10 py-4 
@@ -146,17 +152,46 @@
                         <span class="font-bold">Play Trailer</span>
                     </a>
                 </div>
+
+                <!-- Start Movie Collections -->
+                @isset($movieCollections)
+                    <div class="mt-8 xl:w-[900px] relative">
+                        <h3 class="text-lg font-bold text-slate-400 tracking-wide">Previous Series :</h3>
+                        <!-- Swiper Start -->
+                        <div class="mt-3 swiper movie-collections">
+                            <div class="swiper-wrapper">
+                                @foreach ($movieCollections as $movieCollection)
+                                <div class="swiper-slide">
+                                    <a href="{{ route('movie.show', $movieCollection['id']) }}">
+                                        <img class="duration-300 hover:scale-105" src="{{ $movieCollection['poster_path'] }}" alt="movie_poster" loading="lazy">
+                                    </a>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <!-- Prev -->
+                        <div class="absolute left-0 top-1/2 transform -translate-y-1/2 xl:-translate-x-1/2 z-50">
+                            <i class="collection-prev fa-solid fa-circle-chevron-left text-6xl opacity-40 hover:opacity-80 cursor-pointer text-slate-50  rounded-full"></i>
+                        </div>
+                        <!-- Next -->
+                        <div class="absolute right-0 top-1/2 transform -translate-y-1/2 xl:translate-x-1/2 z-50">
+                            <i class="collection-next fa-solid fa-circle-chevron-right text-6xl opacity-40 hover:opacity-80 cursor-pointer text-slate-50  rounded-full"></i>
+                        </div>
+                    </div>
+                @endisset
+                <!-- End Movie Collections -->
+
             </div>
         </div>
     </div>
+    <!-- End Movie Info -->
 
 
-    <!-- Actors -->
+    <!-- Start Actors -->
     <div class="movie-cast border-b border-gray-800">
         <div class="container mx-auto px-4 py-16">
             <h2 class="text-4xl font-semibold">Cast</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-10">
-
                 @foreach ($movie['credits']['cast'] as $key => $cast)
                     @if ($loop->index < 5) 
                         <div class="mt-8">
@@ -171,20 +206,20 @@
                         </div>
                     @endif
                 @endforeach
-
             </div>
         </div>
     </div>
+    <!-- End Actors -->
 
 
-    <!-- Screenshots -->
+    <!-- Start Thumbnails -->
     <div class="Thumbnail border-b border-gray-800" 
         x-data="{ imageModalOpen: false, imageSrc: '', navigation: false }"
     >
         <div class="container mx-auto px-4 py-16">
             <h2 class="text-4xl font-semibold">Screenshots</h2>
-            <!-- Start Swiper -->
-            <div class="swiper-screenshots mt-6 relative" x-on:mouseenter="navigation = true" x-on:mouseleave="navigation = false">
+            <!-- Start Swiper (Desktop) -->
+            <div class="swiper-screenshots mt-6 relative hidden xl:block" x-on:mouseenter="navigation = true" x-on:mouseleave="navigation = false">
                 <div class="swiper-wrapper ">
                     @foreach ($movie['images']['backdrops'] as $index=>$image)
                         <div class="swiper-slide" 
@@ -207,32 +242,47 @@
                 <div class="screenshot-next absolute h-4/5 top-0 right-0 z-50 bg-white bg-opacity-30 hover:bg-opacity-100 px-2 flex rounded-full transition duration-300 cursor-pointer" style="display: none;" x-show="navigation" x-transition>
                     <i class="fa-solid fa-arrow-right text-black text-5xl my-auto"></i>
                 </div>
-                {{-- <div class="swiper-pagination"></div> --}}
             </div>
-            <!-- End Swiper -->
+            <!-- End Swiper (Desktop) -->
+
+            <!-- Mobile view -->
+            <div class="    grid grid-cols-1 md:grid-cols-2 gap-10 xl:hidden">
+                @foreach ($movie['images']['backdrops'] as $image)
+                    <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="movie_thumbnails" loading="lazy">
+                @endforeach
+            </div>
         </div>
-
-
-        <!-- Thumbnail Modal -->
+        
+        <!--  Start Thumbnail Modal -->
         <div class="fixed inset-0 z-20 bg-black/70" style="display: none" x-show="imageModalOpen" x-transition>
+            <!-- CLose -->
             <div class="absolute top-8 right-20 z-20 cursor-pointer text-4xl ">
                 <i class="fa-sharp fa-solid fa-xmark hover:rotate-90 hover:scale-150 duration-300" x-on:click="imageModalOpen = false"></i>
             </div>
             <div class="flex justify-center align-middle w-12/12 md:w-11/12 xl:w-8/12 mx-auto mt-72 md:mt-56 xl:mt-36" @click.outside="imageModalOpen = false">
-                <div class="my-auto mx-2 w-1/5"><i class="fa-solid fa-caret-left text-gray-800 text-xl md:text-2xl xl:text-4xl cursor-pointer rounded-full bg-white px-1 xl:px-2 hover:text-white hover:bg-slate-700 duration-150 thumbnail-prev no-swiping"></i></div>
-                <div class="swiper swiper_thumbnail" x-show="imageModalOpen" style="display: none">
-                    <div class="swiper-wrapper">
-                    @foreach ($movie['images']['backdrops'] as $image)
-                        <div class="swiper-slide">
-                            <img src="https://image.tmdb.org/t/p/original/{{ $image['file_path'] }}" loading="lazy">
+                {{-- <div class="my-auto mx-2 w-1/5">
+                    <i class="fa-solid fa-caret-left text-gray-800 text-xl md:text-2xl xl:text-4xl cursor-pointer rounded-full bg-white px-1 xl:px-2 hover:text-white hover:bg-slate-700 duration-150 thumbnail-prev no-swiping"></i>
+                </div> --}}
+                    <!-- Start Swiper -->
+                    <div class="swiper swiper-thumbnail" x-show="imageModalOpen" style="display: none">
+                        <div class="swiper-wrapper">
+                        @foreach ($movie['images']['backdrops'] as $image)
+                            <div class="swiper-slide">
+                                <img src="https://image.tmdb.org/t/p/original/{{ $image['file_path'] }}" loading="lazy">
+                            </div>
+                        @endforeach
                         </div>
-                    @endforeach
                     </div>
-                </div>
-                <div class="my-auto mx-2 w-1/5"><i class="fa-solid fa-caret-right text-gray-800 text-xl md:text-2xl xl:text-4xl cursor-pointer rounded-full bg-white px-1 xl:px-2 hover:text-white hover:bg-slate-700 duration-150 thumbnail-next no-swiping"></i></div>
+                    <!-- End Swiper -->
+                {{-- <div class="my-auto mx-2 w-1/5">
+                    <i class="fa-solid fa-caret-right text-gray-800 text-xl md:text-2xl xl:text-4xl cursor-pointer rounded-full bg-white px-1 xl:px-2 hover:text-white hover:bg-slate-700 duration-150 thumbnail-next no-swiping"></i>
+                </div> --}}
             </div>
         </div>
+        <!--  End Thumbnail Modal -->
     </div>
+    <!-- End Screenshots -->
+
 </div>
 
 
@@ -245,7 +295,7 @@
 
 <script>
     // Thumbnails swiper
-    var swiper_thumbnails = new Swiper(".swiper_thumbnail", {
+    var swiper_thumbnails = new Swiper(".swiper-thumbnail", {
         direction: 'horizontal',
         loop: true,
         pagination: {
@@ -280,6 +330,34 @@
             el: ".swiper-pagination",
             clickable: true,
         },
+    });
+
+
+    // Movie Collections swiper
+    var swiper_collections = new Swiper(".movie-collections", {
+        slidesPerGroup: 2,
+        spaceBetween: 30,
+        navigation: {
+            nextEl: '.collection-next',
+            prevEl: '.collection-prev',
+        },
+        breakpoints: {
+            // when window width is <= 640px (mobile)
+            640: {
+                slidesPerView: 1,
+                spaceBetween: 20
+            },
+            // when window width is <= 768px (tablet)
+            768: {
+                slidesPerView: 2,
+                spaceBetween: 30
+            },
+            // when window width is <= 1024px (desktop)
+            1024: {
+                slidesPerView: 4,
+                spaceBetween: 40
+            }
+        }
     });
 
 
