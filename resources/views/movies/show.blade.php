@@ -22,8 +22,6 @@
 
     .swiper-slide {
       text-align: center;
-      font-size: 18px;
-      background: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -215,13 +213,18 @@
 
     <!-- Start Thumbnails -->
     <div class="Thumbnail border-b border-gray-800" 
-        x-data="{ imageModalOpen: false, imageSrc: '', navigation: false }"
+        x-data="
+        { 
+            imageModalOpen: false, 
+            imageSrc: '', 
+            navigation: false,
+        }"
     >
         <div class="container mx-auto px-4 py-16">
             <h2 class="text-4xl font-semibold">Screenshots</h2>
             <!-- Start Swiper (Desktop) -->
-            <div class="swiper-screenshots mt-6 relative hidden xl:block" x-on:mouseenter="navigation = true" x-on:mouseleave="navigation = false">
-                <div class="swiper-wrapper ">
+            <div class="swiper-screenshots mt-6 relative hidden xl:block overflow-hidden" x-on:mouseenter="navigation = true" x-on:mouseleave="navigation = false">
+                <div class="swiper-wrapper">
                     @foreach ($movie['images']['backdrops'] as $index=>$image)
                         <div class="swiper-slide" 
                         x-on:click=" 
@@ -246,43 +249,46 @@
             </div>
             <!-- End Swiper (Desktop) -->
 
-            <!-- Mobile view -->
-            <div id="gallery" class="grid grid-cols-1 md:grid-cols-2 gap-10 ">
+            <!-- Start Grid (Mobile) -->
+            <div id="" class="grid grid-cols-1 md:grid-cols-2 gap-10 xl:hidden">
                 @foreach ($movie['images']['backdrops'] as $image)
                     <a href="https://image.tmdb.org/t/p/original/{{ $image['file_path'] }}">
                         <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="movie_thumbnails" loading="lazy">
                     </a>
                 @endforeach
             </div>
+            <!-- End Grid (Mobile) -->
         </div>
         
         <!--  Start Thumbnail Modal -->
-        <div class="fixed inset-0 z-20 bg-black/70" style="display: none" x-show="imageModalOpen" x-transition>
-            <!-- CLose -->
-            <div class="absolute top-8 right-20 z-20 cursor-pointer text-4xl ">
-                <i class="fa-sharp fa-solid fa-xmark hover:rotate-90 hover:scale-150 duration-300" x-on:click="imageModalOpen = false"></i>
-            </div>
-            <div class="flex justify-center align-middle w-12/12 md:w-11/12 xl:w-8/12 mx-auto mt-72 md:mt-56 xl:mt-36" @click.outside="imageModalOpen = false">
-                {{-- <div class="my-auto mx-2 w-1/5">
-                    <i class="fa-solid fa-caret-left text-gray-800 text-xl md:text-2xl xl:text-4xl cursor-pointer rounded-full bg-white px-1 xl:px-2 hover:text-white hover:bg-slate-700 duration-150 thumbnail-prev no-swiping"></i>
-                </div> --}}
-                    <!-- Start Swiper -->
-                    <div class="swiper swiper-thumbnail" x-show="imageModalOpen" style="display: none">
-                        <div class="swiper-wrapper">
+        <div class="fixed inset-0 z-20 bg-black/70 flex items-center justify-center select-none" style="display: none" x-show="imageModalOpen" @keydown.escape.window="imageModalOpen = false" x-transition>
+            <div class="relative w-1/2">
+                <!-- Swiper -->
+                <div class="swiper swiper-thumbnail">
+                    <div class="swiper-wrapper">
                         @foreach ($movie['images']['backdrops'] as $image)
                             <div class="swiper-slide">
-                                <img src="https://image.tmdb.org/t/p/original/{{ $image['file_path'] }}" loading="lazy">
+                                <img src="https://image.tmdb.org/t/p/w780/{{ $image['file_path'] }}" loading="lazy">
                             </div>
                         @endforeach
-                        </div>
                     </div>
-                    <!-- End Swiper -->
-                {{-- <div class="my-auto mx-2 w-1/5">
-                    <i class="fa-solid fa-caret-right text-gray-800 text-xl md:text-2xl xl:text-4xl cursor-pointer rounded-full bg-white px-1 xl:px-2 hover:text-white hover:bg-slate-700 duration-150 thumbnail-next no-swiping"></i>
-                </div> --}}
+                </div>
+                <!-- Prev -->
+                <div class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-[120%] z-30">
+                    <i class="thumbnail-prev fa-solid fa-caret-left text-gray-800 text-xl md:text-2xl xl:text-6xl cursor-pointer rounded-full bg-white px-1 xl:px-2 hover:text-white hover:bg-slate-700 duration-160"></i>
+                </div>
+                <!-- Next -->
+                <div class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-[120%] z-30">
+                    <i class="thumbnail-next fa-solid fa-caret-right text-gray-800 text-xl md:text-2xl xl:text-6xl cursor-pointer rounded-full bg-white px-1 xl:px-2 hover:text-white hover:bg-slate-700 duration-150"></i>
+                </div>
+            </div>
+            <!-- Close button -->
+            <div class="absolute top-8 right-20 z-20 cursor-pointer text-4xl">
+                <i class="fa-sharp fa-solid fa-xmark hover:rotate-90 hover:scale-150 duration-300" x-on:click="imageModalOpen = false;"></i>
             </div>
         </div>
         <!--  End Thumbnail Modal -->
+
     </div>
     <!-- End Screenshots -->
 
