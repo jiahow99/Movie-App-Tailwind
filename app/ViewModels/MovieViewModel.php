@@ -9,14 +9,12 @@ class MovieViewModel extends ViewModel
 {
     public $movie;
     public $genresList;
-    public $movieCollections;
 
 
-    public function __construct($movie, $genresList, $movieCollections)
+    public function __construct($movie, $genresList)
     {
         $this->movie = $movie;
         $this->genresList = $genresList;
-        $this->movieCollections = $movieCollections;
     }
 
 
@@ -57,6 +55,21 @@ class MovieViewModel extends ViewModel
         $this->movie['images']['backdrops'] = collect( $this->movie['images']['backdrops'] )->take(24);
 
 
+        // Format movie collections
+        if( isset($this->movie['collection_movies']) )
+        {
+            $this->movie['collection_movies'] = array_map(function($movie)
+            {
+                $movie['poster_path'] = isset($movie['poster_path'])
+                    ? 'https://image.tmdb.org/t/p/w500'.$movie['poster_path']
+                    : asset('/image/avatar-placeholder.jpg') ;
+    
+                return collect($movie)->only( ['id', 'poster_path'] ) ;
+            }, 
+            $this->movie['collection_movies']);
+        }
+
+
         // Format movie info
         $formatted_movie = collect(array_replace($this->movie, [
 
@@ -75,8 +88,9 @@ class MovieViewModel extends ViewModel
             'youtubeURL' => $this->movie['videos']['results']
                 ? $this->movie['videos']['results'][0]['key']
                 : null,
+
         ]))->only([
-            'id', 'poster_path', 'title', 'vote_average', 'overview', 'release_date', 'release_year', 'genres', 'genre_ids', 'youtubeURL', 'credits', 'images', 'is_rated'
+            'id', 'poster_path', 'title', 'vote_average', 'overview', 'release_date', 'release_year', 'genres', 'genre_ids', 'youtubeURL', 'credits', 'images', 'is_rated', 'collection_movies'
         ]);
 
         return $formatted_movie;
@@ -86,26 +100,24 @@ class MovieViewModel extends ViewModel
     /**
      * Fetch same collections
      */
-    public function movieCollections(){
+    // public function movieCollections(){
         
-        if( isset($this->movieCollections) )
-        {
-            $newMovieCollections = array_map(function($movie)
-            {
-                $movie['poster_path'] = isset($movie['poster_path'])
-                    ? 'https://image.tmdb.org/t/p/w500'.$movie['poster_path']
-                    : asset('/image/avatar-placeholder.jpg') ;
+    //     if( isset($this->movieCollections) )
+    //     {
+    //         $newMovieCollections = array_map(function($movie)
+    //         {
+    //             $movie['poster_path'] = isset($movie['poster_path'])
+    //                 ? 'https://image.tmdb.org/t/p/w500'.$movie['poster_path']
+    //                 : asset('/image/avatar-placeholder.jpg') ;
     
-                return collect($movie)->only( ['id', 'poster_path'] ) ;
-            }, 
-            $this->movieCollections);
+    //             return collect($movie)->only( ['id', 'poster_path'] ) ;
+    //         }, 
+    //         $this->movieCollections);
     
-            return collect($newMovieCollections);
-    
-            // dd($newMovieCollections);
-        }
+    //         return collect($newMovieCollections);
+    //     }
 
-        return ;
-    }
+    //     return ;
+    // }
 
 }

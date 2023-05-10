@@ -103,20 +103,12 @@ class MovieController extends Controller
     {
         // Fetch movie
         $movie = $movieApi->fetchMovie($id, 'images', 'videos', 'credits');
-
-        // Fetch movie collections
-        if( isset($movie['belongs_to_collection']['id']) )
-        {
-            $movieCollections = $movieApi->fetchCollections($movie['belongs_to_collection']['id'], $id);
-        }else{
-            $movieCollections = null ;
-        }
             
         // Fetch all genres
         $genresList = $movieApi->fetchGenres();
 
         // View model format data before passing into view
-        $viewModel = new MovieViewModel($movie, $genresList, $movieCollections);
+        $viewModel = new MovieViewModel($movie, $genresList);
 
         return view('movies.show', $viewModel);
     }

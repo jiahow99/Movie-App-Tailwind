@@ -154,13 +154,13 @@
                 </div>
 
                 <!-- Start Movie Collections -->
-                @isset($movieCollections)
-                    <div class="mt-8 xl:w-[900px] relative">
+                @isset($movie['collection_movies'])
+                    <div class="mt-8 xl:w-[900px] h-fit relative">
                         <h3 class="text-lg font-bold text-slate-400 tracking-wide">Previous Series :</h3>
                         <!-- Swiper Start -->
                         <div class="mt-3 swiper movie-collections">
                             <div class="swiper-wrapper">
-                                @foreach ($movieCollections as $movieCollection)
+                                @foreach ($movie['collection_movies'] as $movieCollection)
                                 <div class="swiper-slide">
                                     <a href="{{ route('movie.show', $movieCollection['id']) }}">
                                         <img class="duration-300 hover:scale-105" src="{{ $movieCollection['poster_path'] }}" alt="movie_poster" loading="lazy">

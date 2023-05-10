@@ -136,12 +136,30 @@ class MovieApiService
     {
         if( !Redis::hexists('movies', $id) )
         {
-            // Append to base url
-            $url = "https://api.themoviedb.org/3/movie/" . $id . "?append_to_response=" . implode(',', $appendToResponse);
+            // URL for fetching movie
+            $movieURL = "https://api.themoviedb.org/3/movie/" . $id . "?append_to_response=" . implode(',', $appendToResponse);
             
             // Call API
-            $movie = $this->fetch($url, 1, null, true);
+            $movie = $this->fetch($movieURL, 1, null, true);
 
+            // Collection ID
+            $collectionID = $movie['belongs_to_collection']['id'] ?? null ;
+            if( isset($collectionID) )
+            {
+                // URL for fetching collection
+                $collectionURL = "https://api.themoviedb.org/3/collection/" . $collectionID;                
+
+                // Fetch collections of movies then Sort By "Latest"
+                $collectionMovies = collect( $this->fetch($collectionURL, 1, 'parts', false) )
+                    ->reject(function ($collectionMovie) use ($movie){
+                        return $collectionMovie['id'] == $movie['id'];
+                    })
+                    ->sortByDesc('release_date');
+
+                $movie['collection_movies'] = $collectionMovies;
+            }
+
+            
             // Store in Redis
             $json_encoded = json_encode( $movie );
 
@@ -155,26 +173,6 @@ class MovieApiService
 
         return $movie;
     }
-
-
-    /**
-     * Fetch movie collections
-     */
-    public function fetchCollections(string $collectionID, string $movieID)
-    {
-        $url = "https://api.themoviedb.org/3/collection/" . $collectionID;
-
-        // Sort by latest movie at top
-        $movies = collect( $this->fetch($url, 1, 'parts', false) )
-            ->reject(function ($movie) use ($movieID){
-                return $movie['id'] == $movieID;
-            })
-            ->sortByDesc('release_date')
-            ->toArray();
-
-        return $movies;
-    }
-
 
 
     /**
