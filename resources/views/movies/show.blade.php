@@ -4,8 +4,7 @@
 
 <!-- Toastr Link -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fslightbox@1.7.6/dist/fslightbox.min.css">
-<script src="https://cdn.jsdelivr.net/npm/fslightbox@1.7.6/dist/fslightbox.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lightgallery.min.css" integrity="sha512-F2E+YYE1gkt0T5TVajAslgDfTEUQKtlu4ralVq78ViNxhKXQLrgQLLie8u1tVdG2vWnB3ute4hcdbiBtvJQh0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <style>
     .swiper-screenshots .swiper-slide {
@@ -246,9 +245,11 @@
             <!-- End Swiper (Desktop) -->
 
             <!-- Mobile view -->
-            <div class="    grid grid-cols-1 md:grid-cols-2 gap-10 xl:hidden">
+            <div id="gallery" class="grid grid-cols-1 md:grid-cols-2 gap-10 ">
                 @foreach ($movie['images']['backdrops'] as $image)
-                    <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="movie_thumbnails" loading="lazy">
+                    <a href="https://image.tmdb.org/t/p/w780/{{ $image['file_path'] }}">
+                        <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="movie_thumbnails" loading="lazy">
+                    </a>
                 @endforeach
             </div>
         </div>
@@ -292,8 +293,17 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 <!-- Toastr -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- LightGallery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/lightgallery.min.js" integrity="sha512-dSI4QnNeaXiNEjX2N8bkb16B7aMu/8SI5/rE6NIa3Hr/HnWUO+EAZpizN2JQJrXuvU7z0HTgpBVk/sfGd0oW+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
+    let gallery = document.getElementById('gallery');
+    lightGallery(gallery, {
+        controls: true,
+        
+    })
+
+
     // Thumbnails swiper
     var swiper_thumbnails = new Swiper(".swiper-thumbnail", {
         direction: 'horizontal',
