@@ -2,10 +2,8 @@
 
 @section('style')
 
-<!-- Toastr -->
+<!-- Toastr Link -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-<!-- Lightgallery -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lightgallery.min.css" integrity="sha512-F2E+YYE1gkt0T5TVajAslgDfTEUQKtlu4ralVq78ViNxhKXQLrgQLLie8u1tVdG2vWnB3ute4hcdbiBtvJQh0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <style>
@@ -249,7 +247,7 @@
             <!-- Mobile view -->
             <div id="gallery" class="grid grid-cols-1 md:grid-cols-2 gap-10 ">
                 @foreach ($movie['images']['backdrops'] as $image)
-                    <a href="https://image.tmdb.org/t/p/original/{{ $image['file_path'] }}">
+                    <a href="https://image.tmdb.org/t/p/w780/{{ $image['file_path'] }}">
                         <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="movie_thumbnails" loading="lazy">
                     </a>
                 @endforeach
@@ -299,6 +297,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/lightgallery.min.js" integrity="sha512-dSI4QnNeaXiNEjX2N8bkb16B7aMu/8SI5/rE6NIa3Hr/HnWUO+EAZpizN2JQJrXuvU7z0HTgpBVk/sfGd0oW+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
+    // Light gallery (screenshots)
+    let gallery = document.getElementById('gallery');
+    lightGallery(gallery, {
+        controls: true,
+    })
+
+
     // Thumbnails swiper
     var swiper_thumbnails = new Swiper(".swiper-thumbnail", {
         direction: 'horizontal',
@@ -379,13 +384,6 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     };
-
-
-    // Light gallery (screenshots)
-    let gallery = document.getElementById('gallery');
-    lightGallery(gallery, {
-        controls: true,
-    })
     
 </script>
 

@@ -5,8 +5,9 @@
 <!-- Toastr -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<!-- Lightgallery -->
+<!-- Light gallery -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lightgallery.min.css" integrity="sha512-F2E+YYE1gkt0T5TVajAslgDfTEUQKtlu4ralVq78ViNxhKXQLrgQLLie8u1tVdG2vWnB3ute4hcdbiBtvJQh0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lg-fullscreen.min.css" integrity="sha512-JlgW3xkdBcsdFiSfFk5Cfj3sTgo3hA63/lPmZ4SXJegICSLcH43BuwDNlC9fqoUy2h3Tma8Eo48xlZ5XMjM+aQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <style>
     .swiper-screenshots .swiper-slide {
@@ -221,17 +222,12 @@
             <h2 class="text-4xl font-semibold">Screenshots</h2>
             <!-- Start Swiper (Desktop) -->
             <div class="swiper-screenshots mt-6 relative hidden xl:block" x-on:mouseenter="navigation = true" x-on:mouseleave="navigation = false">
-                <div class="swiper-wrapper ">
+                <div id="gallery" class="swiper-wrapper gallery">
                     @foreach ($movie['images']['backdrops'] as $index=>$image)
-                        <div class="swiper-slide" 
-                        x-on:click=" 
-                        imageSrc = 'https://image.tmdb.org/t/p/original/{{ $image['file_path'] }}';
-                        imageModalOpen = true;
-                        activeIndex = $event.target.getAttribute('data-index');
-                        swiper_thumbnails.slideTo(activeIndex);
-                        "
-                        >
-                            <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="{{ $movie['title'] }}_thumbnail" data-index="{{ $index }}">
+                        <div class="swiper-slide">
+                            <a href="https://image.tmdb.org/t/p/w780/{{ $image['file_path'] }}">
+                                <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="{{ $movie['title'] }}_thumbnail" data-index="{{ $index }}">
+                            </a>    
                         </div>
                      @endforeach
                 </div>
@@ -247,25 +243,25 @@
             <!-- End Swiper (Desktop) -->
 
             <!-- Mobile view -->
-            <div id="gallery" class="grid grid-cols-1 md:grid-cols-2 gap-10 ">
+            <div id="gallery" class="grid grid-cols-1 md:grid-cols-2 gap-10 xl:hidden">
                 @foreach ($movie['images']['backdrops'] as $image)
-                    <a href="https://image.tmdb.org/t/p/original/{{ $image['file_path'] }}">
-                        <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="movie_thumbnails" loading="lazy">
+                    <a href="https://image.tmdb.org/t/p/w780/{{ $image['file_path'] }}">
+                        <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="movie_thumbnails">
                     </a>
                 @endforeach
             </div>
         </div>
         
-        <!--  Start Thumbnail Modal -->
+        {{-- <!--  Start Thumbnail Modal -->
         <div class="fixed inset-0 z-20 bg-black/70" style="display: none" x-show="imageModalOpen" x-transition>
             <!-- CLose -->
             <div class="absolute top-8 right-20 z-20 cursor-pointer text-4xl ">
                 <i class="fa-sharp fa-solid fa-xmark hover:rotate-90 hover:scale-150 duration-300" x-on:click="imageModalOpen = false"></i>
             </div>
             <div class="flex justify-center align-middle w-12/12 md:w-11/12 xl:w-8/12 mx-auto mt-72 md:mt-56 xl:mt-36" @click.outside="imageModalOpen = false">
-                {{-- <div class="my-auto mx-2 w-1/5">
+                <div class="my-auto mx-2 w-1/5">
                     <i class="fa-solid fa-caret-left text-gray-800 text-xl md:text-2xl xl:text-4xl cursor-pointer rounded-full bg-white px-1 xl:px-2 hover:text-white hover:bg-slate-700 duration-150 thumbnail-prev no-swiping"></i>
-                </div> --}}
+                </div>
                     <!-- Start Swiper -->
                     <div class="swiper swiper-thumbnail" x-show="imageModalOpen" style="display: none">
                         <div class="swiper-wrapper">
@@ -277,12 +273,12 @@
                         </div>
                     </div>
                     <!-- End Swiper -->
-                {{-- <div class="my-auto mx-2 w-1/5">
+                <div class="my-auto mx-2 w-1/5">
                     <i class="fa-solid fa-caret-right text-gray-800 text-xl md:text-2xl xl:text-4xl cursor-pointer rounded-full bg-white px-1 xl:px-2 hover:text-white hover:bg-slate-700 duration-150 thumbnail-next no-swiping"></i>
-                </div> --}}
+                </div>
             </div>
         </div>
-        <!--  End Thumbnail Modal -->
+        <!--  End Thumbnail Modal --> --}}
     </div>
     <!-- End Screenshots -->
 
@@ -299,6 +295,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/lightgallery.min.js" integrity="sha512-dSI4QnNeaXiNEjX2N8bkb16B7aMu/8SI5/rE6NIa3Hr/HnWUO+EAZpizN2JQJrXuvU7z0HTgpBVk/sfGd0oW+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
+    // Light gallery (screenshots)
+    let gallery = document.querySelectorAll('#gallery');
+    lightGallery(gallery, {
+        controls: true,
+    })
+
+
     // Thumbnails swiper
     var swiper_thumbnails = new Swiper(".swiper-thumbnail", {
         direction: 'horizontal',
@@ -379,13 +382,6 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     };
-
-
-    // Light gallery (screenshots)
-    let gallery = document.getElementById('gallery');
-    lightGallery(gallery, {
-        controls: true,
-    })
     
 </script>
 
