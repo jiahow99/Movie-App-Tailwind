@@ -151,6 +151,7 @@
                         <span class="font-bold">Play Trailer</span>
                     </a>
                 </div>
+
                 <!-- Start Movie Collections -->
                 @isset($movie['collection_movies'])
                     <div class="mt-8 xl:w-[900px] h-fit relative">
@@ -168,16 +169,17 @@
                             </div>
                         </div>
                         <!-- Prev -->
-                        <div class="absolute left-0 top-1/2 transform -translate-y-1/2 xl:-translate-x-1/2 z-50" style="display: none">
+                        <div class="absolute left-0 top-1/2 transform -translate-y-1/2 xl:-translate-x-1/2 z-50">
                             <i class="collection-prev fa-solid fa-circle-chevron-left text-6xl opacity-40 hover:opacity-80 cursor-pointer text-slate-50  rounded-full"></i>
                         </div>
                         <!-- Next -->
-                        <div class="absolute right-0 top-1/2 transform -translate-y-1/2 xl:translate-x-1/2 z-50" style="display: none">
+                        <div class="absolute right-0 top-1/2 transform -translate-y-1/2 xl:translate-x-1/2 z-50">
                             <i class="collection-next fa-solid fa-circle-chevron-right text-6xl opacity-40 hover:opacity-80 cursor-pointer text-slate-50  rounded-full"></i>
                         </div>
                     </div>
                 @endisset
                 <!-- End Movie Collections -->
+
             </div>
         </div>
     </div>
@@ -204,11 +206,11 @@
                     </div>
                 </div>
                 <!-- Prev -->
-                <div class="absolute left-0 top-1/2 transform -translate-y-1/2 z-50" style="display: none" x-show="actorNavigation">
+                <div class="absolute left-0 top-1/2 transform -translate-y-1/2 z-50" x-show="actorNavigation" x-transition>
                     <i class="actor-prev fa-solid fa-circle-chevron-left text-6xl cursor-pointer text-white opacity-60 hover:opacity-100 rounded-full"></i>
                 </div>
                 <!-- Next -->
-                <div class="absolute right-0 top-1/2 transform -translate-y-1/2 z-50" style="display: none" x-show="actorNavigation">
+                <div class="absolute right-0 top-1/2 transform -translate-y-1/2 z-50" x-show="actorNavigation" >
                     <i class="actor-next fa-solid fa-circle-chevron-right text-6xl cursor-pointer text-white opacity-60 hover:opacity-100 rounded-full"></i>
                 </div>
             </div>

@@ -511,7 +511,21 @@ input:-webkit-autofill:active {
 
 
 /******** Actor Image Overlay ********/
-.actor-image::after {
+.actor-slide {
+  position: relative;
+  margin: 2rem 0 0;
+  width: 500px;
+  height: 300px;
+  border: 3px solid black;
+}
+
+.actor-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.actor-slide::after {
   content: "";
   display: block;
   position: absolute;
@@ -524,27 +538,37 @@ input:-webkit-autofill:active {
   transition-duration: 200ms;
 }
 
-.actor-image:hover::after {
+.actor-slide:hover::after {
   opacity: 1;
 }
 
-.actor-name {
+.cta a {
   position: absolute;
   top: 50%;
   left: 30%;
   transform: translate(-50%, -50%);
+  border: 2px solid black;
+  border-radius: 5em;
+  background-color: rgb(255, 201, 154);
+  padding: 0.75rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: sans-serif;
+  font-weight: bold;
+  color: black;
   opacity: 0;
   transition-property: all;
   transition-duration: 500ms;
   z-index: 2;
 }
 
-.actor-image:hover .actor-name {
+.actor-slide:hover .cta a {
   opacity: 1;
   left: 50%;
 }
 
-.actor-name:hover {
+.cta a:hover {
   transform: translate(-50%, -50%) scale(1.1);
 }
+
 /******** Actor Image Overlay ********/

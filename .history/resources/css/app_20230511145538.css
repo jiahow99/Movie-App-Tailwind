@@ -511,7 +511,21 @@ input:-webkit-autofill:active {
 
 
 /******** Actor Image Overlay ********/
-.actor-image::after {
+.actor-slide {
+  position: relative;
+  margin: 2rem 0 0;
+  width: 500px;
+  height: 300px;
+  border: 3px solid black;
+}
+
+.actor-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.actor-slide::after {
   content: "";
   display: block;
   position: absolute;
@@ -524,7 +538,7 @@ input:-webkit-autofill:active {
   transition-duration: 200ms;
 }
 
-.actor-image:hover::after {
+.actor-slide:hover::after {
   opacity: 1;
 }
 
@@ -539,7 +553,7 @@ input:-webkit-autofill:active {
   z-index: 2;
 }
 
-.actor-image:hover .actor-name {
+.actor-slide:hover .actor-name {
   opacity: 1;
   left: 50%;
 }

@@ -151,6 +151,7 @@
                         <span class="font-bold">Play Trailer</span>
                     </a>
                 </div>
+
                 <!-- Start Movie Collections -->
                 @isset($movie['collection_movies'])
                     <div class="mt-8 xl:w-[900px] h-fit relative">
@@ -168,16 +169,17 @@
                             </div>
                         </div>
                         <!-- Prev -->
-                        <div class="absolute left-0 top-1/2 transform -translate-y-1/2 xl:-translate-x-1/2 z-50" style="display: none">
+                        <div class="absolute left-0 top-1/2 transform -translate-y-1/2 xl:-translate-x-1/2 z-50">
                             <i class="collection-prev fa-solid fa-circle-chevron-left text-6xl opacity-40 hover:opacity-80 cursor-pointer text-slate-50  rounded-full"></i>
                         </div>
                         <!-- Next -->
-                        <div class="absolute right-0 top-1/2 transform -translate-y-1/2 xl:translate-x-1/2 z-50" style="display: none">
+                        <div class="absolute right-0 top-1/2 transform -translate-y-1/2 xl:translate-x-1/2 z-50">
                             <i class="collection-next fa-solid fa-circle-chevron-right text-6xl opacity-40 hover:opacity-80 cursor-pointer text-slate-50  rounded-full"></i>
                         </div>
                     </div>
                 @endisset
                 <!-- End Movie Collections -->
+
             </div>
         </div>
     </div>
@@ -185,32 +187,47 @@
 
 
     <!-- Start Actors -->
-    <div class="movie-cast border-b border-gray-800" x-data="{actorNavigation: false}" x-on:mouseenter="actorNavigation = true" x-on:mouseleave="actorNavigation = false">
+    <div class="movie-cast border-b border-gray-800">
         <div class="container mx-auto px-4 py-16">
             <h2 class="text-4xl font-semibold">Cast</h2>
-            <!-- Swiper -->
-            <div class="relative w-full mt-3">
+            <div class="relative outline w-full">
                 <div class="swiper swiper-actors">
                     <div class="swiper-wrapper">
-                      @foreach ($movie['credits']['cast'] as $key => $actor)
-                        <div class="swiper-slide flex-col">
-                            <div class="actor-image cursor-pointer" data-aos="fade-up" data-aos-delay="{{ $key * 200 }}" data-aos-once="true">
-                                <img src="{{ $actor['profile_path'] }}" alt="actor_name">
-                                <div class="actor-name text-2xl whitespace-nowrap">{{ $actor['name'] }}</div>
+                      @foreach ($movie['credits']['cast'] as $actor)
+                        <div class="swiper-slide">
+                            <img src="{{ $actor['profile_path'] }}" alt="actor_name">
+                            <div class="mt-2">
+                                <span class="text-lg mt-2 hover:text-gray-300 duration-500">{{ $actor['name'] }}</span>
                             </div>
-                            <div class="text-gray-400 text-left">{{ $actor['character'] }}</div>
+                            <div class="text-gray-400">{{ $actor['character'] }}</div>
                         </div>
                       @endforeach
                     </div>
                 </div>
                 <!-- Prev -->
-                <div class="absolute left-0 top-1/2 transform -translate-y-1/2 z-50" style="display: none" x-show="actorNavigation">
-                    <i class="actor-prev fa-solid fa-circle-chevron-left text-6xl cursor-pointer text-white opacity-60 hover:opacity-100 rounded-full"></i>
+                <div class="absolute left-0 top-1/2 transform -translate-y-1/2  z-50">
+                    <i class="actor-prev fa-solid fa-circle-chevron-left text-6xl cursor-pointer text-white  rounded-full"></i>
                 </div>
                 <!-- Next -->
-                <div class="absolute right-0 top-1/2 transform -translate-y-1/2 z-50" style="display: none" x-show="actorNavigation">
-                    <i class="actor-next fa-solid fa-circle-chevron-right text-6xl cursor-pointer text-white opacity-60 hover:opacity-100 rounded-full"></i>
+                <div class="absolute right-0 top-1/2 transform -translate-y-1/2  z-50">
+                    <i class="actor-next fa-solid fa-circle-chevron-right text-6xl cursor-pointer text-white  rounded-full"></i>
                 </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-10">
+                @foreach ($movie['credits']['cast'] as $key => $cast)
+                    @if ($loop->index < 5) 
+                        <div class="mt-8">
+                            <a href="{{ route('actor.show', $cast['id']) }}">
+                                <img src="{{ $cast['profile_path'] }}" class="transition ease-in-out duration-500 hover:scale-105 hover:opacity-60" alt="actor_image" 
+                                    data-aos="fade-up" data-aos-delay="{{ $key * 200 }}" data-aos-once="true">
+                                <div class="mt-2">
+                                    <span class="text-lg mt-2 hover:text-gray-300 duration-500">{{ $cast['name'] }}</span>
+                                </div>
+                                <div class="text-gray-400">{{ $cast['character'] }}</div>
+                            </a>
+                        </div>
+                    @endif
+                @endforeach
             </div>
         </div>
     </div>

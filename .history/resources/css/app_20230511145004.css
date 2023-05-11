@@ -511,40 +511,5 @@ input:-webkit-autofill:active {
 
 
 /******** Actor Image Overlay ********/
-.actor-image::after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.37);
-  opacity: 0;
-  transition-property: opacity;
-  transition-duration: 200ms;
-}
 
-.actor-image:hover::after {
-  opacity: 1;
-}
-
-.actor-name {
-  position: absolute;
-  top: 50%;
-  left: 30%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition-property: all;
-  transition-duration: 500ms;
-  z-index: 2;
-}
-
-.actor-image:hover .actor-name {
-  opacity: 1;
-  left: 50%;
-}
-
-.actor-name:hover {
-  transform: translate(-50%, -50%) scale(1.1);
-}
 /******** Actor Image Overlay ********/

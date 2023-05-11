@@ -511,7 +511,7 @@ input:-webkit-autofill:active {
 
 
 /******** Actor Image Overlay ********/
-.actor-image::after {
+.actor-slide::after {
   content: "";
   display: block;
   position: absolute;
@@ -524,7 +524,7 @@ input:-webkit-autofill:active {
   transition-duration: 200ms;
 }
 
-.actor-image:hover::after {
+.actor-slide:hover::after {
   opacity: 1;
 }
 
@@ -539,7 +539,7 @@ input:-webkit-autofill:active {
   z-index: 2;
 }
 
-.actor-image:hover .actor-name {
+.actor-slide:hover .actor-name {
   opacity: 1;
   left: 50%;
 }
