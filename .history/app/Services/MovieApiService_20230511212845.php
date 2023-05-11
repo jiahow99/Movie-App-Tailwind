@@ -31,8 +31,6 @@ class MovieApiService
                 $movies = array_slice($this->fetchPopularMovies(), 0, 20);
                 break;
         }
-
-        return $movies;
     }
 
 

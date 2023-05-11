@@ -16,23 +16,19 @@ class MovieApiService
     {
         switch ($category) {
             case 'nowplaying':
-                $movies = array_slice($this->fetchPopularMovies(), 0, 20);
+                $movies = $this->fetchNowPlaying();
                 break;
-
             case 'toprated':
-                // $movies = array_slice($this->fetchPopularMovies(), 0, 20);
-                // break;
-
+                # code...
+                break;
             case 'popular':
-                $movies = array_slice($this->fetchPopularMovies(), 0, 20);
+                # code...
                 break;
             
             default:
-                $movies = array_slice($this->fetchPopularMovies(), 0, 20);
+                # code...
                 break;
         }
-
-        return $movies;
     }
 
 

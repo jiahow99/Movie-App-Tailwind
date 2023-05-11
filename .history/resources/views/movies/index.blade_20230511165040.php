@@ -18,19 +18,15 @@
 
 
 @section('content')
-<div class="container mx-auto px-4 pt-8">
-    <div class="movies-filter w-full bg-gray-800 px-3 py-5 rounded-lg flex justify-start align-middle gap-5">
-        <div class="rounded-sm   px-2 py-1 font-semibold ">Countries :</div>
-        <div class="rounded-xl px-5 py-1 text-gray-300 cursor-pointer underline-offset-3 hover:bg-slate-700 duration-300 bg-gray-700 underline pointer-events-none">All</div>
+<div class="container mx-auto px-4 pt-16">
+    <div class="movies-filter w-full bg-gray-800 p-3 rounded-md flex justify-start align-middle gap-5">
         @foreach ($regions as $key => $value)
-        <a href="{{ route('movies.region', $key) }}">
-            <div class="rounded-xl text-sm font-semibold bg-slate-500 px-5 py-2 text-gray-300 underline-offset-3 cursor-pointer hover:bg-slate-700 hover:-translate-y-1 duration-300 select-none">{{ $key }}</div>
-        </a>
+            <div class="rounded-full bg-slate-500 px-3 py-1 text-gray-300">{{ $key }}</div>
         @endforeach
     </div>
 
     {{-- Popular Movies --}}
-    <div class="popular-movies mt-20">
+    <div class="popular-movies">
         <div class="flex justify-between align-middle">
             <a href="{{ route('movies.popular') }}">
                 <h2 class="relative uppercase tracking-wider text-orange-500 text-xl font-bold mb-4 after:content-[''] 

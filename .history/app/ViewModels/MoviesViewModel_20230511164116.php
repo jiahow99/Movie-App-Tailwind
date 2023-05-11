@@ -31,6 +31,7 @@ class MoviesViewModel extends ViewModel
     }
 
 
+    // All genres 
     public function genresList(){
         // id => genre (map)
         return collect($this->genresList)->mapWithKeys(function ($genresList){
@@ -60,11 +61,6 @@ class MoviesViewModel extends ViewModel
         
         // Chunk 20 items each array
         return collect($newMovieArray)->chunk(20);
-    }
-
-
-    public function regions(){
-        return $this->regions;
     }
 
 

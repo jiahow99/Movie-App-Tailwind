@@ -15,24 +15,14 @@ class MovieApiService
     public function fetchMovieByCategory(string $category)
     {
         switch ($category) {
-            case 'nowplaying':
-                $movies = array_slice($this->fetchPopularMovies(), 0, 20);
-                break;
-
-            case 'toprated':
-                // $movies = array_slice($this->fetchPopularMovies(), 0, 20);
-                // break;
-
-            case 'popular':
-                $movies = array_slice($this->fetchPopularMovies(), 0, 20);
+            case 'value':
+                # code...
                 break;
             
             default:
-                $movies = array_slice($this->fetchPopularMovies(), 0, 20);
+                # code...
                 break;
         }
-
-        return $movies;
     }
 
 
@@ -77,7 +67,7 @@ class MovieApiService
      */
     public function fetchNowPlaying(int $max_page = 1)
     {
-        if( !Redis::exists("movies:nowplaying") ){
+        if( !Redis::exists("movies:nowPlaying") ){
             
             $nowPlaying = [];
 
@@ -93,14 +83,14 @@ class MovieApiService
             
             // Store in Redis
             $json_encoded = json_encode( $nowPlaying );
-            Redis::set('movies:nowplaying', $json_encoded , 'EX' , 1800);  // Expire in 30 mins
+            Redis::set('movies:nowPlaying', $json_encoded , 'EX' , 1800);  // Expire in 30 mins
 
             // Show loader animation
             Session::flash('loader', 'showing');
         }
 
         // Return data
-        $nowPlaying = json_decode( Redis::get('movies:nowplaying') , true );
+        $nowPlaying = json_decode( Redis::get('movies:nowPlaying') , true );
 
         return $nowPlaying;
     }

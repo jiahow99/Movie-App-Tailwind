@@ -14,25 +14,7 @@ class MovieApiService
      */
     public function fetchMovieByCategory(string $category)
     {
-        switch ($category) {
-            case 'nowplaying':
-                $movies = array_slice($this->fetchPopularMovies(), 0, 20);
-                break;
-
-            case 'toprated':
-                // $movies = array_slice($this->fetchPopularMovies(), 0, 20);
-                // break;
-
-            case 'popular':
-                $movies = array_slice($this->fetchPopularMovies(), 0, 20);
-                break;
-            
-            default:
-                $movies = array_slice($this->fetchPopularMovies(), 0, 20);
-                break;
-        }
-
-        return $movies;
+        $cacheName = 'movies:' . strtolower($category) ;
     }
 
 

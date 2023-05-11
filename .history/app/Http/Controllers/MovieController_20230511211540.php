@@ -121,7 +121,7 @@ class MovieController extends Controller
      * Fetch movies by categories
      * [ 'Now Playing' , 'Top Rated' , 'Popular' ]
      */
-    public function category(MovieApiService $movieApi, string $category)
+    public function categoryIndex(MovieApiService $movieApi, string $category)
     {
         // Fetch movies by Category
         $moviesByCategory = $movieApi->fetchMovieByCategory( $category );

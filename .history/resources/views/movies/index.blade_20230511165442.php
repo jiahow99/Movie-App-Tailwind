@@ -18,14 +18,11 @@
 
 
 @section('content')
-<div class="container mx-auto px-4 pt-8">
+<div class="container mx-auto px-4 pt-16">
     <div class="movies-filter w-full bg-gray-800 px-3 py-5 rounded-lg flex justify-start align-middle gap-5">
-        <div class="rounded-sm   px-2 py-1 font-semibold ">Countries :</div>
-        <div class="rounded-xl px-5 py-1 text-gray-300 cursor-pointer underline-offset-3 hover:bg-slate-700 duration-300 bg-gray-700 underline pointer-events-none">All</div>
+        <div class="rounded-sm bg-slate-700 px-2 py-1 text-lg">Countries :</div>
         @foreach ($regions as $key => $value)
-        <a href="{{ route('movies.region', $key) }}">
-            <div class="rounded-xl text-sm font-semibold bg-slate-500 px-5 py-2 text-gray-300 underline-offset-3 cursor-pointer hover:bg-slate-700 hover:-translate-y-1 duration-300 select-none">{{ $key }}</div>
-        </a>
+            <div class="rounded-xl bg-slate-500 px-5 py-1 text-gray-300 cursor-pointer hover:bg-slate-700 duration-300">{{ $key }}</div>
         @endforeach
     </div>
 

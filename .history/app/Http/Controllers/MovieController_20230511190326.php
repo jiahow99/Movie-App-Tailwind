@@ -8,7 +8,6 @@ use App\ViewModels\MovieViewModel;
 use App\ViewModels\MoviesViewModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
-use App\ViewModels\CategoryViewModel;
 use Illuminate\Support\Facades\Redis;
 use App\ViewModels\NowPlayingViewModel;
 use Illuminate\Support\Facades\Session;
@@ -117,28 +116,12 @@ class MovieController extends Controller
     }
 
 
-     /**
-     * Fetch movies by categories
-     * [ 'Now Playing' , 'Top Rated' , 'Popular' ]
-     */
-    public function category(MovieApiService $movieApi, string $category)
-    {
-        // Fetch movies by Category
-        $moviesByCategory = $movieApi->fetchMovieByCategory( $category );
-
-        // View model
-        $viewModel = new CategoryViewModel($category, $moviesByCategory);
-
-        return view('movies.category', $viewModel);
-    }
-
-
     /**
      * Fetch movies by Region
      */
     public function moviesByRegion(MovieApiService $movieApi, string $region)
     {
-
+        dd($region);
     }
 
 

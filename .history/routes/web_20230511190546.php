@@ -32,7 +32,7 @@ Route::get('/login/facebook/redirect', [LoginController::class, 'facebookRedirec
 Route::get('/', [MovieController::class, 'index'])->name('movies.index');
 Route::get('/movies/movie/{movie}', [MovieController::class, 'show'])->name('movie.show');
 
-Route::get('/movies/{category}', [MovieController::class, 'category'])->name('movies.category');
+Route::get('/movies/{category}', [MovieController::class, 'categoryIndex'])->name('movies.category');
 
 // Popular movies
 Route::get('/movies/popular', [MovieController::class, 'popular'])->name('movies.popular');

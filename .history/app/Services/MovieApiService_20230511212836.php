@@ -28,11 +28,9 @@ class MovieApiService
                 break;
             
             default:
-                $movies = array_slice($this->fetchPopularMovies(), 0, 20);
+                # code...
                 break;
         }
-
-        return $movies;
     }
 
 
