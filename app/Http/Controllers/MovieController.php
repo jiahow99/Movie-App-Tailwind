@@ -25,77 +25,19 @@ class MovieController extends Controller
         // Fetch how many page
         $max_page = 2;
         
-        $popularMovies = $movieApi->fetchPopularMovies($max_page);
+        $popularMovies = $movieApi->fetchCategoryMovies('popular', $max_page);
         
-        $nowPlaying = $movieApi->fetchNowPlaying($max_page);
+        $nowPlaying = $movieApi->fetchCategoryMovies('now_playing', $max_page);
+
+        $topRated = $movieApi->fetchCategoryMovies('top_rated', $max_page);
 
         $genresArray = $movieApi->fetchGenres();
 
         $regions = $movieApi->fetchRegions();
 
-        $viewModel = new MoviesViewModel($popularMovies, $nowPlaying, $genresArray, $regions);
+        $viewModel = new MoviesViewModel($popularMovies, $nowPlaying, $topRated, $genresArray, $regions);
 
         return view('movies.index', $viewModel);
-    }
-
-
-    /**
-     * Show popular movies
-     */
-    public function popular(MovieApiService $movieApi)
-    {        
-        $popularMovies =  array_slice($movieApi->fetchPopularMovies(), 0, 20);
-
-        $genresList = $movieApi->fetchGenres();
-        
-        $view_model = new popularMoviesViewModel($popularMovies, $genresList);
-
-        return view('movies.popular', $view_model);
-    }
-
-
-    /**
-     * Popular movies infinite scrolling
-     */
-    public function popularLoadMore(MovieApiService $movieApi, $page = 1)
-    {
-        $popularMovies = $movieApi->popularLoadMore( $page );
-
-        $genresList = $movieApi->fetchGenres();
-        
-        $view_model = new popularMoviesViewModel($popularMovies, $genresList);
-
-        return view('movies.popular', $view_model);
-    }
-
-
-     /**
-     * Show Now Playing movies
-     */
-    public function nowPlaying(MovieApiService $movieApi)
-    {        
-        $nowPlayingMovies =  array_slice($movieApi->fetchNowPlaying(), 0, 20);
-
-        $genresList = $movieApi->fetchGenres();
-        
-        $view_model = new NowPlayingViewModel($nowPlayingMovies, $genresList);
-
-        return view('movies.nowPlaying', $view_model);
-    }
-
-
-    /**
-     * Now playing movies infinite scrolling
-     */
-    public function nowPlayingLoadMore(MovieApiService $movieApi, $page = 1)
-    {
-        $nowPlayingMovies = $movieApi->nowPlayingLoadMore( $page );
-
-        $genresList = $movieApi->fetchGenres();
-        
-        $view_model = new NowPlayingViewModel($nowPlayingMovies, $genresList);
-
-        return view('movies.nowPlaying', $view_model);
     }
 
 
@@ -123,13 +65,31 @@ class MovieController extends Controller
      */
     public function category(MovieApiService $movieApi, string $category)
     {
-        // Fetch movies by Category
-        $moviesByCategory = $movieApi->fetchMovieByCategory( $category );
+        // Fetch movies by Category (only take 1 page easier for infinite scroll load)
+        $moviesByCategory = array_slice($movieApi->fetchCategoryMovies($category), 0, 20);
+
+        // Fetch all genres
+        $genresList = $movieApi->fetchGenres();
 
         // View model
-        $viewModel = new CategoryViewModel($category, $moviesByCategory);
+        $viewModel = new CategoryViewModel($category, $moviesByCategory, $genresList);
 
         return view('movies.category', $viewModel);
+    }
+
+
+    /**
+     * Movies infinite scroll (category page)
+     */
+    public function loadMore(MovieApiService $movieApi, string $category, $page = 1)
+    {
+        $moreMovies = $movieApi->loadMore($category, $page);
+
+        $genresList = $movieApi->fetchGenres();
+        
+        $view_model = new CategoryViewModel($category, $moreMovies, $genresList);
+
+        return view('movies.category', $view_model);
     }
 
 

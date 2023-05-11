@@ -6,17 +6,19 @@ use Spatie\ViewModels\ViewModel;
 
 class MoviesViewModel extends ViewModel
 {
-    protected $popularMovies;
-    protected $nowPlaying;
-    protected $genresList;
-    protected $regions;
+    public $popularMovies;
+    public $nowPlaying;
+    public $topRated;
+    public $genresList;
+    public $regions;
 
 
-    public function __construct($popularMovies, $nowPlaying, $genresList, $regions)
+    public function __construct($popularMovies, $nowPlaying, $topRated, $genresArray, $regions)
     {
         $this->popularMovies = $popularMovies;
         $this->nowPlaying = $nowPlaying;
-        $this->genresList = $genresList;
+        $this->topRated = $topRated;
+        $this->genresList = $genresArray;
         $this->regions = $regions;
     }
 
@@ -28,6 +30,11 @@ class MoviesViewModel extends ViewModel
 
     public function nowPlaying(){
         return $this->formatMovies($this->nowPlaying);
+    }
+
+
+    public function topRated(){
+        return $this->formatMovies($this->topRated);
     }
 
 

@@ -14,6 +14,7 @@ Auth::routes([
 //     Route::get('/', [MovieController::class, 'index'])->name('movies.index');
 // });
 
+/******************************** Socialite Auth ********************************/
 // Github Login
 Route::get('/login/github', [LoginController::class, 'github'])->name('github.login');
 Route::get('/login/github/redirect', [LoginController::class, 'githubRedirect']);
@@ -30,25 +31,22 @@ Route::get('/login/facebook/redirect', [LoginController::class, 'facebookRedirec
 /******************************** Public Route ********************************/
 // Movies
 Route::get('/', [MovieController::class, 'index'])->name('movies.index');
+
+// Single movie
 Route::get('/movies/movie/{movie}', [MovieController::class, 'show'])->name('movie.show');
 
+// Movies by Category
 Route::get('/movies/{category}', [MovieController::class, 'category'])->name('movies.category');
-
-// Popular movies
-Route::get('/movies/popular', [MovieController::class, 'popular'])->name('movies.popular');
-Route::get('/movies/popular/page/{page?}', [MovieController::class, 'popularLoadMore'])->name('movies.popular.load');
 
 // Movies by Region
 Route::get('/movies/{region}', [MovieController::class, 'moviesByRegion'])->name('movies.region');
 
+// Load More
+Route::get('/movies/{category}/page/{page?}', [MovieController::class, 'loadMore'])->name('movies.popular.load');
+
 Route::middleware(['auth', 'auth.api'])->group(function () {
     Route::post('/movie/{movie}/rating/{action}', [MovieController::class, 'rateMovie'])->name('movie.rate');
 });
-
-// Now Playing movies
-Route::get('/movies/nowplaying', [MovieController::class, 'nowPlaying'])->name('movies.nowplaying');
-Route::get('/movies/nowplaying/page/{page?}', [MovieController::class, 'nowPlayingLoadMore'])->name('movies.popular.load');
-
 
 // Actors
 Route::get('/actors', [ActorController::class, 'index'])->name('actors.index');

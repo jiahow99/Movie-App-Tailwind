@@ -205,11 +205,11 @@
                 </div>
                 <!-- Prev -->
                 <div class="absolute left-0 top-1/2 transform -translate-y-1/2 z-50" style="display: none" x-show="actorNavigation">
-                    <i class="actor-prev fa-solid fa-circle-chevron-left text-6xl cursor-pointer text-white opacity-60 hover:opacity-100 rounded-full"></i>
+                    <i class="actor-prev fa-solid fa-circle-chevron-left text-6xl cursor-pointer text-black opacity-60 hover:opacity-100 rounded-full"></i>
                 </div>
                 <!-- Next -->
                 <div class="absolute right-0 top-1/2 transform -translate-y-1/2 z-50" style="display: none" x-show="actorNavigation">
-                    <i class="actor-next fa-solid fa-circle-chevron-right text-6xl cursor-pointer text-white opacity-60 hover:opacity-100 rounded-full"></i>
+                    <i class="actor-next fa-solid fa-circle-chevron-right text-6xl cursor-pointer text-black opacity-60 hover:opacity-100 rounded-full"></i>
                 </div>
             </div>
         </div>
@@ -291,9 +291,8 @@
                 <i class="fa-sharp fa-solid fa-xmark hover:rotate-90 hover:scale-150 duration-300" x-on:click="imageModalOpen = false;"></i>
             </div>
         </div>
-
     </div>
-    <!-- End Screenshots -->
+    <!-- End Thumbnails -->
 
 </div>
 
@@ -308,33 +307,44 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/lightgallery.min.js" integrity="sha512-dSI4QnNeaXiNEjX2N8bkb16B7aMu/8SI5/rE6NIa3Hr/HnWUO+EAZpizN2JQJrXuvU7z0HTgpBVk/sfGd0oW+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    // Actors swiper
+    // Swiper for Actor
     var swiper = new Swiper(".swiper-actors", {
-      slidesPerView: 5,
-      spaceBetween: 20,
+        slidesPerView: 2.5,
+        spaceBetween: 20,
+        slidesPerGroup: 2,
+        spaceBetween: 30,
+        loop: true,
+        navigation: {
+            nextEl: ".actor-next",
+            prevEl: ".actor-prev",
+        },
+        breakpoints: {
+            // when window width is <= 768px (tablet)
+            768: {
+                slidesPerView: 3.5,
+                spaceBetween: 30
+            },
+            // when window width is <= 1024px (desktop)
+            1024: {
+                slidesPerView: 4.5,
+                spaceBetween: 30
+            }
+        }
     });
 
 
-    // Thumbnails swiper
+    // Swiper for Thumbnails
     var swiper_thumbnails = new Swiper(".swiper-thumbnail", {
         direction: 'horizontal',
         loop: true,
-        pagination: {
-            el: ".swiper-pagination",
-            type: "progressbar",
-        },
         navigation: {
             nextEl: ".thumbnail-next",
             prevEl: ".thumbnail-prev",
         },
-        keyboard: {
-            enabled: true,
-            onlyInViewport: false,
-        },
     });
 
 
-    // Screenshots swiper
+    // Swiper for Screenshots
     var swiper_screenshots = new Swiper(".swiper-screenshots", {
         slidesPerView: 3,
         loop: true,
@@ -354,20 +364,15 @@
     });
 
 
-    // Movie Collections swiper
+    // Swiper for Movie Collections
     var swiper_collections = new Swiper(".movie-collections", {
-        slidesPerGroup: 2,
-        spaceBetween: 30,
+        slidesPerView: 2,
+                spaceBetween: 20,  
         navigation: {
             nextEl: '.collection-next',
             prevEl: '.collection-prev',
         },
         breakpoints: {
-            // when window width is <= 640px (mobile)
-            400: {
-                slidesPerView: 2,
-                spaceBetween: 20,   
-            },
             // when window width is <= 768px (tablet)
             768: {
                 slidesPerView: 3,

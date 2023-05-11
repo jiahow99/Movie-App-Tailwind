@@ -6,8 +6,8 @@ use Spatie\ViewModels\ViewModel;
 
 class NowPlayingViewModel extends ViewModel
 {
-    protected $nowPlayingMovies;
-    protected $genresList;
+    public $nowPlayingMovies;
+    public $genresList;
 
 
     public function __construct($nowPlayingMovies, $genresList)
@@ -17,8 +17,10 @@ class NowPlayingViewModel extends ViewModel
     }
 
 
+    /**
+     * Format Movies
+     */
     public function nowPlayingMovies(){
-        
         // Change value before pass to View
         $formattedMovies =  array_map(function($movie){
             // id => genre
@@ -42,6 +44,9 @@ class NowPlayingViewModel extends ViewModel
     }
 
 
+    /**
+     * Convert genres into format "id" => "name"
+     */
     public function genresList(){
         // id => genre (map)
         return collect($this->genresList)->mapWithKeys(function ($genresList){
