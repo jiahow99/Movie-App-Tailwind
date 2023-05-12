@@ -118,7 +118,7 @@ class MovieApiService
                 $regionLanguage = $regions[$region]['language'];
 
                 foreach ($regionLanguage as $language) {
-                    $url = "https://api.themoviedb.org/3/discover/movie?sort_by=release_date.desc&with_original_language=".$language."&region=".$regionCode."&with_production_countries=".$regionCode;
+                    $url = "https://api.themoviedb.org/3/discover/movie?with_original_language=".$language."&region=".$regionCode."&with_production_countries=".$regionCode."&sort_by=release_date.asc";
                     
                     $results = $this->fetch($url, 1, 'results');
 
@@ -133,7 +133,7 @@ class MovieApiService
 
         $moviesByRegion = json_decode( Redis::get($redisCacheName), true );
 
-        return $moviesByRegion;
+        dd($moviesByRegion);
     }
     
     

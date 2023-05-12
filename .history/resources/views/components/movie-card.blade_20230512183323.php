@@ -1,6 +1,6 @@
  <div class="movie mt-8">
     <a  href="{{ route('movie.show', $movie['id']) }}">
-        <img src="{{ asset('image/movie_placeholder.jpg') }}" data-image="{{ $movie['poster_path'] }}" class="movie_poster transition ease-in-out duration-500 hover:scale-105 hover:opacity-60 " alt="{{ $movie['title'] }}" loading="lazy">
+        <img class="h-fit" src="{{ asset('image/movie_placeholder.jpg') }}" data-image="{{ $movie['poster_path'] }}" class="movie_poster transition ease-in-out duration-500 hover:scale-105 hover:opacity-60 " alt="parasite" loading="lazy">
     </a>
     <div class="mt-2">
         <a href="#" class="text-lg mt-2 hover:text-gray-300 duration-500">{{ $movie['title'] }}</a>

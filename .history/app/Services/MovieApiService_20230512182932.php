@@ -199,7 +199,7 @@ class MovieApiService
             $regions = [
                 'Hong Kong' => [
                     'code' => 'HK',
-                    'language' => ['zh','cn']
+                    'language' => ['zh']
                 ],
                 'Taiwan' => [
                     'code' => 'TW',

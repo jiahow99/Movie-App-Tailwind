@@ -98,16 +98,7 @@ class MovieController extends Controller
      */
     public function moviesByRegion(MovieApiService $movieApi, string $region)
     {
-        // Fetch movies by Region
-        $moviesByRegion = $movieApi->fetchRegionMovies($region);
-
-        // Fetch all genres
-        $genresList = $movieApi->fetchGenres();
-
-        // View model
-        $viewModel = new CategoryViewModel($region, $moviesByRegion, $genresList);
-
-        return view('movies.category', $viewModel);
+        $moviesByRegion = $movieApi->fetchRegionMovies( $region );
     }
 
 

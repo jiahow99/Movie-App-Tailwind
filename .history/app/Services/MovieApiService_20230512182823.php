@@ -133,7 +133,7 @@ class MovieApiService
 
         $moviesByRegion = json_decode( Redis::get($redisCacheName), true );
 
-        return $moviesByRegion;
+        dd($moviesByRegion);
     }
     
     

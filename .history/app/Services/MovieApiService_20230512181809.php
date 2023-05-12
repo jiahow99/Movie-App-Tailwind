@@ -110,23 +110,28 @@ class MovieApiService
         // Cache fetched movies
         if( !Redis::exists($redisCacheName) )
         {
-            $movies = [];
-
             // Multiple language
             if( is_array($regions[$region]['language']) )
             {
                 $regionLanguage = $regions[$region]['language'];
 
                 foreach ($regionLanguage as $language) {
-                    $url = "https://api.themoviedb.org/3/discover/movie?sort_by=release_date.desc&with_original_language=".$language."&region=".$regionCode."&with_production_countries=".$regionCode;
+                    $url = "https://api.themoviedb.org/3/discover/movie?with_original_language=".$language."&region=".$regionCode."&with_production_countries=".$regionCode;
                     
-                    $results = $this->fetch($url, 1, 'results');
-
-                    $movies = array_merge($movies, $results);
+                    $movies = $this->fetch($url, 1, 'results');
                 }
-            }
+
+                $url2 = "https://api.themoviedb.org/3/discover/movie?with_original_language=".$regionLanguage[1]."&region=".$regionCode."&with_production_countries=".$regionCode;
             
-            $json_encoded = json_encode( $movies );
+                $movies = 
+            }
+            $url = "https://api.themoviedb.org/3/discover/movie?with_original_language=".$regionLanguage."&region=".$regionCode."&with_production_countries=".$regionCode;
+
+            $fetchedMovies = $this->fetch($url, 1, 'results');
+
+            dd($url);
+
+            $json_encoded = json_encode( $fetchedMovies );
 
             Redis::set($redisCacheName, $json_encoded, 'EX', 1800);  // Expire in 30 mins
         }

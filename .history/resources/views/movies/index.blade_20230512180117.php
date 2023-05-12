@@ -27,18 +27,16 @@
                     All
                 </div>
                 @foreach ($regions as $key => $item)
-                    <a href="{{ route('movies.region', $key) }}">
-                        <div class="px-3 py-1 duration-200 bg-gray-500 hover:-translate-y-1 hover:bg-gray-800 rounded-full cursor-pointer">
-                            {{ $key }}
-                        </div>
-                    </a>
+                    <div class="px-3 py-1 duration-300 bg-gray-500 hover:-translate-y-1 hover:bg-gray-800 rounded-full cursor-pointer">
+                        {{ $key }}
+                    </div>
                 @endforeach
             </div>
         </div>
 
 
         <!-- Now Playing Movies -->
-        <div class="now-playing mt-8">
+        <div class="now-playing">
             <div class="flex justify-between align-middle">
                 <a href="{{ route('movies.category', 'now_playing') }}">
                     <h2 class="relative uppercase tracking-wider text-orange-500 text-xl font-bold mb-4 after:content-[''] 

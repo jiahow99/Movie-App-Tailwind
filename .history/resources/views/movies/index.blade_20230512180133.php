@@ -27,11 +27,9 @@
                     All
                 </div>
                 @foreach ($regions as $key => $item)
-                    <a href="{{ route('movies.region', $key) }}">
-                        <div class="px-3 py-1 duration-200 bg-gray-500 hover:-translate-y-1 hover:bg-gray-800 rounded-full cursor-pointer">
-                            {{ $key }}
-                        </div>
-                    </a>
+                    <div class="px-3 py-1 duration-300 bg-gray-500 hover:-translate-y-1 hover:bg-gray-800 rounded-full cursor-pointer">
+                        {{ $key }}
+                    </div>
                 @endforeach
             </div>
         </div>
