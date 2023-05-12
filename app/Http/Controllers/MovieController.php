@@ -79,33 +79,18 @@ class MovieController extends Controller
 
 
     /**
-     * Movies infinite scroll (category page)
-     */
-    public function loadMore(MovieApiService $movieApi, string $category, $page = 1)
-    {
-        $moreMovies = $movieApi->loadMore($category, $page);
-
-        $genresList = $movieApi->fetchGenres();
-        
-        $view_model = new CategoryViewModel($category, $moreMovies, $genresList);
-
-        return view('movies.category', $view_model);
-    }
-
-
-    /**
      * Fetch movies by Region
      */
-    public function moviesByRegion(MovieApiService $movieApi, string $region)
+    public function moviesByRegion(MovieApiService $movieApi, string $region, $page=1)
     {
         // Fetch movies by Region
-        $moviesByRegion = $movieApi->fetchRegionMovies($region);
+        $moviesByRegion = $movieApi->fetchRegionMovies($region, $page);
 
         // Fetch all genres
         $genresList = $movieApi->fetchGenres();
 
         // View model
-        $viewModel = new CategoryViewModel($region, $moviesByRegion, $genresList);
+        $viewModel = new CategoryViewModel($region, $moviesByRegion, $genresList, 'region');
 
         return view('movies.category', $viewModel);
     }
@@ -135,6 +120,36 @@ class MovieController extends Controller
         // Return to movie page
         return redirect()->back()->with('Success', 'Thank you for the feedback !');
     }
+
+
+    /**
+     * Movies infinite scroll (category page)
+     */
+    public function loadMore(MovieApiService $movieApi, string $category, $page=1)
+    {
+        $moreMovies = $movieApi->loadMore($category, $page);
+
+        $genresList = $movieApi->fetchGenres();
+        
+        $view_model = new CategoryViewModel($category, $moreMovies, $genresList);
+
+        return view('movies.category', $view_model);
+    }
+
+
+    /**
+     * Movies infinite scroll (category page)
+     */
+    // public function loadMoreRegion(MovieApiService $movieApi, string $region, $page = 1)
+    // {
+    //     $moreMovies = $movieApi->loadMoreRegion($region, $page);
+
+    //     $genresList = $movieApi->fetchGenres();
+        
+    //     $view_model = new CategoryViewModel($region, $moreMovies, $genresList);
+
+    //     return view('movies.category', $view_model);
+    // }
 
 
     /**

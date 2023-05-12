@@ -63,8 +63,10 @@ class MovieApiService
         // Replace spacebar with _
         $category = str_replace(' ', '_', $category) ;
 
+        $redisCacheName = 'movies:'.$category;
+
         // Check if stored data before
-        if( !Redis::exists('movies:'.$category) ){
+        if( !Redis::exists($redisCacheName) ){
 
             $movies = [];
 
@@ -77,8 +79,7 @@ class MovieApiService
             }
 
             // Store in Redis
-            $json_encoded = json_encode( $movies ); 
-            Redis::set('movies:'.$category, $json_encoded, 'EX', 1800);  // Expire in 30 mins
+            $this->redisCache($redisCacheName, $movies);
         }
         
         // Return from Redis
@@ -91,46 +92,42 @@ class MovieApiService
     /**
      * Fetch movies by Region.
      */
-    public function fetchRegionMovies(string $region)
+    public function fetchRegionMovies(string $region, $page=1)
     {
         // Fetch regions 'code' & 'language
         $regions = $this->fetchRegions();
+
+        // Get latest date (exclude upcoming movies)
+        $nowDate = date('Y-m-d');
 
         // Fetch region code ('HK','JP')
         $regionCode = $regions[$region]['code'];
 
         // Fetch region language ('en','zh')
         $regionLanguage = is_array( $regions[$region]['language'] )
-            ? implode(',', $regions[$region]['language'])
+            ? implode('|', $regions[$region]['language'])
             : $regions[$region]['language'] ;
 
-        // Example => "movies:popular:page:2" in Redis
-        $redisCacheName = 'movies:' . $regionCode;
+        // "movies:HK" or "movies:HK:page:2"
+        if( $page == 1 )
+        {
+            $redisCacheName = 'movies:'.$regionCode;
+        }else{
+            $redisCacheName = 'movies:'.$regionCode.':page:'.$page;
+        }
 
         // Cache fetched movies
         if( !Redis::exists($redisCacheName) )
         {
-            $movies = [];
+            $url = "https://api.themoviedb.org/3/discover/movie?language=en-US&region=".$regionCode."&sort_by=primary_release_date.desc&include_adult=false&include_video=false&page=".$page."&release_date.lte=".$nowDate."&with_original_language=".$regionLanguage ;
 
-            // Multiple language
-            if( is_array($regions[$region]['language']) )
-            {
-                $regionLanguage = $regions[$region]['language'];
-
-                foreach ($regionLanguage as $language) {
-                    $url = "https://api.themoviedb.org/3/discover/movie?sort_by=release_date.desc&with_original_language=".$language."&region=".$regionCode."&with_production_countries=".$regionCode;
-                    
-                    $results = $this->fetch($url, 1, 'results');
-
-                    $movies = array_merge($movies, $results);
-                }
-            }
+            $movies = $this->fetch($url, 1, 'results');
             
-            $json_encoded = json_encode( $movies );
-
-            Redis::set($redisCacheName, $json_encoded, 'EX', 1800);  // Expire in 30 mins
+            // Cache movies
+            $this->redisCache($redisCacheName, $movies);
         }
 
+        // Return movies
         $moviesByRegion = json_decode( Redis::get($redisCacheName), true );
 
         return $moviesByRegion;
@@ -140,21 +137,21 @@ class MovieApiService
     /**
      * Fetch more movies (Popular).
      */
-    public function loadMore(string $category, int $page)
+    public function loadMore(string $category, $page=2)
     {
+        // API endpoint
+        $url = "https://api.themoviedb.org/3/movie/" . $category;
+
         // Example => "movies:popular:page:2" in Redis
         $redisCacheName = 'movies:' . $category . ':page:' . $page;
         
         // Cache fetched movies
         if( !Redis::exists($redisCacheName) )
-        {
-            $url = "https://api.themoviedb.org/3/movie/" . $category;
-            
-            $fetchedMovies = $this->fetch($url, $page, 'results');
+        {            
+            $fetchedMovies = $this->fetch($url, $page, 'results', true);
 
-            $json_encoded = json_encode( $fetchedMovies );
-
-            Redis::set($redisCacheName, $json_encoded, 'EX', 1800);  // Expire in 30 mins
+            // Cache movies
+            $this->redisCache($redisCacheName, $fetchedMovies);
         }
 
         // Return movies
@@ -165,24 +162,52 @@ class MovieApiService
 
 
     /**
+     * Fetch more movies (Popular).
+     */
+    // public function loadMoreRegion(string $region, int $page)
+    // {
+    //     $regions = $this->fetchRegions();
+
+    //     $regionCode = $regions[$region]['code'];
+
+    //     $url
+
+    //     // Example => "movies:popular:page:2" in Redis
+    //     $redisCacheName = 'movies:' . $regionCode . ':page:' . $page;
+        
+    //     // Cache fetched movies
+    //     if( !Redis::exists($redisCacheName) )
+    //     {            
+    //         $fetchedMovies = $this->fetch($url, $page, 'results', true);
+
+    //         // Cache movies
+    //         $this->redisCache($redisCacheName, $fetchedMovies);
+    //     }
+
+    //     // Return movies
+    //     $moreMovies =  json_decode( Redis::get($redisCacheName), true );
+
+    //     return $moreMovies;
+    // }
+
+
+    /**
      * Fetch genres.
      */
     public function fetchGenres()
     {
-        if( !Redis::exists('genres:list') ){
+        $redisCacheName = 'genres:list';
+
+        if( !Redis::exists($redisCacheName) ){
             // Fetch data from API
             $genresList = $this->fetch('https://api.themoviedb.org/3/genre/movie/list', 1, 'genres');
             
             // Store in Redis
-            $json_encoded = json_encode( $genresList );
-            Redis::set('genres:list', $json_encoded, 'EX', 1800);  // Expire in 30 mins
-
-            // Show loader animation
-            Session::flash('loader', 'showing');
+            $this->redisCache($redisCacheName, $genresList);
         }
 
         // Return genres list
-        $genresList = json_decode( Redis::get('genres:list'), true );
+        $genresList = json_decode( Redis::get($redisCacheName), true );
 
         return $genresList;
     }
@@ -194,7 +219,9 @@ class MovieApiService
      */
     public function fetchRegions()
     {
-        if( !Redis::exists('regions:list') ){
+        $redisCacheName = 'regions:list';
+
+        if( !Redis::exists($redisCacheName) ){
             // Regions
             $regions = [
                 'Hong Kong' => [
@@ -206,7 +233,7 @@ class MovieApiService
                     'language' => ['zh','cn']
                 ],
                 'United States' => [
-                    'code' => ['GB','US'],
+                    'code' => 'US',
                     'language' => 'en'
                 ],
                 'Japan' => [
@@ -232,12 +259,11 @@ class MovieApiService
             ];
             
             // Store in Redis
-            $json_encoded = json_encode( $regions );
-            Redis::set('regions:list', $json_encoded, 'EX', 1800);  // Expire in 30 mins
+            $this->redisCache($redisCacheName, $regions);
         }
 
         // Return genres list
-        $regions = json_decode( Redis::get('regions:list'), true );
+        $regions = json_decode( Redis::get($redisCacheName), true );
 
         return $regions;
     }
@@ -246,14 +272,13 @@ class MovieApiService
     /**
      * Fetch from URL
      */
-    private function fetch(string $url , int $page = 1, string $resultArray=null, bool $appendToResponse=false )
+    private function fetch(string $url , $page = 1, string $resultArray=null, bool $load_more=false )
     {
         // Fetch url with bearer token
-        $response = $appendToResponse
-            ? Http::withToken(config('services.tmdb.token'))->get( $url )
-            : Http::withToken(config('services.tmdb.token'))->get( $url.'?page='.$page ) ;
-
-
+        $response = $load_more
+            ? Http::withToken(config('services.tmdb.token'))->get( $url.'?page='.$page )
+            : Http::withToken(config('services.tmdb.token'))->get( $url ) ;
+            
         // Check response OK
         if($response->getStatusCode() === 200)
         {
@@ -266,8 +291,18 @@ class MovieApiService
             // Abort with Status Code
             abort($response->getStatusCode());
         }
-    }   
+    }
     
+
+    /**
+     * Store into Redis
+     */
+    private function redisCache(string $name, $data, int $expiry_time=1800)
+    {
+        // Store in Redis
+        $json_encoded = json_encode( $data );
+        Redis::set($name, $json_encoded, 'EX', $expiry_time);  // Expire in 30 mins
+    }
 
 }
 

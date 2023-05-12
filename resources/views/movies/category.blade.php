@@ -66,34 +66,54 @@
         lazyImages.forEach(function(image) {
             observer.observe(image);
         });
-
-        // Infinite scroll
-        let category = document.getElementById('category-name').getAttribute('data-category');
-        let elem = document.querySelector('.grid');
-        let infScroll = new InfiniteScroll( elem, {
-            // options
-            path: `/movies/${category}/page/@{{#}}`,
-            append: '.movie',
-            history: false,
-            status: '.page-load-status',
-        });
-        
-        // After added new item, lazy load them
-        infScroll.on( 'append', function( body, path, items, response ) {
-            var lazyImages = document.querySelectorAll('.movie_poster');
-        
-            lazyImages.forEach(function(image) {
-                observer.observe(image);
-            });
-        });
-
-    
-
-        
-
     </script>
-    
 
-    
+    @if ( isset($type) && $type=="region")
+        <script>
+            // Infinite scroll
+            let category = document.getElementById('category-name').getAttribute('data-category');
+            let elem = document.querySelector('.grid');
+            
+            let infScroll = new InfiniteScroll( elem, {
+                // options
+                path: `/movies/region/${category}/page/@{{#}}`,
+                append: '.movie',
+                history: false,
+                status: '.page-load-status',
+            });
+            
+            // After added new item, lazy load them
+            infScroll.on( 'append', function( body, path, items, response ) {
+                var lazyImages = document.querySelectorAll('.movie_poster');
+            
+                lazyImages.forEach(function(image) {
+                    observer.observe(image);
+                });
+            });
+        </script>
+    @else
+        <script>
+            // Infinite scroll
+            let category = document.getElementById('category-name').getAttribute('data-category');
+            let elem = document.querySelector('.grid');
+            
+            let infScroll = new InfiniteScroll( elem, {
+                // options
+                path: `/movies/${category}/page/@{{#}}`,
+                append: '.movie',
+                history: false,
+                status: '.page-load-status',
+            });
+            
+            // After added new item, lazy load them
+            infScroll.on( 'append', function( body, path, items, response ) {
+                var lazyImages = document.querySelectorAll('.movie_poster');
+            
+                lazyImages.forEach(function(image) {
+                    observer.observe(image);
+                });
+            });
+        </script>
+    @endif
 
 @endsection

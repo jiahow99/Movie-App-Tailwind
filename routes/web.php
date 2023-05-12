@@ -37,12 +37,12 @@ Route::get('/movies/movie/{movie}', [MovieController::class, 'show'])->name('mov
 
 // Movies by Category
 Route::get('/movies/{category}', [MovieController::class, 'category'])->name('movies.category');
+Route::get('/movies/{category}/page/{page?}', [MovieController::class, 'loadMore']);
 
 // Movies by Region
 Route::get('/movies/region/{region}', [MovieController::class, 'moviesByRegion'])->name('movies.region');
+Route::get('/movies/region/{region}/page/{page}', [MovieController::class, 'moviesByRegion']);
 
-// Load More
-Route::get('/movies/{category}/page/{page?}', [MovieController::class, 'loadMore'])->name('movies.popular.load');
 
 Route::middleware(['auth', 'auth.api'])->group(function () {
     Route::post('/movie/{movie}/rating/{action}', [MovieController::class, 'rateMovie'])->name('movie.rate');

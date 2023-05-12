@@ -10,13 +10,16 @@ class CategoryViewModel extends ViewModel
     public $categoryName;
     public $movies;
     public $genresList;
+    public $type;
 
-    public function __construct($category, $moviesByCategory, $genresList)
+    public function __construct($category, $moviesByCategory, $genresList, $type=null)
     {
         $this->category = $category;
         $this->movies = $moviesByCategory;
         $this->genresList = $genresList;
+        $this->type = $type;
     }
+
 
     /**
      * Format movies
@@ -47,6 +50,7 @@ class CategoryViewModel extends ViewModel
         return $formattedMovies;
     }
 
+
     /**
      * Set category name
      */
@@ -71,6 +75,7 @@ class CategoryViewModel extends ViewModel
 
         return $this->categoryName;
     }
+
 
     /**
      * Convert genres into format "id" => "name" 
