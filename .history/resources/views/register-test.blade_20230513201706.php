@@ -64,7 +64,7 @@
 <div class="register-form w-full h-full flex justify-center align-middle">
     <div>
         <!-- login modal -->
-        <div class="register-box w-screen md:w-[600px] xl:w-[800px] mt-0 md:mt-12 pt-2 pb-10 px-8">
+        <div class="register-box  md:w-[600px] xl:w-[800px] mt-12 pt-2 pb-10 px-8">
             <h1 class="text-center text-2xl pb-10 tracking-widest font-bold mt-7 underline">Register</h1>
             <div class="xl:flex justify-between gap-5">
                 <!-- Start Login Form -->
@@ -118,7 +118,7 @@
                 <!-- End Login Form -->
 
                 <!-- Start Social Login -->
-                <div class="basis-1/2 mt-10 lg:mt-0 border-t lg:border-t-0 lg:border-l border-neutral-600 xl:pl-5 ">
+                <div class="basis-1/2 mt-10 lg:mt-0 border-t lg:border-l border-neutral-600 xl:pl-5 ">
                     <div class="w-full h-full flex flex-col justify-center align-middle ">
                         <span class="text-center text-gray-500 font-bold text-sm">OR</span>
                         <span class="text-center text-gray-500 font-bold">Log In With :</span>

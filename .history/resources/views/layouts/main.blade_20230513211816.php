@@ -48,7 +48,7 @@
     <!-- Start Navbar -->
     <nav id="navbar" class="relative border-b border-gray-800 z-50" x-data="{ account_dropdown: false }">
         <!-- Hamburger Menu -->
-        <div class="flex lg:hidden justify-between align-middle px-4 py-2">
+        <div class="flex justify-between align-middle px-4 py-2">
             <div></div>
             <div class="my-auto">
                 <a href="{{ route('movies.index') }}" class="flex items-center">

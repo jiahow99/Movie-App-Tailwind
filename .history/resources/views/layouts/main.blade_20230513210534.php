@@ -48,7 +48,7 @@
     <!-- Start Navbar -->
     <nav id="navbar" class="relative border-b border-gray-800 z-50" x-data="{ account_dropdown: false }">
         <!-- Hamburger Menu -->
-        <div class="flex lg:hidden justify-between align-middle px-4 py-2">
+        <div class="flex justify-between align-middle px-4 py-2">
             <div></div>
             <div class="my-auto">
                 <a href="{{ route('movies.index') }}" class="flex items-center">
@@ -56,9 +56,11 @@
                     <span class="no-underline font-bold ml-2">Movie App</span>
                 </a> 
             </div>
-            <div id="hamburger-toggler" class="bg-gray-700 px-3 py-2 rounded-lg" onclick="toggleMenu()">
-                <i class="fa-solid fa-bars"></i>
-            </div>  
+            <div>
+                <div id="hamburger-toggler" class="bg-gray-700 px-3 py-2 rounded-lg">
+                    <i class="fa-solid fa-bars"></i>
+                </div>  
+            </div>
         </div>
         <div id="hamburger-menu" class="hidden">
             <div class="text-center">
@@ -82,7 +84,7 @@
         </div>
 
         <!-- Deskop Menu -->
-        <div class="container mx-auto hidden lg:flex flex-col lg:flex-row items-center justify-between px-4 py-6">
+        <div class="container mx-auto flex flex-col lg:flex-row items-center justify-between px-4 py-6 hidden lg:block">
             <ul class="flex flex-col lg:flex-row items-center">
                 <li>
                     <a href="{{ route('movies.index') }}" class="flex items-center">
@@ -246,8 +248,6 @@
 
     @yield('scripts')
     
-    <!-- Jquery -->
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     @livewireScripts
 
     <!-- If make API call -->
@@ -272,6 +272,7 @@
     <script>
         // Scroll to Top button
         const scrollToTopBtn = document.querySelector(".scroll-to-top");
+
         window.addEventListener("scroll", () => {
             if (window.pageYOffset > 100) {
                 scrollToTopBtn.style.display = "block";
@@ -281,9 +282,6 @@
         });
 
         // Hamburger menu
-        function toggleMenu() {
-            $('#hamburger-menu').slideToggle();
-        }
     </script>
 
 </body>

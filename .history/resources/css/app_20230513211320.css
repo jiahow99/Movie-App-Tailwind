@@ -549,3 +549,11 @@ input:-webkit-autofill:active {
 }
 /******** Actor Image Overlay ********/
 
+
+
+#hamburger-menu{
+  animation-name: slideDown;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}

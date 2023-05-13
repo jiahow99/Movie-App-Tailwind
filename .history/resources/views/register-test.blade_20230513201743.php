@@ -64,7 +64,7 @@
 <div class="register-form w-full h-full flex justify-center align-middle">
     <div>
         <!-- login modal -->
-        <div class="register-box w-screen md:w-[600px] xl:w-[800px] mt-0 md:mt-12 pt-2 pb-10 px-8">
+        <div class="register-box w-full md:w-[600px] xl:w-[800px] mt-12 pt-2 pb-10 px-8">
             <h1 class="text-center text-2xl pb-10 tracking-widest font-bold mt-7 underline">Register</h1>
             <div class="xl:flex justify-between gap-5">
                 <!-- Start Login Form -->

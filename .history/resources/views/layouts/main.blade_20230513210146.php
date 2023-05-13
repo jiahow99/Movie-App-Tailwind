@@ -48,7 +48,7 @@
     <!-- Start Navbar -->
     <nav id="navbar" class="relative border-b border-gray-800 z-50" x-data="{ account_dropdown: false }">
         <!-- Hamburger Menu -->
-        <div class="flex lg:hidden justify-between align-middle px-4 py-2">
+        <div class="flex justify-between align-middle px-4 pt-2">
             <div></div>
             <div class="my-auto">
                 <a href="{{ route('movies.index') }}" class="flex items-center">
@@ -56,11 +56,13 @@
                     <span class="no-underline font-bold ml-2">Movie App</span>
                 </a> 
             </div>
-            <div id="hamburger-toggler" class="bg-gray-700 px-3 py-2 rounded-lg" onclick="toggleMenu()">
-                <i class="fa-solid fa-bars"></i>
-            </div>  
+            <div>
+                <div id="ham-menu" class="bg-gray-700 px-3 py-2 rounded-lg">
+                    <i class="fa-solid fa-bars"></i>
+                </div>  
+            </div>
         </div>
-        <div id="hamburger-menu" class="hidden">
+        <div id="hamburger-menu">
             <div class="text-center">
                 <a href="{{ route('movies.index') }}" class="hover:text-gray-300">Movies</a>
             </div>
@@ -73,16 +75,10 @@
             <div class="text-center mt-2">
                 <livewire:search-dropdown />
             </div>
-            @if (!Auth::check())
-                <!-- Login -->
-                <div class="login-btn px-7 py-1 bg-gray-700 text-gray-300 w-fit mx-auto my-3" x-on:click="loginModal = true">
-                    Login
-                </div>
-            @endif
         </div>
 
-        <!-- Deskop Menu -->
-        <div class="container mx-auto hidden lg:flex flex-col lg:flex-row items-center justify-between px-4 py-6">
+        <!-- Hamburger Menu -->
+        <div class="container mx-auto flex flex-col lg:flex-row items-center justify-between px-4 py-6">
             <ul class="flex flex-col lg:flex-row items-center">
                 <li>
                     <a href="{{ route('movies.index') }}" class="flex items-center">
@@ -110,10 +106,8 @@
                     <div class="login-btn px-7 py-1 bg-gray-700 text-gray-300" x-on:click="loginModal = true">
                         Login
                     </div>
-                @endif
 
-                <!-- Account -->
-                @if (Auth::check())
+                    <!-- Account -->
                     <div class="relative mt-3 lg:mt-0 w-32 text-right select-none mr-10">
                         <div class="flex justify-end align-center gap-2">
                             <i class="fa-solid fa-user rounded-full border-white border-2 p-1 cursor-pointer" x-on:click="account_dropdown = !account_dropdown"></i>
@@ -246,8 +240,6 @@
 
     @yield('scripts')
     
-    <!-- Jquery -->
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     @livewireScripts
 
     <!-- If make API call -->
@@ -272,6 +264,7 @@
     <script>
         // Scroll to Top button
         const scrollToTopBtn = document.querySelector(".scroll-to-top");
+
         window.addEventListener("scroll", () => {
             if (window.pageYOffset > 100) {
                 scrollToTopBtn.style.display = "block";
@@ -279,11 +272,6 @@
                 scrollToTopBtn.style.display = "none";
             }
         });
-
-        // Hamburger menu
-        function toggleMenu() {
-            $('#hamburger-menu').slideToggle();
-        }
     </script>
 
 </body>
