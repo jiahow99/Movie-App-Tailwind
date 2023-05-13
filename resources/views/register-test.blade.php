@@ -68,11 +68,20 @@
             <h1 class="text-center text-2xl pb-10 tracking-widest font-bold mt-7 underline">Register</h1>
             <div class="xl:flex justify-between gap-5">
                 <!-- Start Login Form -->
-                <form class="basis-1/2" action="{{ route('login') }}" method="POST">
+                <form class="basis-1/2" action="{{ route('register') }}" method="POST">
                     @csrf
+                    <!-- Name -->
+                    <div class="user-box mb-3 @error('email') invalid @enderror">
+                        <input type="text" name="name" value="{{ old('name') }}" required >
+                        @error('name') 
+                            <span class="text-sm text-red-500 font-bold">{{ $message }}</span> 
+                        @enderror
+                        <label>Name</label>
+                    </div>
+
                     <!-- Email -->
                     <div class="user-box mb-3 @error('email') invalid @enderror">
-                        <input type="text" name="email" value="{{ old('email') }}" required x-ref="email">
+                        <input type="text" name="email" value="{{ old('email') }}" required >
                         @error('email') 
                             <span class="text-sm text-red-500 font-bold">{{ $message }}</span> 
                         @enderror
@@ -81,7 +90,7 @@
     
                     <!-- Password -->
                     <div class="user-box mb-3">
-                        <input type="password" name="password" required x-ref="password">
+                        <input type="password" name="password" required >
                         @error('password') 
                             <span class="text-sm text-red-500 font-bold">{{ $message }}</span> 
                         @enderror
@@ -90,25 +99,11 @@
     
                     <!-- Confirm Password -->
                     <div class="user-box mb-3">
-                        <input type="password_confirm" name="password_confirmation" required x-ref="password_confirm">
+                        <input type="password" name="password_confirmation" required >
                         <label>Confirm Password</label>
                     </div>
-    
-    
-                    <!-- Remember me -->
-                    <div class="flex items-center justify-between mt-10 mb-5">
-                        <div class="flex items-start">
-                            <div class="flex items-center h-5">
-                                <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500">
-                            </div>
-                            <div class="ml-3 text-sm">
-                                <label for="remember" class="text-white hover:cursor-pointer select-none text-center text-sm font-semibold">Remember me</label>
-                            </div>
-                        </div>
-                        <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
-                    </div>  
                     
-                    <!-- Login -->
+                    <!-- Login Button -->
                     <div class="text-center mt-10">
                         <button type="submit" class="w-full py-1 px-10 mx-auto login-btn-2 rounded-md">
                             Login

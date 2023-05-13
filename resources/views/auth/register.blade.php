@@ -1,77 +1,149 @@
-@extends('layouts.app')
+@extends('layouts.main')
+
+@section('style')
+    <style>
+        .register-box {
+        background: #252222f2;
+        box-sizing: border-box;
+        box-shadow: 0 15px 25px rgba(0,0,0,.6);
+        border-radius: 10px;
+        }
+
+        .register-box .user-box {
+        position: relative;
+        }
+
+        .register-box .user-box input {
+        width: 100% !important;
+        padding: 10px 0 !important;
+        font-size: 16px !important;
+        color: #fff !important;
+        /* margin-bottom: 30px; */
+        border: none !important;
+        border-bottom: 1px solid #fff !important;
+        outline: none !important;
+        background: transparent !important;
+        }
+
+        .register-box .invalid input{
+        border-bottom: 2px solid #d31414 !important;
+        }
+
+        /* Disable Autofill overriding Css */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+        -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+        -webkit-transition-delay: 9999s;
+        }
+
+        .register-box .user-box label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px 0;
+        font-size: 16px;
+        color: #fff;
+        pointer-events: none;
+        transition: .5s;
+        }
+
+        .register-box .user-box input:focus ~ label,
+        .register-box .user-box input:valid ~ label {
+        top: -20px;
+        left: 0;
+        color: #bdb8b8;
+        font-size: 12px;
+        }
+    </style>
+@endsection
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+<div class="register-form w-full h-full flex justify-center align-middle">
+    <div>
+        <!-- login modal -->
+        <div class="register-box w-screen md:w-[600px] xl:w-[800px] mt-0 md:mt-12 pt-2 pb-10 px-8">
+            <h1 class="text-center text-2xl pb-10 tracking-widest font-bold mt-7 underline">Register</h1>
+            <div class="xl:flex justify-between gap-5">
+                <!-- Start Login Form -->
+                <form class="basis-1/2" action="{{ route('register') }}" method="POST">
+                    @csrf
+                    <!-- Name -->
+                    <div class="user-box mb-3 @error('email') invalid @enderror">
+                        <input type="text" name="name" value="{{ old('name') }}" required >
+                        @error('name') 
+                            <span class="text-sm text-red-500 font-bold">{{ $message }}</span> 
+                        @enderror
+                        <label>Name</label>
+                    </div>
 
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+                    <!-- Email -->
+                    <div class="user-box mb-3 @error('email') invalid @enderror">
+                        <input type="text" name="email" value="{{ old('email') }}" required >
+                        @error('email') 
+                            <span class="text-sm text-red-500 font-bold">{{ $message }}</span> 
+                        @enderror
+                        <label>Email</label>
+                    </div>
+    
+                    <!-- Password -->
+                    <div class="user-box mb-3">
+                        <input type="password" name="password" required >
+                        @error('password') 
+                            <span class="text-sm text-red-500 font-bold">{{ $message }}</span> 
+                        @enderror
+                        <label>Password</label>
+                    </div>
+    
+                    <!-- Confirm Password -->
+                    <div class="user-box mb-3">
+                        <input type="password" name="password_confirmation" required >
+                        <label>Confirm Password</label>
+                    </div>
+                    
+                    <!-- Login Button -->
+                    <div class="text-center mt-10">
+                        <button type="submit" class="w-full py-1 px-10 mx-auto login-btn-2 rounded-md">
+                            Login
+                        </button >
+                    </div>
+                </form>
+                <!-- End Login Form -->
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                <!-- Start Social Login -->
+                <div class="basis-1/2 mt-10 lg:mt-0 border-t lg:border-t-0 lg:border-l border-neutral-600 xl:pl-5 ">
+                    <div class="w-full h-full flex flex-col justify-center align-middle ">
+                        <span class="text-center text-gray-500 font-bold text-sm">OR</span>
+                        <span class="text-center text-gray-500 font-bold">Log In With :</span>
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        <!-- Social media login -->
+                        <a href="{{ route('facebook.login') }}">
+                            <div class="facebook w-full py-2 bg-blue-600 hover:bg-blue-800 duration-300 text-center rounded-md mt-3">
+                                <i class="fa-brands fa-facebook-f text-white mr-2"></i>
+                                <span class="text-sm">Log in with Facebook</span>
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        </a>
+                        <a href="{{ route('google.login') }}">
+                            <div class="google w-full flex justify-center align-middle py-2 bg-white hover:bg-slate-300 duration-300 text-center rounded-md mt-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="mr-2" viewBox="0 0 48 48" width="22px"><path fill="#fbc02d" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12	s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20	s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/><path fill="#e53935" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039	l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/><path fill="#4caf50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36	c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/><path fill="#1565c0" d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/></svg>
+                                <span class="text-sm text-black">Log in with Google</span>
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        </a>
+                        <a href="{{ route('github.login') }}">
+                            <div class="github w-full flex justify-center align-middle py-2 bg-[#f5f5f5] hover:bg-slate-300 duration-300 text-center rounded-md mt-3">
+                                <i class="fa-brands fa-github text-xl text-black mr-2"></i>
+                                <span class="text-sm text-[#333]">Log in with Github</span>
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                        </a>
+                    </div>
                 </div>
+                <!-- End Social Login -->
             </div>
         </div>
     </div>
+    
 </div>
+
 @endsection

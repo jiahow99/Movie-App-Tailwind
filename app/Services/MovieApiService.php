@@ -80,7 +80,10 @@ class MovieApiService
 
             // Store in Redis
             $this->redisCache($redisCacheName, $movies);
+            
+            session()->flash('loader', true);
         }
+        
         
         // Return from Redis
         $moviesByCategory = json_decode( Redis::get('movies:'.$category) , true ); 
@@ -119,13 +122,16 @@ class MovieApiService
         // Cache fetched movies
         if( !Redis::exists($redisCacheName) )
         {
-            $url = "https://api.themoviedb.org/3/discover/movie?language=en-US&region=".$regionCode."&sort_by=primary_release_date.desc&include_adult=false&include_video=false&page=".$page."&release_date.lte=".$nowDate."&with_original_language=".$regionLanguage ;
+            $url = "https://api.themoviedb.org/3/discover/movie?language=en-US&region=".$regionCode."&include_adult=false&include_video=false&page=".$page."&release_date.lte=".$nowDate."&with_original_language=".$regionLanguage ;
 
             $movies = $this->fetch($url, 1, 'results');
             
             // Cache movies
             $this->redisCache($redisCacheName, $movies);
+
+            session()->flash('loader', true);
         }
+
 
         // Return movies
         $moviesByRegion = json_decode( Redis::get($redisCacheName), true );

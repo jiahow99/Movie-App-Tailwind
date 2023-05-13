@@ -29,6 +29,7 @@ Route::get('/login/facebook/redirect', [LoginController::class, 'facebookRedirec
 
 // Register
 Route::view('/register/test', 'register-test');
+Route::view('/verify', 'auth.verify');
 
 /******************************** Public Route ********************************/
 // Movies

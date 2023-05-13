@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Movie App</title>
+    <title>{{ config('app.name') }}</title>
     @vite('resources/css/app.css')
 
     <!-- FontAwesome icon -->
@@ -53,7 +53,7 @@
             <div class="my-auto">
                 <a href="{{ route('movies.index') }}" class="flex items-center">
                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABKUlEQVR4nO2WTU4CMRSAuzLsvICs2bPQRIY9E+K5HJceA0LCHfhdcwXHYYVGWRrNZxob8lLKoO0UiOFLumhf06/z+qapUqcCUAcGwNq0IdA4hPSFbV51LKZ4wG76Yt4F8AAsgQLI9FiIeC1Et0Ai+u9inhbZZFWJE6At+m9iXuHYXBEiHpakuucQy80FiRumkGxWwNWeVN97i0Vl9/WZmtaTUlFcmfny8OI6CkAXeMafHEh9xDnhPO1Yuw0sgLErWAnWmpfAI/DlikcRA3c6A2UbiyUujW84i33Zl0Fl4206i4/9O/3lAskjXpmJuTJHrmAaKNdp7ahQgNkvZNNgkQ1wA3yadi3Gm8CHObeWqhp+zsT5ehRPn0UM8dSku+aI1YA5MKlcrP4r3zUAtm9D5+gNAAAAAElFTkSuQmCC" alt="movie_app_logo">
-                    <span class="no-underline font-bold ml-2">Movie App</span>
+                    <span class="no-underline font-bold ml-2">{{ config('app.name') }}</span>
                 </a> 
             </div>
             <div id="hamburger-toggler" class="bg-gray-700 px-3 py-2 rounded-lg" onclick="toggleMenu()">
@@ -87,7 +87,7 @@
                 <li>
                     <a href="{{ route('movies.index') }}" class="flex items-center">
                         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABKUlEQVR4nO2WTU4CMRSAuzLsvICs2bPQRIY9E+K5HJceA0LCHfhdcwXHYYVGWRrNZxob8lLKoO0UiOFLumhf06/z+qapUqcCUAcGwNq0IdA4hPSFbV51LKZ4wG76Yt4F8AAsgQLI9FiIeC1Et0Ai+u9inhbZZFWJE6At+m9iXuHYXBEiHpakuucQy80FiRumkGxWwNWeVN97i0Vl9/WZmtaTUlFcmfny8OI6CkAXeMafHEh9xDnhPO1Yuw0sgLErWAnWmpfAI/DlikcRA3c6A2UbiyUujW84i33Zl0Fl4206i4/9O/3lAskjXpmJuTJHrmAaKNdp7ahQgNkvZNNgkQ1wA3yadi3Gm8CHObeWqhp+zsT5ehRPn0UM8dSku+aI1YA5MKlcrP4r3zUAtm9D5+gNAAAAAElFTkSuQmCC" alt="movie_app_logo">
-                        <span class="no-underline font-bold ml-2">Movie App</span>
+                        <span class="no-underline font-bold ml-2">{{ config('app.name') }}</span>
                     </a> 
                 </li>
                 <li class="lg:ml-16 mt-3 lg:mt-0">
@@ -185,7 +185,7 @@
                           <label for="remember" class="text-white hover:cursor-pointer select-none text-center text-sm font-semibold">Remember me</label>
                         </div>
                     </div>
-                    <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
+                    <a href="{{ route('password.request') }}" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
                 </div>  
                 
                 <!-- Login -->
@@ -197,7 +197,7 @@
 
                 <!-- Sign up -->
                 <div class="text-gray-400/80 text-sm mt-5 font-semibold text-center">
-                    <span>Don't have an account ? Sign up</span>
+                    <span>Don't have an account ? <a class="text-blue-500 text-lg hover:underline" href="{{ route('register') }}">Sign up</a></span>
                 </div>
 
                 <div class="inline-flex items-center justify-center w-full">

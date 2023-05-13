@@ -202,11 +202,13 @@
                     <div class="swiper-wrapper">
                       @foreach ($movie['credits']['cast'] as $key => $actor)
                         <div class="swiper-slide flex-col">
-                            <div class="actor-image cursor-pointer" data-aos="fade-up" data-aos-delay="{{ $key * 200 }}" data-aos-once="true">
-                                <img src="{{ $actor['profile_path'] }}" alt="actor_name">
-                                <div class="actor-name text-2xl whitespace-nowrap">{{ $actor['name'] }}</div>
-                            </div>
-                            <div class="text-gray-400 text-left">{{ $actor['character'] }}</div>
+                            <a href="{{ route('actor.show', $actor['id']) }}">
+                                <div class="actor-image cursor-pointer" data-aos="fade-up" data-aos-delay="{{ $key * 200 }}" data-aos-once="true">
+                                    <img src="{{ $actor['profile_path'] }}" alt="actor_name">
+                                    <div class="actor-name text-2xl whitespace-nowrap">{{ $actor['name'] }}</div>
+                                </div>
+                                <div class="text-gray-400 text-left">{{ $actor['character'] }}</div>
+                            </a>
                         </div>
                       @endforeach
                     </div>
@@ -263,13 +265,13 @@
             </div>
 
             <!-- Thumbnails (Mobile) -->
-            <div id="gallery" class="grid grid-cols-1 md:grid-cols-2 gap-10 xl:hidden">
+            {{-- <div id="gallery" class="grid grid-cols-1 md:grid-cols-2 gap-10 xl:hidden">
                 @foreach ($movie['images']['backdrops'] as $image)
                     <a href="https://image.tmdb.org/t/p/original/{{ $image['file_path'] }}">
                         <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="movie_thumbnails" loading="lazy">
                     </a>
                 @endforeach
-            </div>
+            </div> --}}
 =        </div>
         
         <!--  Thumbnail Modal -->
