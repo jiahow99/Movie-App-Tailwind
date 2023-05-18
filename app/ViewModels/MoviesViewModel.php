@@ -10,16 +10,16 @@ class MoviesViewModel extends ViewModel
     public $nowPlaying;
     public $topRated;
     public $genresList;
-    public $regions;
+    public $filterData;
 
 
-    public function __construct($popularMovies, $nowPlaying, $topRated, $genresArray, $regions)
+    public function __construct($popularMovies, $nowPlaying, $topRated, $genresArray, $filterData)
     {
         $this->popularMovies = $popularMovies;
         $this->nowPlaying = $nowPlaying;
         $this->topRated = $topRated;
         $this->genresList = $genresArray;
-        $this->regions = $regions;
+        $this->filterData = $filterData;
     }
 
 
@@ -70,9 +70,7 @@ class MoviesViewModel extends ViewModel
     }
 
 
-    public function regions(){
-        return $this->regions;
-    }
+   
 
 
 }

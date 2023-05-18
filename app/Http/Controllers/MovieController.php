@@ -33,9 +33,9 @@ class MovieController extends Controller
 
         $genresArray = $movieApi->fetchGenres();
 
-        $regions = $movieApi->fetchRegions();
+        $filterData['regions'] = $movieApi->fetchRegions();
 
-        $viewModel = new MoviesViewModel($popularMovies, $nowPlaying, $topRated, $genresArray, $regions);
+        $viewModel = new MoviesViewModel($popularMovies, $nowPlaying, $topRated, $genresArray, $filterData);
 
         return view('movies.index', $viewModel);
     }
