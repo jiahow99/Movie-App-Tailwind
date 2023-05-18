@@ -9,6 +9,35 @@ use Illuminate\Support\Facades\Session;
 class MovieApiService
 {
     /**
+     * Fetch trending Tv/Movie.
+     */
+    public function fetchTrending(string $category, int $max_page = 2)
+    {
+        
+        $redisCacheName = $category.':trending';
+        
+        if( !Redis::exists($redisCacheName) )
+        {
+            $url = "https://api.themoviedb.org/3/trending/".$category."/week";
+
+            $trending = [];
+
+            for ($page=1; $page <= $max_page; $page++) { 
+
+                $fetchedTrending = $this->fetch($url, $page, 'results', true);
+
+                $trending = array_merge($trending, $fetchedTrending);
+            }
+
+            $this->redisCache($redisCacheName, $trending);
+        }
+
+        $trending = json_decode( Redis::get($redisCacheName), true);
+
+        return $trending;
+    }
+
+    /**
      * Fetch specific movie.
      */
     public function fetchMovie(string $id, ... $appendToResponse)

@@ -95,29 +95,5 @@ class MovieViewModel extends ViewModel
 
         return $formatted_movie;
     }
-
-
-    /**
-     * Fetch same collections
-     */
-    // public function movieCollections(){
-        
-    //     if( isset($this->movieCollections) )
-    //     {
-    //         $newMovieCollections = array_map(function($movie)
-    //         {
-    //             $movie['poster_path'] = isset($movie['poster_path'])
-    //                 ? 'https://image.tmdb.org/t/p/w500'.$movie['poster_path']
-    //                 : asset('/image/avatar-placeholder.jpg') ;
     
-    //             return collect($movie)->only( ['id', 'poster_path'] ) ;
-    //         }, 
-    //         $this->movieCollections);
-    
-    //         return collect($newMovieCollections);
-    //     }
-
-    //     return ;
-    // }
-
 }

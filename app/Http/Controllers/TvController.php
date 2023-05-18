@@ -14,11 +14,20 @@ class TvController extends Controller
      */
     public function index(Request $request, MovieApiService $movieApi)
     {
+        // Fetch how many pages of results - 20 result per page
+        $max_page = 2;
+
+        $trendingTv = $movieApi->fetchTrending('tv', 2);
+
         $popularTv = $movieApi->fetchCategoryTv('popular', 2);
 
         $topRatedTv = $movieApi->fetchCategoryTv('top_rated', 2);
 
-        $viewModel = new TvsViewModel();
+        $genresList = $movieApi->fetchGenres();
+
+        $filterData['regions'] = $movieApi->fetchRegions();
+
+        $viewModel = new TvsViewModel($trendingTv, $topRatedTv, $popularTv, $genresList, $filterData);
 
         return view('tv.index', $viewModel);
     }

@@ -38,7 +38,7 @@ class MoviesViewModel extends ViewModel
     }
 
 
-    public function genresList(){
+    private function genresList(){
         // id => genre (map)
         return collect($this->genresList)->mapWithKeys(function ($genresList){
             return [$genresList['id'] => $genresList['name']];
