@@ -155,35 +155,7 @@ class MovieApiService
      */
     public function fetchCategoryTv(string $category, int $max_page = 2)
     {
-        // Replace spacebar with '_'
         $category = str_replace(' ', '_', $category);
-
-        $redisCacheName = 'tv:'.$category;
-
-        // Check if stored data before
-        if( !Redis::exists($redisCacheName) ){
-
-            $tv = [];
-
-            // Fetch data from API
-            for ($page=1; $page <= $max_page; $page++) { 
-                
-                $fetchedTv = $this->fetch('https://api.themoviedb.org/3/tv/'.$category.'?language=en-US&page=1' , null , 'results' );
-
-                $tv = array_merge($tv, $fetchedTv);
-            }
-
-            // Store in Redis
-            $this->redisCache($redisCacheName, $tv);
-            
-            session()->flash('loader', true);
-        }
-        
-        
-        // Return from Redis
-        $tvByCategory = json_decode( Redis::get($redisCacheName) , true ); 
-
-        return $tvByCategory;
     }
 
     

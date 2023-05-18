@@ -1,5 +1,5 @@
-@extends('layouts.main')
+@extends('main.layout')
 
 @section('content')
-    
+    123
 @endsection

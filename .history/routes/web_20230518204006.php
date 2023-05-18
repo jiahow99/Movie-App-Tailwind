@@ -52,7 +52,7 @@ Route::middleware(['auth', 'auth.api'])->group(function () {
 });
 
 // Tv Series
-Route::get('/tvseries', [TvController::class, 'index'])->name('tv.index');
+Route::get('/tvseries', 'TvController@index')->name('tv.index');
 
 // Actors
 Route::get('/actors', [ActorController::class, 'index'])->name('actors.index');

@@ -181,9 +181,9 @@ class MovieApiService
         
         
         // Return from Redis
-        $tvByCategory = json_decode( Redis::get($redisCacheName) , true ); 
+        $moviesByCategory = json_decode( Redis::get( $redisCacheName ) , true ); 
 
-        return $tvByCategory;
+        return $moviesByCategory;
     }
 
     

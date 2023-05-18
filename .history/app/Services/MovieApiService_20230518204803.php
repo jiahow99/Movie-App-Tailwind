@@ -168,22 +168,22 @@ class MovieApiService
             // Fetch data from API
             for ($page=1; $page <= $max_page; $page++) { 
                 
-                $fetchedTv = $this->fetch('https://api.themoviedb.org/3/tv/'.$category.'?language=en-US&page=1' , null , 'results' );
+                $fetchedTv = $this->fetch('https://api.themoviedb.org/3/movie/'.$category , $page , 'results' , true);
 
-                $tv = array_merge($tv, $fetchedTv);
+                $movies = array_merge($movies, $fetchedTv);
             }
 
             // Store in Redis
-            $this->redisCache($redisCacheName, $tv);
+            $this->redisCache($redisCacheName, $movies);
             
             session()->flash('loader', true);
         }
         
         
         // Return from Redis
-        $tvByCategory = json_decode( Redis::get($redisCacheName) , true ); 
+        $moviesByCategory = json_decode( Redis::get('movies:'.$category) , true ); 
 
-        return $tvByCategory;
+        return $moviesByCategory;
     }
 
     
