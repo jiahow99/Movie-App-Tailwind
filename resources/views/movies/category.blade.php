@@ -22,8 +22,12 @@
         </div>
         <div class="hidden" id="category-name" data-category="{{ $category }}"></div>
 
-        @isset($chosenYear)
-            <div class="hidden" id="chosen-year" data-chosen-year="{{ $chosenYear }}"></div>
+        @isset($chosen['year'])
+            <div class="hidden" id="chosen-year" data-chosen-year="{{ $chosen['year'] }}"></div>
+        @endisset
+
+        @isset($chosen['genre'])
+            <div class="hidden" id="chosen-genre" data-chosen-genre="{{ $chosen['genre'] }}"></div>
         @endisset
     </div>
     <!-- End Movies -->
@@ -88,9 +92,24 @@
                 let elem = document.querySelector('.grid');
                 
                 // If filter has year
-                if( document.getElementById('chosen-year') ){
-                    let chosenYear = document.getElementById('chosen-year').getAttribute('data-chosen-year');
-                    var path = `/movies/region/${category}/page/@{{#}}?year=${chosenYear}`;
+                if ( document.getElementById('chosen-year') )
+                {
+                    var chosenYear = document.getElementById('chosen-year').getAttribute('data-chosen-year');
+                }else{
+                    var chosenYear = '';
+                }
+
+                // If filter has genre
+                if( document.getElementById('chosen-genre') )
+                {
+                    var chosenGenre = document.getElementById('chosen-genre').getAttribute('data-chosen-genre')
+                }else{
+                    var chosenGenre = '';
+                }
+
+                if( document.getElementById('chosen-year') || document.getElementById('chosen-genre') )
+                {
+                    var path = `/movies/region/${category}/page/@{{#}}?year=${chosenYear}&genre=${chosenGenre}`;
                 }else{
                     var path = `/movies/region/${category}/page/@{{#}}`;
                 }

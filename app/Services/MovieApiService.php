@@ -46,9 +46,9 @@ class MovieApiService
         {
             // URL for fetching movie
             $movieURL = "https://api.themoviedb.org/3/movie/" . $id . "?append_to_response=" . implode(',', $appendToResponse);
-            
+
             // Call API
-            $movie = $this->fetch($movieURL, 1, null);
+            $movie = $this->fetch($movieURL);
 
             // Collection ID
             $collectionID = $movie['belongs_to_collection']['id'] ?? null ;
@@ -165,38 +165,41 @@ class MovieApiService
         }
 
         $baseURL = "https://api.themoviedb.org/3/discover/movie";
-
-        // Format url based on presence of chosen filter
-        $formattedURL = isset($chosen)
-            ? $this->formatFilterURL($baseURL, $chosen)
-            : $baseURL."region=".$regionCode."&page=".$page."&release_date.lte=".$nowDate."&with_original_language=".$regionLanguage;
-
-        // Cache fetched movies
-        if( !Redis::exists($redisCacheName) )
+        
+        if( isset($chosen) )
         {
-            $movies = $this->fetch($formattedURL, $page, 'results');
+            $chosenYear = $chosen['year'] ?? '';
+            $chosenGenre = $chosen['genre'] ?? '';
+
+            $formattedURL =  $baseURL."?region=".$regionCode."&page=".$page."&primary_release_year=".$chosenYear."&with_genres=".$chosenGenre."&with_original_language=".$regionLanguage ;
             
-            // Cache movies
-            $this->redisCache($redisCacheName, $movies);
-
-            session()->flash('loader', true);
-        }
-
-
-        // Return movies
-        $moviesByRegion = json_decode( Redis::get($redisCacheName), true );
-
-        // If has filter, e.g. years,action
-        if( !$chosen == null )
-        {
-            $url = "https://api.themoviedb.org/3/discover/movie?language=en-US&region=".$regionCode."&include_adult=false&include_video=false&page=".$page."&primary_release_year=".$filters['year']."&with_original_language=".$regionLanguage ;
-
-            $filterMovies = $this->fetch($url, $page, 'results');
+            $filterMovies = $this->fetch($formattedURL, $page, 'results');
 
             return $filterMovies;
-        }
 
-        return $moviesByRegion;
+        }else{
+            $formattedURL =  $baseURL."?region=".$regionCode."&page=".$page."&primary_release_date.lte=".$nowDate."&with_original_language=".$regionLanguage ;
+
+            // Cache fetched movies
+            if( !Redis::exists($redisCacheName) )
+            {
+                $movies = $this->fetch($formattedURL, $page, 'results');
+                
+                // Cache movies
+                $this->redisCache($redisCacheName, $movies);
+
+                session()->flash('loader', true);
+            }
+
+
+            // Return movies
+            $moviesByRegion = json_decode( Redis::get($redisCacheName), true );
+
+            return $moviesByRegion;
+        }   
+
+
+        
     }
     
 
@@ -395,13 +398,6 @@ class MovieApiService
     }
 
 
-    /**
-     * Format url based on filter
-     */
-    private function formatFilterURL(string $baseURL, array $chosen)
-    {
-        if( isset )
-    }
 
 }
 

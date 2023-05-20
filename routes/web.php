@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\MovieController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TvController;
 use App\Http\Controllers\ActorController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\Auth\LoginController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 
 Auth::routes([
     'verify' => true
@@ -46,7 +47,6 @@ Route::get('/movies/{category}/page/{page?}', [MovieController::class, 'category
 // Movies by Region
 Route::get('/movies/region/{region}', [MovieController::class, 'moviesByRegion'])->name('movies.region');
 Route::get('/movies/region/{region}/page/{page}', [MovieController::class, 'moviesByRegion']);
-
 
 
 Route::middleware(['auth', 'auth.api'])->group(function () {

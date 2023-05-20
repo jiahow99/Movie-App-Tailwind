@@ -48,7 +48,7 @@ class MovieController extends Controller
     {
         // Fetch movie
         $movie = $movieApi->fetchMovie($id, 'images', 'videos', 'credits');
-            
+
         // Fetch all genres
         $genresList = $movieApi->fetchGenres();
         

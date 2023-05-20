@@ -94,30 +94,30 @@ class CategoryViewModel extends ViewModel
     }
 
 
-    /**
-     * Get filter 'year'
-     */
-    public function chosenYear()
-    {
-        if( $this->filterInput != null && $this->filterInput['year'] != null)
-        {
-            $this->chosenYear = $this->filterInput['year'];
+    // /**
+    //  * Get filter 'year'
+    //  */
+    // public function chosenYear()
+    // {
+    //     if( $this->filterInput != null && $this->filterInput['year'] != null)
+    //     {
+    //         $this->chosenYear = $this->filterInput['year'];
             
-            return $this->chosenYear;
-        }
-    }
+    //         return $this->chosenYear;
+    //     }
+    // }
 
 
-    /**
-     * Get filter 'genres'
-     */
-    public function chosenGenres()
-    {
-        if( !$this->filterInput == null && isset($this->filterInput['genre']))
-        {
-            $this->chosenGenre = $this->filterInput['genre'];
+    // /**
+    //  * Get filter 'genres'
+    //  */
+    // public function chosenGenres()
+    // {
+    //     if( !$this->filterInput == null && isset($this->filterInput['genre']))
+    //     {
+    //         $this->chosenGenre = $this->filterInput['genre'];
             
-            return $this->chosenYear;
-        }
-    }
+    //         return $this->chosenYear;
+    //     }
+    // }
 }
