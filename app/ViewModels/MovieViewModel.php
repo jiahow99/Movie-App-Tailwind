@@ -36,7 +36,7 @@ class MovieViewModel extends ViewModel
         // id => genre
         $genresFormatted = collect($this->movie['genres'])->mapWithKeys(function($genres){
             return [ $genres['id'] => $genres['name'] ]; 
-        })->implode(', ');
+        })->filter()->implode(', ');
 
 
         // Format cast

@@ -44,12 +44,12 @@ class TvController extends Controller
         $tv = $movieApi->fetchTv($id, 'images', 'videos', 'credits');
 
         // Fetch all genres
-        $genresList = $movieApi->fetchGenres('movie');
+        $genresList = $movieApi->fetchGenres('tv');
         
         // View model format data before passing into view
-        $viewModel = new TvViewModel($movie, $genresList);
+        $viewModel = new TvViewModel($tv, $genresList);
 
-        return view('movies.show', $viewModel);
+        return view('tv.show', $viewModel);
     }
 
 

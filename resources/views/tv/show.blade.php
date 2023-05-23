@@ -45,7 +45,7 @@
         isDesktop: window.innerWidth >= 1280,
         isOpen: false,
         autoplay: 0,
-        videoSrc: 'https://www.youtube.com/embed/{{ $movie['youtubeURL'] }}?autoplay=',
+        videoSrc: 'https://www.youtube.com/embed/{{ $tv['youtubeURL'] }}?autoplay=',
     }">
 
     <!-- Video Modal -->
@@ -65,23 +65,23 @@
     <div class="movie-info border-b border-gray-800">
         <div class="container mx-auto px-4 py-16 flex flex-col xl:flex-row">
             <!-- Poster -->
-            <img src="{{ $movie['poster_path'] }}" class="w-96 h-fit mx-auto xl:mx-0" alt="{{ $movie['title'] }}">
+            <img src="{{ $tv['poster_path'] }}" class="w-96 h-fit mx-auto xl:mx-0" alt="{{ $tv['name'] }}">
             <div class="mt-6 xl:mt-0 xl:ml-24">
-                <h2 class="text-4xl font-semibold">{{ $movie['title'] }} ({{ $movie['release_year'] }})</h2>
+                <h2 class="text-4xl font-semibold">{{ $tv['name'] }} ({{ $tv['first_air_date'] }})</h2>
                 <div class="flex items-center text-gray-400 mt-1">
                     <span class="text-orange-400"><i class="fa-solid fa-star"></i></span>
-                    <span class="ml-1">{{ $movie['vote_average'] }}</span>
+                    <span class="ml-1">{{ $tv['vote_average'] }}</span>
                     <span class="mx-2">|</span>
-                    <span>{{ $movie['release_date'] }}</span>
+                    <span>{{ $tv['first_air_date'] }}</span>
                     <!-- Rated -->
-                    @isset( $movie['is_rated'] )
+                    @isset( $tv['is_rated'] )
                         <span class="ml-5 mr-3">
                             <!-- Rate good -->
-                            <i class="fa-solid fa-thumbs-up fa-xl @if ($movie['is_rated'] === 'good') text-green-700 scale-125 @else text-gray-700 pointer-events-none @endif"></i>
+                            <i class="fa-solid fa-thumbs-up fa-xl @if ($tv['is_rated'] === 'good') text-green-700 scale-125 @else text-gray-700 pointer-events-none @endif"></i>
                         </span>
                         <span >
                             <!-- Rate bad -->
-                            <i class="fa-solid fa-thumbs-down fa-xl @if ($movie['is_rated'] === 'bad') text-red-500 scale-125 @else text-gray-700 pointer-events-none @endif"></i>
+                            <i class="fa-solid fa-thumbs-down fa-xl @if ($tv['is_rated'] === 'bad') text-red-500 scale-125 @else text-gray-700 pointer-events-none @endif"></i>
                         </span>
                     <!-- Not Rated Yet -->
                     @else
@@ -103,45 +103,29 @@
                         </span>
                     @endisset
                     <!-- Hidden Form (Post Request) -->
-                    <form id="rate-good" action="{{ route('movie.rate', [$movie['id'], 'good']) }}" method="POST" class="hidden">
+                    <form id="rate-good" action="{{ route('movie.rate', [$tv['id'], 'good']) }}" method="POST" class="hidden">
                         @csrf
                         @method('POST')
                     </form>
-                    <form id="rate-bad" action="{{ route('movie.rate', [$movie['id'], 'bad']) }}" method="POST" class="hidden">
+                    <form id="rate-bad" action="{{ route('movie.rate', [$tv['id'], 'bad']) }}" method="POST" class="hidden">
                         @csrf
                         @method('POST')
                     </form>
                 </div>
                 <!-- Genres -->
                 <div class="text-gray-400 mt-2">
-                    {{ $movie['genres'] }}
+                    {{ $tv['genres'] }}
                 </div>
                 <!-- Overview -->
                 <p class="text-gray-300 mt-8">
-                    {{ $movie['overview'] }}
+                    {{ $tv['overview'] }}
                 </p>
-                <!-- Crew -->
-                <div class="mt-12">
-                    <div class="text-white font-semibold">Featured Cast</div>
-                    <div class="flex mt-4">
-
-                        @foreach ($movie['credits']['crew'] as $crew)
-                            @if ($loop->index < 3)
-                                <div class="mr-8">
-                                    <div>{{ $crew['name'] }}</div>
-                                    <div class="text-sm text-gray-400">{{ $crew['department'].', '.$crew['job'] }}</div>
-                                </div>
-                            @endif
-                        @endforeach
-
-                    </div>
-                </div>
                 <!-- "Play trailer" -->
                 <div class="mt-12">
                     <!-- Desktop -->
                     <span 
                     class="flex items-center bg-orange-500 text-gray-900 rounded font-semibold px-10 py-4 
-                    hover:bg-orange-600 transition ease-in-out duration-300 space-x-3 w-fit cursor-pointer" 
+                    hover:bg-orange-600 transition ease-in-out duration-300 space-x-3 w-fit" 
                     x-show="isDesktop"
                     x-on:click="isOpen=true; autoplay=true"
                     >
@@ -150,7 +134,7 @@
                     </span>
                     <!-- Mobile -->
                     <a 
-                    href="https://www.youtube.com/watch?v={{ $movie['youtubeURL'] }}" 
+                    href="https://www.youtube.com/watch?v={{ $tv['youtubeURL'] }}" 
                     class="flex items-center bg-orange-500 text-gray-900 rounded font-semibold px-10 py-4 
                     hover:bg-orange-600 transition ease-in-out duration-300 space-x-3 w-fit" style="display: none"
                     x-show="isMobile"
@@ -160,16 +144,16 @@
                     </a>
                 </div>
                 <!-- Start Movie Collections -->
-                @isset($movie['collection_movies'])
+                @isset($tv['seasons'])
                     <div class="mt-8 xl:w-[900px] h-fit relative">
-                        <h3 class="text-lg font-bold text-slate-400 tracking-wide">Previous Series :</h3>
+                        <h3 class="text-lg font-bold text-slate-400 tracking-wide">Featured seasons :</h3>
                         <!-- Swiper Start -->
                         <div class="mt-3 swiper movie-collections">
                             <div class="swiper-wrapper">
-                                @foreach ($movie['collection_movies'] as $movieCollection)
+                                @foreach ($tv['seasons'] as $season)
                                 <div class="swiper-slide">
-                                    <a href="{{ route('movie.show', $movieCollection['id']) }}">
-                                        <img class="duration-300 hover:scale-105" src="{{ $movieCollection['poster_path'] }}" alt="movie_poster" loading="lazy">
+                                    <a href="{{ route('movie.show', $season['id']) }}">
+                                        <img class="duration-300 hover:scale-105" src="{{ $season['poster_path'] }}" alt="tv_poster" loading="lazy">
                                     </a>
                                 </div>
                                 @endforeach
@@ -197,17 +181,17 @@
         <div class="container mx-auto px-4 py-16">
             <h2 class="text-4xl font-semibold">Cast</h2>
             <!-- Swiper -->
-            <div class="relative w-full mt-3">
+            <div class="relative w-full mt-3 h-fit">
                 <div class="swiper swiper-actors">
                     <div class="swiper-wrapper">
-                      @foreach ($movie['credits']['cast'] as $key => $actor)
+                      @foreach ($tv['created_by'] as $key => $actor)
                         <div class="swiper-slide flex-col">
                             <a href="{{ route('actor.show', $actor['id']) }}">
                                 <div class="actor-image cursor-pointer" data-aos="fade-up" data-aos-delay="{{ $key * 200 }}" data-aos-once="true">
                                     <img src="{{ $actor['profile_path'] }}" alt="actor_name">
                                     <div class="actor-name text-2xl whitespace-nowrap">{{ $actor['name'] }}</div>
                                 </div>
-                                <div class="text-gray-400 text-left">{{ $actor['character'] }}</div>
+                                <div class="text-gray-400 text-left">{{ $actor['name'] }}</div>
                             </a>
                         </div>
                       @endforeach
@@ -241,7 +225,7 @@
             <!-- Thumbnails (Desktop) -->
             <div class="swiper-screenshots mt-6 relative hidden xl:block overflow-hidden" x-on:mouseenter="navigation = true" x-on:mouseleave="navigation = false">
                 <div class="swiper-wrapper">
-                    @foreach ($movie['images']['backdrops'] as $index=>$image)
+                    @foreach ($tv['images']['backdrops'] as $index=>$image)
                         <div class="swiper-slide" 
                         x-on:click=" 
                         imageSrc = 'https://image.tmdb.org/t/p/original/{{ $image['file_path'] }}';
@@ -250,7 +234,7 @@
                         swiper_thumbnails.slideTo(activeIndex);
                         "
                         >
-                            <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="{{ $movie['title'] }}_thumbnail" data-index="{{ $index }}">
+                            <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="{{ $tv['name'] }}_thumbnail" data-index="{{ $index }}">
                         </div>
                      @endforeach
                 </div>
@@ -266,7 +250,7 @@
 
             <!-- Thumbnails (Mobile) -->
             {{-- <div id="gallery" class="grid grid-cols-1 md:grid-cols-2 gap-10 xl:hidden">
-                @foreach ($movie['images']['backdrops'] as $image)
+                @foreach ($tv['images']['backdrops'] as $image)
                     <a href="https://image.tmdb.org/t/p/original/{{ $image['file_path'] }}">
                         <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="movie_thumbnails" loading="lazy">
                     </a>
@@ -280,7 +264,7 @@
                 <!-- Swiper -->
                 <div class="swiper swiper-thumbnail">
                     <div class="swiper-wrapper">
-                        @foreach ($movie['images']['backdrops'] as $image)
+                        @foreach ($tv['images']['backdrops'] as $image)
                             <div class="swiper-slide">
                                 <img src="https://image.tmdb.org/t/p/w780/{{ $image['file_path'] }}" loading="lazy">
                             </div>

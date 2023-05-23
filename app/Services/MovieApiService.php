@@ -149,43 +149,25 @@ class MovieApiService
      */
     public function fetchTv(string $id, ... $appendToResponse)
     {
-        if( !Redis::hexists('movies', $id) )
+        if( !Redis::hexists('tvs', $id) )
         {
             // URL for fetching movie
-            $movieURL = "https://api.themoviedb.org/3/movie/" . $id . "?append_to_response=" . implode(',', $appendToResponse);
+            $movieURL = "https://api.themoviedb.org/3/tv/" . $id . "?append_to_response=" . implode(',', $appendToResponse);
 
             // Call API
             $movie = $this->fetch($movieURL);
-
-            // Collection ID
-            $collectionID = $movie['belongs_to_collection']['id'] ?? null ;
-            if( isset($collectionID) )
-            {
-                // URL for fetching collection
-                $collectionURL = "https://api.themoviedb.org/3/collection/" . $collectionID;                
-
-                // Fetch collections of movies then Sort By "Latest"
-                $collectionMovies = collect( $this->fetch($collectionURL, 1, 'parts', false) )
-                    ->reject(function ($collectionMovie) use ($movie){
-                        return $collectionMovie['id'] == $movie['id'];
-                    })
-                    ->sortByDesc('release_date');
-
-                $movie['collection_movies'] = $collectionMovies;
-            }
-
             
             // Store in Redis
             $json_encoded = json_encode( $movie );
 
-            Redis::hset('movies', $id, $json_encoded);  
-            Redis::expire('movies', 1800);  // Expire in 30 mins
+            Redis::hset('tvs', $id, $json_encoded);  
+            Redis::expire('tvs', 1800);  // Expire in 30 mins
 
             return $movie;
         }
 
         // Return movie
-        return json_decode( Redis::hget('movies', $id), true );
+        return json_decode( Redis::hget('tvs', $id), true );
     }
 
 
