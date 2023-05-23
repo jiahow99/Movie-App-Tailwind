@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\ViewModels\TvsViewModel;
 use App\Services\MovieApiService;
 use App\ViewModels\MoviesViewModel;
-use App\ViewModels\TvsViewModel;
+use App\ViewModels\CategoryViewModel;
+use App\ViewModels\TvViewModel;
 
 class TvController extends Controller
 {
@@ -23,7 +25,7 @@ class TvController extends Controller
 
         $topRatedTv = $movieApi->fetchCategoryTv('top_rated', $max_page);
 
-        $genresList = $movieApi->fetchGenres();
+        $genresList = $movieApi->fetchGenres('tv');
 
         $filterData['regions'] = $movieApi->fetchRegions();
 
@@ -34,30 +36,85 @@ class TvController extends Controller
 
 
     /**
-     * Fetch Tv by Region
+     * Display the specified tv
+     */
+    public function show(MovieApiService $movieApi, string $id)
+    {
+        // Fetch movie
+        $tv = $movieApi->fetchTv($id, 'images', 'videos', 'credits');
+
+        // Fetch all genres
+        $genresList = $movieApi->fetchGenres('movie');
+        
+        // View model format data before passing into view
+        $viewModel = new TvViewModel($movie, $genresList);
+
+        return view('movies.show', $viewModel);
+    }
+
+
+    /**
+     * Fetch movies by categories
+     * [ 'Now Playing' , 'Top Rated' , 'Popular' ]
+     */
+    public function category(MovieApiService $movieApi, string $category, int $page=1)
+    {
+        if($page == 1)
+        {
+            // For index page
+            $results = ($category=='trending')
+                ? $movieApi->fetchTrending('tv', 2)
+                : $movieApi->fetchCategoryTv($category, 2);     
+                
+            $tvByCategory = array_slice($results, 0, 20);
+        }else {
+            // For category page
+            $tvByCategory = ($category=='trending')
+                ? $movieApi->fetchTrending('tv', 0, $page)
+                : $movieApi->fetchCategoryTv($category, 0, $page);    
+        }
+
+        // Fetch genres
+        $genresList = $movieApi->fetchGenres('tv');
+
+        $pageType = 'category';
+
+        // View model
+        $viewModel = new CategoryViewModel('tv', $category, $tvByCategory, $genresList, $pageType);
+
+        return view('tv.category', $viewModel);
+    }
+
+
+    /**
+     * Fetch tv by Region
      */
     public function tvByRegion(MovieApiService $movieApi, string $region, $page=1)
     {
-        // Get user input filter data
+        // Get filter data if have
         $filterInput = request()->except('region');
         
+        // Get chosen filter
+        $chosen['year'] = $filterInput['year'] ?? null ;
+        $chosen['genre'] = $filterInput['genre'] ?? null ;
+
         // Fetch movies by Region
-        $moviesByRegion = $movieApi->fetchRegionMovies($region, $page, $filterInput);
+        $moviesByRegion = $movieApi->discover('tv', $region, $page, $chosen);
         
         // Fetch all genres
-        $genresList = $movieApi->fetchGenres();
+        $genresList = $movieApi->fetchGenres('movie');
         
-        // Fetch all regions
+        // Fetch all filter data
         $filterData['regions'] = $movieApi->fetchRegions();
-        
-        // Fetch all years
         $filterData['years'] = $movieApi->fetchYears();
+        $filterData['genres'] = $movieApi->fetchGenres('movie');
 
-        $filterType = 'region';
+        $pageType = 'region';
 
         // View model
-        $viewModel = new CategoryViewModel($region, $moviesByRegion, $genresList, $filterType, $filterData, $filterInput);
+        $viewModel = new CategoryViewModel('tv', $region, $moviesByRegion, $genresList, $pageType, $filterData, $chosen);
 
-        return view('movies.category', $viewModel);
+        return view('tv.category', $viewModel);
     }
+
 }

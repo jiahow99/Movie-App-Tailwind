@@ -56,13 +56,18 @@ Route::middleware(['auth', 'auth.api'])->group(function () {
 
 
 // Tv Series
-Route::get('/tvseries', [TvController::class, 'index'])->name('tv.index');
+Route::get('/tv', [TvController::class, 'index'])->name('tv.index');
 
-// Movies by Category
-Route::get('/tv/{category}', [TvController::class, 'category'])->name('tv.category');
+// Single tv
+Route::get('/tv/{tv}', [TvController::class, 'show'])->name('tv.show');
+
+// Tv by Category
+Route::get('/tv/list/{category}', [TvController::class, 'category'])->name('tv.category');
 Route::get('/tv/{category}/page/{page?}', [TvController::class, 'category']);
 
-
+// Tv by Region
+Route::get('/tv/region/{region}', [TvController::class, 'tvByRegion'])->name('tv.region');
+Route::get('/tv/region/{region}/page/{page}', [TvController::class, 'tvByRegion']);
 
 
 // Actors

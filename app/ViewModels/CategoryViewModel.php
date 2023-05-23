@@ -6,23 +6,23 @@ use Spatie\ViewModels\ViewModel;
 
 class CategoryViewModel extends ViewModel
 {
+    public $type;
     public $category;
     public $categoryName;
     public $movies;
     public $genresList;
     public $filterType;
     public $filterData;
-    public $filterInput;
     public $chosen;
 
-    public function __construct($category, $moviesByCategory, $genresList, $filterType, $filterData=null, $filterInput=null, $chosen=null)
+    public function __construct($type, $category, $moviesByCategory, $genresList, $filterType, $filterData=null, $chosen=null)
     {
+        $this->type = $type;
         $this->category = $category;
         $this->movies = $moviesByCategory;
         $this->genresList = $genresList;
         $this->filterType = $filterType;
         $this->filterData = $filterData;
-        $this->filterInput = $filterInput;
         $this->chosen = $chosen;
     }
 
@@ -37,19 +37,27 @@ class CategoryViewModel extends ViewModel
             // id => genre
             $genresFormatted = collect($movie['genre_ids'])->mapWithKeys(function($value){
                 return [$value => $this->genresList()->get($value)];
-            })->implode(', ');
+            })->filter()->implode(', ');
 
             // Change value
             $movie['poster_path'] = $movie['poster_path']
                 ? 'https://image.tmdb.org/t/p/w500'.$movie['poster_path']
                 : asset('image/movie_placeholder.jpg');
+
             $movie['vote_average'] = $movie['vote_average']*10 . "%";
+            
             $movie['release_date'] = isset($movie['release_date'])
                 ? \Carbon\Carbon::parse($movie['release_date'])->format('M d, Y')
-                : 'unknown';
+                : 'To be confirmed';
+
+            $movie['first_air_date'] = isset($movie['first_air_date'])
+                ? \Carbon\Carbon::parse($movie['first_air_date'])->format('M d, Y')
+                : 'To be confirmed';
+
             $movie['genres'] = $genresFormatted;
+
             return collect($movie)->only([
-                'id', 'poster_path', 'title', 'vote_average', 'overview', 'release_date', 'genres', 'genre_ids'
+                'id', 'poster_path', 'title', 'vote_average', 'overview', 'release_date', 'genres', 'genre_ids', 'first_air_date', 'name'
             ]);
         }, $this->movies);
         
@@ -74,8 +82,12 @@ class CategoryViewModel extends ViewModel
             case 'popular':
                 $this->categoryName = 'Popular';
                 break;
+
+            case 'trending':
+                $this->categoryName = 'Trending';
+                break;
             default:
-                $this->categoryName = '';
+                $this->categoryName = $this->category;
                 break;
         }
         return $this->categoryName;
@@ -93,31 +105,4 @@ class CategoryViewModel extends ViewModel
         });
     }
 
-
-    // /**
-    //  * Get filter 'year'
-    //  */
-    // public function chosenYear()
-    // {
-    //     if( $this->filterInput != null && $this->filterInput['year'] != null)
-    //     {
-    //         $this->chosenYear = $this->filterInput['year'];
-            
-    //         return $this->chosenYear;
-    //     }
-    // }
-
-
-    // /**
-    //  * Get filter 'genres'
-    //  */
-    // public function chosenGenres()
-    // {
-    //     if( !$this->filterInput == null && isset($this->filterInput['genre']))
-    //     {
-    //         $this->chosenGenre = $this->filterInput['genre'];
-            
-    //         return $this->chosenYear;
-    //     }
-    // }
 }

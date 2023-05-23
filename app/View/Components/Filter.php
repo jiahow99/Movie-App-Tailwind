@@ -8,6 +8,7 @@ use Illuminate\View\Component;
 
 class Filter extends Component
 {
+    public $type;
     public $filterData;
     public $category;
     public $chosen;
@@ -15,8 +16,9 @@ class Filter extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($filterData, $category=null, $chosen=null)
+    public function __construct($type, $filterData, $category=null, $chosen=null)
     {
+        $this->type = $type;
         $this->filterData = $filterData;
         $this->category = $category;
         $this->chosen = $chosen;

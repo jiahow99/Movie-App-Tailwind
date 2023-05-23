@@ -6,6 +6,7 @@ use Spatie\ViewModels\ViewModel;
 
 class TvsViewModel extends ViewModel
 {
+    public $type;
     public $trendingTv;
     public $topRatedTv;
     public $popularTv;
@@ -14,6 +15,7 @@ class TvsViewModel extends ViewModel
 
     public function __construct($trendingTv, $topRatedTv, $popularTv, $genresList, $filterData)
     {
+        $this->type = 'tv';
         $this->trendingTv = $trendingTv;
         $this->topRatedTv = $topRatedTv;
         $this->popularTv = $popularTv;
@@ -72,13 +74,13 @@ class TvsViewModel extends ViewModel
 
             $tv['poster_path'] = 'https://image.tmdb.org/t/p/w500'.$tv['poster_path'];
             $tv['vote_average'] = $tv['vote_average']*10 . "%";
-            $tv['release_date'] = isset($tv['first_air_date'])
+            $tv['first_air_date'] = isset($tv['first_air_date'])
                 ? \Carbon\Carbon::parse($tv['first_air_date'])->format('M d, Y')
                 : 'To Be Confirmed...';
             $tv['genres'] = $genresFormatted;
 
             return collect($tv)->only([
-                'id', 'poster_path', 'name', 'vote_average', 'release_date', 'genres', 'genre_ids'
+                'id', 'poster_path', 'name', 'vote_average', 'first_air_date', 'genres', 'genre_ids'
             ]);
 
         }, $tvArray);

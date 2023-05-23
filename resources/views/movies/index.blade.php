@@ -20,7 +20,7 @@
 @section('content')
     <div class="container mx-auto px-4 pt-16">
         <!-- Filters -->
-        <x-filter :filterData="$filterData"/>
+        <x-filter :type="'movies'" :filterData="$filterData" />
 
         <!-- Now Playing Movies -->
         <div class="now-playing">
@@ -42,7 +42,7 @@
                 <div class="swiper-wrapper">
                     @foreach ($nowPlaying[0] as $movie)
                     <div class="swiper-slide">
-                        <x-movie-card :movie="$movie" />
+                        <x-movie-card :type="'movie'" :movie="$movie" />
                     </div>
                     @endforeach
                 </div>
@@ -51,7 +51,7 @@
                 <div class="swiper-wrapper">
                     @foreach ($nowPlaying[1] as $movie)
                     <div class="swiper-slide">
-                        <x-movie-card :movie="$movie" />
+                        <x-movie-card :type="'movie'" :movie="$movie" />
                     </div>
                     @endforeach
                 </div>
@@ -80,7 +80,7 @@
                 <div class="swiper-wrapper">
                     @foreach ($popularMovies[0] as $movie)
                     <div class="swiper-slide">
-                        <x-movie-card :movie="$movie" />
+                        <x-movie-card :type="'movie'" :movie="$movie" />
                     </div>
                     @endforeach
                 </div>
@@ -89,7 +89,7 @@
                 <div class="swiper-wrapper">
                     @foreach ($popularMovies[1] as $movie)
                     <div class="swiper-slide">
-                        <x-movie-card :movie="$movie" />
+                        <x-movie-card :type="'movie'" :movie="$movie" />
                     </div>
                     @endforeach
                 </div>
@@ -118,7 +118,7 @@
                 <div class="swiper-wrapper">
                     @foreach ($topRated[0] as $movie)
                     <div class="swiper-slide">
-                        <x-movie-card :movie="$movie" />
+                        <x-movie-card :type="'movie'" :movie="$movie" />
                     </div>
                     @endforeach
                 </div>
@@ -127,7 +127,7 @@
                 <div class="swiper-wrapper">
                     @foreach ($topRated[1] as $movie)
                     <div class="swiper-slide">
-                        <x-movie-card :movie="$movie" />
+                        <x-movie-card :type="'movie'" :movie="$movie" />
                     </div>
                     @endforeach
                 </div>

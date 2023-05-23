@@ -6,6 +6,7 @@ use Spatie\ViewModels\ViewModel;
 
 class MoviesViewModel extends ViewModel
 {
+    public $type;
     public $popularMovies;
     public $nowPlaying;
     public $topRated;
@@ -15,6 +16,7 @@ class MoviesViewModel extends ViewModel
 
     public function __construct($popularMovies, $nowPlaying, $topRated, $genresArray, $filterData)
     {
+        $this->type = 'movies';
         $this->popularMovies = $popularMovies;
         $this->nowPlaying = $nowPlaying;
         $this->topRated = $topRated;

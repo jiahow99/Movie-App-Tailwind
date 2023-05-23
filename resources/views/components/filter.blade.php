@@ -11,13 +11,13 @@
         @isset($filterData['regions'])
             <div class="font-bold">Countries :</div>
             <div class="flex flex-wrap justify-start align-middle gap-5 mt-2">
-                <a href="{{ route('movies.index') }}">
+                <a href="{{ route($type.'.index') }}">
                     <div class="px-4 duration-300 hover:-translate-y-1 rounded-full border-2 border-gray-300">
                         All
                     </div>
                 </a>
                 @foreach ($filterData['regions'] as $key => $item)
-                    <a href="{{ route('movies.region', $key) }}">
+                    <a href="{{ route($type.'.region', $key) }}">
                         <div class="w-28 text-center py-1 text-sm duration-200 rounded-full @if( isset($category) && $category == $key ) bg-gradient-to-r from-yellow-600 to-red-600 font-bold cursor-default shadow-lg @else bg-transparent border-2 border-gray-300 hover:-translate-y-1 hover:bg-gray-800 text-slate-300 hover:text-white  @endif ">
                             {{ $key }}
                         </div>
@@ -31,7 +31,7 @@
             <div class="font-bold mt-3">Years :</div>
             <div class="flex flex-wrap justify-start align-middle gap-5 mt-2">
                 @foreach ($filterData['years'] as $year)
-                    <a href="{{ route('movies.region', ['region'=> $category, 'year' => $year, 'genre' => $chosen['genre'] ?? null ]) }}">
+                    <a href="{{ route($type.'.region', ['region'=> $category, 'year' => $year, 'genre' => $chosen['genre'] ?? null ]) }}">
                         <div class="w-20 text-center py-1 text-sm duration-200 rounded-full @if( isset($chosen['year']) && $year == $chosen['year'] ) bg-gradient-to-r from-yellow-600 to-red-600 font-bold cursor-default shadow-lg @else bg-transparent border-2 border-gray-300 hover:-translate-y-1 hover:bg-gray-800 text-slate-300 hover:text-white @endif">
                             {{ $year }}
                         </div>
@@ -45,7 +45,7 @@
             <div class="font-bold mt-3">Genres :</div>
             <div class="flex flex-wrap justify-start align-middle gap-5 mt-2">
                 @foreach ($filterData['genres'] as $genre)
-                    <a href="{{ route('movies.region', ['region'=> $category, 'year' => $chosen['year'] ?? null, 'genre' => $genre['id'] ]) }}">
+                    <a href="{{ route($type.'.region', ['region'=> $category, 'year' => $chosen['year'] ?? null, 'genre' => $genre['id'] ]) }}">
                         <div class="w-32 text-center py-1 text-sm duration-200 rounded-full @if( isset($chosen['genre']) && $genre['id'] == $chosen['genre'] ) bg-gradient-to-r from-yellow-600 to-red-600 font-bold cursor-default shadow-lg @else bg-transparent border-2 border-gray-300 hover:-translate-y-1 hover:bg-gray-800 text-slate-300 hover:text-white @endif">
                             {{ $genre['name'] }}
                         </div>

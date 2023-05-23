@@ -5,16 +5,16 @@
 <div class="container mx-auto px-4 pt-16">
     <!-- Filter -->
     @isset($filterData)
-        <x-filter :type="'movies'" :filterData="$filterData" :chosen="$chosen" :category="$category" />
+        <x-filter :type="$type" :filterData="$filterData" :chosen="$chosen" :category="$category" />
     @endisset
 
     <!-- Start Movies -->
     <div class="movies">
-        <a href="{{ route('movies.category', $category) }}">
+        <a href="{{ route('tv.category', $category) }}">
             <h2 class="relative uppercase tracking-wider text-orange-500 text-2xl font-bold mb-4 after:content-[''] w-fit
             after:bg-[rgb(2,0,36)] after:bg-gradient-to-r after:from-red-800 after:via-yellow-600 after:to-yellow-500 after:w-[0%] after:left-0 after:-bottom-[3px] 
             after:h-[4px] after:absolute transition-all after:duration-300 hover:after:w-[100%] bg-gradient-to-r  from-amber-500 to-pink-500 bg-clip-text text-transparent">
-                {{ $categoryName }} Movies
+                {{ $categoryName }} TV
             </h2>
         </a>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 gap-8">
@@ -34,7 +34,7 @@
     </div>
     <!-- End Movies -->
 
-
+    
     <!-- Loading (infinite scroll) -->
     <div class="page-load-status text-center py-8">
         <p class="infinite-scroll-request"><i class="fas fa-spinner fa-spin fa-4x"></i></p>
@@ -111,9 +111,9 @@
 
                 if( document.getElementById('chosen-year') || document.getElementById('chosen-genre') )
                 {
-                    var path = `/movies/region/${category}/page/@{{#}}?year=${chosenYear}&genre=${chosenGenre}`;
+                    var path = `/tv/region/${category}/page/@{{#}}?year=${chosenYear}&genre=${chosenGenre}`;
                 }else{
-                    var path = `/movies/region/${category}/page/@{{#}}`;
+                    var path = `/tv/region/${category}/page/@{{#}}`;
                 }
                 
                 // Configuration
@@ -143,7 +143,7 @@
                 
                 // Configuration
                 let infScroll = new InfiniteScroll( elem, {
-                    path: `/movies/${category}/page/@{{#}}`,
+                    path: `/tv/${category}/page/@{{#}}`,
                     append: '.movie',
                     history: false,
                     status: '.page-load-status',

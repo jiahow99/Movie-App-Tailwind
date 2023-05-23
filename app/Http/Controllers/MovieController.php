@@ -31,7 +31,7 @@ class MovieController extends Controller
 
         $topRated = $movieApi->fetchCategoryMovies('top_rated', $max_page);
 
-        $genresArray = $movieApi->fetchGenres();
+        $genresArray = $movieApi->fetchGenres('movie');
 
         $filterData['regions'] = $movieApi->fetchRegions();
 
@@ -50,7 +50,7 @@ class MovieController extends Controller
         $movie = $movieApi->fetchMovie($id, 'images', 'videos', 'credits');
 
         // Fetch all genres
-        $genresList = $movieApi->fetchGenres();
+        $genresList = $movieApi->fetchGenres('movie');
         
         // View model format data before passing into view
         $viewModel = new MovieViewModel($movie, $genresList);
@@ -75,12 +75,12 @@ class MovieController extends Controller
         }
 
         // Fetch all genres
-        $genresList = $movieApi->fetchGenres();
+        $genresList = $movieApi->fetchGenres('movie');
 
         $pageType = 'category';
 
         // View model
-        $viewModel = new CategoryViewModel($category, $moviesByCategory, $genresList, $pageType);
+        $viewModel = new CategoryViewModel('movie', $category, $moviesByCategory, $genresList, $pageType);
 
         return view('movies.category', $viewModel);
     }
@@ -99,20 +99,20 @@ class MovieController extends Controller
         $chosen['genre'] = $filterInput['genre'] ?? null ;
 
         // Fetch movies by Region
-        $moviesByRegion = $movieApi->fetchRegionMovies($region, $page, $chosen);
+        $moviesByRegion = $movieApi->discover('movie', $region, $page, $chosen);
         
         // Fetch all genres
-        $genresList = $movieApi->fetchGenres();
+        $genresList = $movieApi->fetchGenres('movie');
         
         // Fetch all filter data
         $filterData['regions'] = $movieApi->fetchRegions();
         $filterData['years'] = $movieApi->fetchYears();
-        $filterData['genres'] = $movieApi->fetchGenres();
+        $filterData['genres'] = $movieApi->fetchGenres('movie');
 
         $pageType = 'region';
 
         // View model
-        $viewModel = new CategoryViewModel($region, $moviesByRegion, $genresList, $pageType, $filterData, $filterInput, $chosen);
+        $viewModel = new CategoryViewModel('movie', $region, $moviesByRegion, $genresList, $pageType, $filterData, $chosen);
 
         return view('movies.category', $viewModel);
     }
@@ -142,36 +142,6 @@ class MovieController extends Controller
         // Return to movie page
         return redirect()->back()->with('Success', 'Thank you for the feedback !');
     }
-
-
-    /**
-     * Movies infinite scroll (category page)
-     */
-    public function loadMore(MovieApiService $movieApi, string $category, $page=1)
-    {
-        $moreMovies = $movieApi->loadMore($category, $page);
-
-        $genresList = $movieApi->fetchGenres();
-        
-        $view_model = new CategoryViewModel($category, $moreMovies, $genresList);
-
-        return view('movies.category', $view_model);
-    }
-
-
-    /**
-     * Movies infinite scroll (category page)
-     */
-    // public function loadMoreRegion(MovieApiService $movieApi, string $region, $page = 1)
-    // {
-    //     $moreMovies = $movieApi->loadMoreRegion($region, $page);
-
-    //     $genresList = $movieApi->fetchGenres();
-        
-    //     $view_model = new CategoryViewModel($region, $moreMovies, $genresList);
-
-    //     return view('movies.category', $view_model);
-    // }
 
 
     /**
