@@ -15,6 +15,7 @@ class TvViewModel extends ViewModel
     {
         $this->tv = $tv;
         $this->genresList = $genresList;
+        // dd($tv);
     }
 
     public function tv(){
@@ -36,7 +37,7 @@ class TvViewModel extends ViewModel
         }, $this->tv['created_by']);
 
 
-        // Format cast
+        // Format season
         $this->tv['seasons'] = array_map(function($season){
 
             $season['poster_path'] = $season['poster_path']
@@ -68,9 +69,9 @@ class TvViewModel extends ViewModel
                 : null,
 
         ]))->only([
-            'id', 'poster_path', 'name', 'vote_average', 'overview', 'first_air_date', 'release_year', 'genres', 'seasons', 'youtubeURL', 'created_by', 'images', 'is_rated'
+            'id', 'poster_path', 'name', 'vote_average', 'overview', 'first_air_date', 'release_year', 'genres', 'seasons', 'youtubeURL', 'created_by', 'images', 'created_by'
         ]);
 
-        return $formatted_tv;
+        return collect($formatted_tv)->dump();
     }
 }

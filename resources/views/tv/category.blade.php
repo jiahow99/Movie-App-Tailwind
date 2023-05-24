@@ -36,8 +36,14 @@
 
     
     <!-- Loading (infinite scroll) -->
-    <div class="page-load-status text-center py-8">
-        <p class="infinite-scroll-request"><i class="fas fa-spinner fa-spin fa-4x"></i></p>
+    <div class="page-load-status text-center py-8" style="display: none">
+        <p class="infinite-scroll-request">
+            <div class="fixed inset-0 flex justify-center items-center">
+                <div class="px-6 py-1 bg-gray-500 rounded-xl" >
+                    <div class="movie-loader"></div>
+                </div>
+            </div>
+        </p>
         <p class="infinite-scroll-last text-2xl">End of content</p>
         <p class="infinite-scroll-error text-2xl">No more pages to load</p>
     </div>

@@ -265,13 +265,13 @@
             </div>
 
             <!-- Thumbnails (Mobile) -->
-            {{-- <div id="gallery" class="grid grid-cols-1 md:grid-cols-2 gap-10 xl:hidden">
+            <div id="gallery" class="grid grid-cols-1 md:grid-cols-2 gap-10 xl:hidden">
                 @foreach ($movie['images']['backdrops'] as $image)
                     <a href="https://image.tmdb.org/t/p/original/{{ $image['file_path'] }}">
                         <img src="https://image.tmdb.org/t/p/w500/{{ $image['file_path'] }}" alt="movie_thumbnails" loading="lazy">
                     </a>
                 @endforeach
-            </div> --}}
+            </div>
 =        </div>
         
         <!--  Thumbnail Modal -->

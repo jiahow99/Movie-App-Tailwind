@@ -257,7 +257,9 @@ class MovieApiService
             $chosenYear = $chosen['year'] ?? '';
             $chosenGenre = $chosen['genre'] ?? '';
 
-            $formattedURL =  $baseURL."?region=".$regionCode."&page=".$page."&primary_release_year=".$chosenYear."&with_genres=".$chosenGenre."&with_original_language=".$regionLanguage ;
+            $formattedURL = ( $type == 'tv' )
+                ? $baseURL."?first_air_date_year=".$chosenYear."&page=".$page."&with_genres=".$chosenGenre."&with_origin_country=".$regionCode."&with_original_language=".$regionLanguage
+                : $baseURL."?region=".$regionCode."&page=".$page."&primary_release_year=".$chosenYear."&with_genres=".$chosenGenre."&with_original_language=".$regionLanguage ;
             // dd($formattedURL);
             $filterMovies = $this->fetch($formattedURL, $page, 'results');
 
@@ -288,8 +290,25 @@ class MovieApiService
     }
     
 
-    
+    /**
+     * Fetch tv season.
+     */
+    public function fetchSeason(string $tv, string $season)
+    {
+        $redisCacheName = 'tv:'.$tv.':season:'.$season;
 
+        if( !Redis::exists($redisCacheName) )
+        {
+            $url = "https://api.themoviedb.org/3/tv/".$tv."/season/".$season."?append_to_response=videos,images,credits";
+            
+            return $this->fetch($url);
+        }
+
+
+        return json_decode( Redis::get($redisCacheName), true );
+    }
+
+    
 
     /**
      * Fetch genres.

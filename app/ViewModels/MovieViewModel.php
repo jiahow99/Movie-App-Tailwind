@@ -54,6 +54,7 @@ class MovieViewModel extends ViewModel
         // Format screenshots
         $this->movie['images']['backdrops'] = collect( $this->movie['images']['backdrops'] )->take(24);
 
+        
         // Format movie collections
         if( isset($this->movie['collection_movies']) )
         {

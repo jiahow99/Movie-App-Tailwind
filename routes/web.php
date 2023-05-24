@@ -51,6 +51,7 @@ Route::get('/movies/region/{region}/page/{page}', [MovieController::class, 'movi
 
 Route::middleware(['auth', 'auth.api'])->group(function () {
     Route::post('/movie/{movie}/rating/{action}', [MovieController::class, 'rateMovie'])->name('movie.rate');
+    Route::post('/tv/{tv}/rating/{action}', [TvController::class, 'rateTv'])->name('tv.rate');
 });
 
 
@@ -60,6 +61,7 @@ Route::get('/tv', [TvController::class, 'index'])->name('tv.index');
 
 // Single tv
 Route::get('/tv/{tv}', [TvController::class, 'show'])->name('tv.show');
+Route::get('/tv/{tvId}/season/{season}', [TvController::class, 'season'])->name('tv.season');
 
 // Tv by Category
 Route::get('/tv/list/{category}', [TvController::class, 'category'])->name('tv.category');

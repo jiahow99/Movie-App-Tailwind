@@ -7,6 +7,7 @@ use App\ViewModels\TvsViewModel;
 use App\Services\MovieApiService;
 use App\ViewModels\MoviesViewModel;
 use App\ViewModels\CategoryViewModel;
+use App\ViewModels\SeasonViewModel;
 use App\ViewModels\TvViewModel;
 
 class TvController extends Controller
@@ -42,7 +43,7 @@ class TvController extends Controller
     {
         // Fetch movie
         $tv = $movieApi->fetchTv($id, 'images', 'videos', 'credits');
-
+        
         // Fetch all genres
         $genresList = $movieApi->fetchGenres('tv');
         
@@ -116,5 +117,24 @@ class TvController extends Controller
 
         return view('tv.category', $viewModel);
     }
+
+
+    /**
+     * Fetch tv season
+     */
+    public function season(MovieApiService $movieApi, string $tvId, string $seasonId)
+    {
+        // Fetch tv
+        $tv = $movieApi->fetchTv($tvId);
+
+        // Fetch season
+        $season = $movieApi->fetchSeason($tvId, $seasonId);
+        
+        // View model
+        $viewModel = new SeasonViewModel($tv, $season);
+
+        return view('tv.season', $viewModel);
+    }
+
 
 }
