@@ -94,8 +94,11 @@ class ActorViewModel extends ViewModel
             $cast['poster_path'] = isset($cast['poster_path'])
                 ? 'https://image.tmdb.org/t/p/w500/' . $cast['poster_path']
                 : asset('image/movie_placeholder.jpg') ;
+
             $cast['title'] = isset($cast['title']) ? $cast['title'] : 'Untitled' ;
+
             $cast['character'] = isset($cast['character']) ? $cast['character'] : 'unknown' ;
+
             $cast['release_year'] = isset($cast['release_date'])
                 ? Carbon::parse($cast['release_date'])->year 
                 : '';
@@ -105,13 +108,12 @@ class ActorViewModel extends ViewModel
                 'poster_path', 
                 'popularity',
                 'id',
+                'release_date'
             ]);
-
-            return collect($cast)->sortByDesc('popularity');
 
         }, $this->credits);
 
-        return collect($newCastArray);
+        return collect($newCastArray)->sortByDesc('release_date');
     }
 
 
@@ -132,8 +134,6 @@ class ActorViewModel extends ViewModel
                 'popularity',
                 'release_year'
             ]);
-
-            // return collect($cast)->sortBy('release_year');
 
         }, $this->credits);
 

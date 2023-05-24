@@ -176,12 +176,12 @@
                             </div>
                         </div>
                         <!-- Prev -->
-                        <div class="absolute left-0 top-1/2 transform -translate-y-1/2 xl:-translate-x-1/2 z-50" style="display: none">
-                            <i class="collection-prev fa-solid fa-circle-chevron-left text-6xl opacity-40 hover:opacity-80 cursor-pointer text-slate-50  rounded-full"></i>
+                        <div class="absolute left-0 top-1/2 transform -translate-y-1/2 xl:-translate-x-1/2 z-50">
+                            <i class="mcollection-prev fa-solid fa-circle-chevron-left text-6xl opacity-40 hover:opacity-80 cursor-pointer text-slate-50  rounded-full"></i>
                         </div>
                         <!-- Next -->
-                        <div class="absolute right-0 top-1/2 transform -translate-y-1/2 xl:translate-x-1/2 z-50" style="display: none">
-                            <i class="collection-next fa-solid fa-circle-chevron-right text-6xl opacity-40 hover:opacity-80 cursor-pointer text-slate-50  rounded-full"></i>
+                        <div class="absolute right-0 top-1/2 transform -translate-y-1/2 xl:translate-x-1/2 z-50">
+                            <i class="mcollection-next fa-solid fa-circle-chevron-right text-6xl opacity-40 hover:opacity-80 cursor-pointer text-slate-50  rounded-full"></i>
                         </div>
                     </div>
                 @endisset
@@ -379,8 +379,8 @@
         slidesPerView: 2,
                 spaceBetween: 20,  
         navigation: {
-            nextEl: '.collection-next',
-            prevEl: '.collection-prev',
+            nextEl: '.mcollection-next',
+            prevEl: '.mcollection-prev',
         },
         breakpoints: {
             // when window width is <= 768px (tablet)

@@ -76,7 +76,7 @@ class MovieApiService
                     ->reject(function ($collectionMovie) use ($movie){
                         return $collectionMovie['id'] == $movie['id'];
                     })
-                    ->sortByDesc('release_date');
+                    ->sortByDesc('release_date')->toArray();
 
                 $movie['collection_movies'] = $collectionMovies;
             }
