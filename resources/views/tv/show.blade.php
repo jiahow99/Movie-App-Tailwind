@@ -49,7 +49,7 @@
     }">
 
     <!-- Video Modal -->
-    <div class="fixed w-full h-full inset-x-0 " 
+    <div class="fixed w-full h-full inset-x-0 z-[99999]" 
     x-show="isOpen" 
     x-transition.duration.500ms.ease-in-out.origin-top
     >
@@ -116,7 +116,7 @@
                                 <div class="swiper-slide">
                                     <a href="{{ route('tv.season', ['tvId' => $tv['id'] , 'season' => $season['season_number'] , 'genres' => $tv['genres'] ]) }}">
                                         <img class="duration-300 hover:scale-105" src="{{ $season['poster_path'] }}" alt="tv_poster" loading="lazy">
-                                        <div class="mt-2">{{ $season['name'] }}</div>
+                                        <div class="mt-2">Season {{ $season['season_number'] }} : {{ $season['name'] }}</div>
                                     </a>
                                 </div>
                                 @endforeach
@@ -147,14 +147,14 @@
             <div class="relative w-full mt-3 h-fit">
                 <div class="swiper swiper-actors">
                     <div class="swiper-wrapper">
-                      @foreach ($tv['created_by'] as $key => $actor)
+                      @foreach ($tv['credits']['cast'] as $key => $actor)
                         <div class="swiper-slide flex-col">
                             <a href="{{ route('actor.show', $actor['id']) }}">
                                 <div class="actor-image cursor-pointer" data-aos="fade-up" data-aos-delay="{{ $key * 200 }}" data-aos-once="true">
                                     <img src="{{ $actor['profile_path'] }}" alt="actor_name">
                                     <div class="actor-name text-2xl whitespace-nowrap">{{ $actor['name'] }}</div>
                                 </div>
-                                <div class="text-gray-400 text-left">{{ $actor['name'] }}</div>
+                                <div class="text-gray-400 text-left">{{ $actor['character'] }}</div>
                             </a>
                         </div>
                       @endforeach

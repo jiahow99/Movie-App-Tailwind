@@ -308,6 +308,23 @@ class MovieApiService
         return json_decode( Redis::get($redisCacheName), true );
     }
 
+
+    /**
+     * Fetch tv season.
+     */
+    public function fetchEpisode(string $tvId, string $season, string $episode)
+    {
+        $redisCacheName = 'tv:'.$tvId.':season:'.$season.':episode:'.$episode;
+
+        if( !Redis::exists($redisCacheName) )
+        {
+            $url = "https://api.themoviedb.org/3/tv/".$tvId."/season/".$season."/episode/".$episode."?append_to_response=videos,images,credits";
+            
+            return $this->fetch($url);
+        }
+
+        return json_decode( Redis::get($redisCacheName), true );
+    }
     
 
     /**

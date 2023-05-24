@@ -126,7 +126,7 @@
 
                 <!-- Account -->
                 @if (Auth::check())
-                    <div class="relative mt-3 lg:mt-0 w-32 text-right select-none mr-10">
+                    <div class="relative mt-3 lg:mt-0 text-right select-none mr-10">
                         <div class="flex justify-end align-center gap-2">
                             {{ Auth::user()->name }}
                             <i class="fa-solid fa-user rounded-full border-white border-2 p-1 cursor-pointer" x-on:click="account_dropdown = !account_dropdown"></i>

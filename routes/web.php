@@ -29,9 +29,6 @@ Route::get('/login/google/redirect', [LoginController::class, 'googleRedirect'])
 Route::get('/login/facebook', [LoginController::class, 'facebook'])->name('facebook.login');
 Route::get('/login/facebook/redirect', [LoginController::class, 'facebookRedirect']);
 
-// Register
-Route::view('/register/test', 'register-test');
-Route::view('/verify', 'auth.verify');
 
 /******************************** Public Route ********************************/
 // Movies
@@ -62,6 +59,7 @@ Route::get('/tv', [TvController::class, 'index'])->name('tv.index');
 // Single tv
 Route::get('/tv/{tv}', [TvController::class, 'show'])->name('tv.show');
 Route::get('/tv/{tvId}/season/{season}', [TvController::class, 'season'])->name('tv.season');
+Route::get('/tv/{tvId}/season/{season}/episode/{episode}', [TvController::class, 'episode'])->name('tv.episode');
 
 // Tv by Category
 Route::get('/tv/list/{category}', [TvController::class, 'category'])->name('tv.category');

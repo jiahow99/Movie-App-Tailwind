@@ -26,7 +26,7 @@ class TvViewModel extends ViewModel
 
 
         // Format cast
-        $this->tv['created_by'] = array_map(function($cast){
+        $this->tv['credits']['cast'] = array_map(function($cast){
 
             $cast['profile_path'] = $cast['profile_path']
                 ? 'https://image.tmdb.org/t/p/w500'.$cast['profile_path']
@@ -34,11 +34,11 @@ class TvViewModel extends ViewModel
             
             return $cast;
 
-        }, $this->tv['created_by']);
+        }, $this->tv['credits']['cast']);
 
 
         // Format season
-        $this->tv['seasons'] = array_map(function($season){
+        $this->tv['seasons'] = collect(array_map(function($season){
 
             $season['poster_path'] = $season['poster_path']
                 ? 'https://image.tmdb.org/t/p/w500'.$season['poster_path']
@@ -46,7 +46,7 @@ class TvViewModel extends ViewModel
             
             return $season;
 
-        }, $this->tv['seasons']);
+        }, $this->tv['seasons']))->sortByDesc('season_number');
 
 
         // Format tv info
@@ -69,9 +69,9 @@ class TvViewModel extends ViewModel
                 : null,
 
         ]))->only([
-            'id', 'poster_path', 'name', 'vote_average', 'overview', 'first_air_date', 'release_year', 'genres', 'seasons', 'youtubeURL', 'created_by', 'images', 'created_by'
+            'id', 'poster_path', 'name', 'vote_average', 'overview', 'first_air_date', 'release_year', 'genres', 'seasons', 'youtubeURL', 'created_by', 'images', 'credits'
         ]);
 
-        return collect($formatted_tv)->dump();
+        return $formatted_tv;
     }
 }

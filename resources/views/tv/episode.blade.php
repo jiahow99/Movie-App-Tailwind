@@ -45,7 +45,7 @@
         isDesktop: window.innerWidth >= 1280,
         isOpen: false,
         autoplay: 0,
-        videoSrc: 'https://www.youtube.com/embed/{{ $season['youtubeURL'] }}?autoplay=',
+        videoSrc: 'https://www.youtube.com/embed/{{ $episode['youtubeURL'] }}?autoplay=',
     }">
 
     <!-- Video Modal -->
@@ -65,25 +65,25 @@
     <div class="movie-info border-b border-gray-800">
         <div class="container mx-auto px-4 py-16 flex flex-col xl:flex-row">
             <!-- Poster -->
-            <img src="{{ $season['poster_path'] }}" class="w-96 h-fit mx-auto xl:mx-0" alt="{{ $season['name'] }}">
+            <img src="{{ $episode['still_path'] }}" class="w-96 h-fit mx-auto xl:mx-0" alt="{{ $episode['name'] }}">
             <div class="mt-6 xl:mt-0 xl:ml-24">
-                <h2 class="text-4xl font-semibold">{{ $season['name'] }} ({{ $season['air_year'] }})</h2>
+                <h2 class="text-4xl font-semibold">Episode {{ $episode['episode_number'] }}: {{ $episode['name'] }} ({{ $episode['air_year'] }})</h2>
                 <div class="flex items-center text-gray-400 mt-1">
                     <span class="text-orange-400"><i class="fa-solid fa-star"></i></span>
-                    <span class="ml-1">{{ $tv['vote_average'] }}</span>
+                    <span class="ml-1">{{ $episode['vote_average'] }}</span>
                     <span class="mx-2">|</span>
-                    <span>{{ $season['air_date'] }}</span>
+                    <span>{{ $episode['air_date'] }}</span>
                 </div>
                 <!-- Overview -->
                 <p class="text-gray-300 mt-8">
-                    {{ $tv['overview'] }}
+                    {{ $episode['overview'] }}
                 </p>
                 <!-- "Play trailer" -->
                 <div class="mt-12">
                     <!-- Desktop -->
                     <span 
                     class="flex items-center bg-orange-500 text-gray-900 rounded font-semibold px-10 py-4 
-                    hover:bg-orange-600 transition ease-in-out duration-300 space-x-3 w-fit cursor-pointer" 
+                    hover:bg-orange-600 transition ease-in-out duration-300 space-x-3 w-fit" 
                     x-show="isDesktop"
                     x-on:click="isOpen=true; autoplay=true"
                     >
@@ -92,7 +92,7 @@
                     </span>
                     <!-- Mobile -->
                     <a 
-                    href="https://www.youtube.com/watch?v={{ $season['youtubeURL'] }}" 
+                    href="https://www.youtube.com/watch?v={{ $episode['youtubeURL'] }}" 
                     class="flex items-center bg-orange-500 text-gray-900 rounded font-semibold px-10 py-4 
                     hover:bg-orange-600 transition ease-in-out duration-300 space-x-3 w-fit" style="display: none"
                     x-show="isMobile"
@@ -102,19 +102,19 @@
                     </a>
                 </div>
                 <!-- Start episodes -->
-                @isset($season['episodes'])
+                @isset($sameEpisodes)
                     <div class="mt-8 xl:w-[900px] h-fit relative">
-                        <h3 class="text-lg font-bold text-slate-400 tracking-wide">Featured seasons :</h3>
+                        <h3 class="text-lg font-bold text-slate-400 tracking-wide">Other seasons :</h3>
                         <!-- Swiper Start -->
                         <div class="mt-3 swiper movie-collections">
                             <div class="swiper-wrapper">
-                                @foreach ($season['episodes'] as $episode)
-                                <div class="swiper-slide">
-                                    <a href="{{ route('tv.episode', ['tvId' => $tv['id'] , 'season' => $season['season_number'] , 'episode' => $episode['episode_number'] ] ) }}">
-                                        <img class="duration-300 hover:scale-105" src="{{ $episode['still_path'] }}" alt="tv_poster" loading="lazy">
-                                        <div class="mt-2">Episode {{ $episode['episode_number'] }}</div>
-                                    </a>
-                                </div>
+                                @foreach ($sameEpisodes as $episode)
+                                    <div class="swiper-slide">
+                                        <a href="{{ route('tv.episode', ['tvId' => $tv , 'season' => $season['season_number'] , 'episode' => $episode['episode_number'] ] ) }}">
+                                            <img class="duration-300 hover:scale-105" src="{{ $episode['still_path'] }}" alt="tv_poster" loading="lazy">
+                                            <div class="mt-2">Episode {{ $episode['episode_number'] }}</div>
+                                        </a>
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
@@ -135,39 +135,6 @@
     <!-- End Tv Info -->
 
 
-    <!-- Start Actors -->
-    <div class="movie-cast border-b border-gray-800" x-data="{actorNavigation: false}" x-on:mouseenter="actorNavigation = true" x-on:mouseleave="actorNavigation = false">
-        <div class="container mx-auto px-4 py-16">
-            <h2 class="text-4xl font-semibold">Cast</h2>
-            <!-- Swiper -->
-            <div class="relative w-full mt-3 h-fit">
-                <div class="swiper swiper-actors">
-                    <div class="swiper-wrapper">
-                      @foreach ($season['credits']['cast'] as $key => $actor)
-                        <div class="swiper-slide flex-col">
-                            <a href="{{ route('actor.show', $actor['id']) }}">
-                                <div class="actor-image cursor-pointer" data-aos="fade-up" data-aos-delay="{{ $key * 200 }}" data-aos-once="true">
-                                    <img src="{{ $actor['profile_path'] }}" alt="actor_name">
-                                    <div class="actor-name text-2xl whitespace-nowrap">{{ $actor['name'] }}</div>
-                                </div>
-                                <div class="text-gray-400 text-left">{{ $actor['character'] }}</div>
-                            </a>
-                        </div>
-                      @endforeach
-                    </div>
-                </div>
-                <!-- Prev -->
-                <div class="absolute left-0 top-1/2 transform -translate-y-1/2 z-50" style="display: none" x-show="actorNavigation">
-                    <i class="actor-prev fa-solid fa-circle-chevron-left text-6xl cursor-pointer text-black opacity-60 hover:opacity-100 rounded-full"></i>
-                </div>
-                <!-- Next -->
-                <div class="absolute right-0 top-1/2 transform -translate-y-1/2 z-50" style="display: none" x-show="actorNavigation">
-                    <i class="actor-next fa-solid fa-circle-chevron-right text-6xl cursor-pointer text-black opacity-60 hover:opacity-100 rounded-full"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Actors -->
 </div>
 
 

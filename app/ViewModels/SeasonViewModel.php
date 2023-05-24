@@ -14,7 +14,7 @@ class SeasonViewModel extends ViewModel
     {
         $this->tv = $tv;
         $this->season = $season;
-        // dd($season);
+        // dd($this->season);
     }
 
     
@@ -37,7 +37,7 @@ class SeasonViewModel extends ViewModel
 
             $episode['still_path'] = $episode['still_path']
                 ? 'https://image.tmdb.org/t/p/w500'.$episode['still_path']
-                : asset('image/avatar-placeholder.png');
+                : asset('image/movie_placeholder.jpg');
 
             return $episode;
 
@@ -60,7 +60,7 @@ class SeasonViewModel extends ViewModel
             'air_date' => Carbon::parse($this->season['air_date'])->format('M d, Y'),
         ]);
 
-        return $new_season;
+        return collect($new_season)->dump();
     }
 
 }

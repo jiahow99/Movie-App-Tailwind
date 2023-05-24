@@ -7,6 +7,7 @@ use App\ViewModels\TvsViewModel;
 use App\Services\MovieApiService;
 use App\ViewModels\MoviesViewModel;
 use App\ViewModels\CategoryViewModel;
+use App\ViewModels\EpisodeViewModel;
 use App\ViewModels\SeasonViewModel;
 use App\ViewModels\TvViewModel;
 
@@ -134,6 +135,24 @@ class TvController extends Controller
         $viewModel = new SeasonViewModel($tv, $season);
 
         return view('tv.season', $viewModel);
+    }
+
+
+    /**
+     * Fetch tv season
+     */
+    public function episode(MovieApiService $movieApi, string $tvId, string $seasonId, string $episode)
+    {
+        // Fetch episode
+        $episode = $movieApi->fetchEpisode($tvId, $seasonId, $episode);
+
+        // Fetch season
+        $season = $movieApi->fetchSeason($tvId, $seasonId);
+        
+        // View model
+        $viewModel = new EpisodeViewModel($season, $episode, $tvId);
+
+        return view('tv.episode', $viewModel);
     }
 
 

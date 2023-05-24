@@ -1,6 +1,13 @@
 @extends('layouts.main')
 
 @section('content')
+@if (session('resent'))
+    <div class="bg-teal-100 border-l-4 border-teal-500 text-teal-700 p-4 w-1/2 mx-auto" role="alert">
+        <p class="font-bold">Successfully resend !</p>
+        <p>Verification has been resend to your email. Please check junkbox if not appearing.</p>
+    </div>
+@endif
+
 <div class="flex justify-center mt-20 min-h-screen p-5">
     <div class="relative p-8 h-fit text-center text-white bg-gray-700 font-sans shadow-xl lg:max-w-3xl rounded-3xl lg:p-12 ">
         <h1 style="color: white !important; text-align: center !important;">Thanks for signing up for {{ config('app.name') }} !</h1>

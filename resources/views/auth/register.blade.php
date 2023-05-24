@@ -106,7 +106,7 @@
                     <!-- Login Button -->
                     <div class="text-center mt-10">
                         <button type="submit" class="w-full py-1 px-10 mx-auto login-btn-2 rounded-md">
-                            Login
+                            Register
                         </button >
                     </div>
                 </form>
