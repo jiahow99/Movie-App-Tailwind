@@ -8,17 +8,29 @@
     </div>
 @endif
 
+@if (session('attempts'))
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 w-1/2 mx-auto" role="alert">
+        <p class="font-bold">Too many attempts !</p>
+        <p>{{ session('attempts') }}.</p>
+    </div>
+@endif
+
 <div class="w-1/3 min-h-screen mx-auto">
     <div class="text-3xl text-slate-200 font-semibold mt-10 underline underline-offset-2 tracking-wider">Reset password</div>
     <form method="POST" action="{{ route('password.email') }}" class=" mt-5">
         @csrf
 
-        <div class="flex gap-2 items-center">
-            <label for="email" class="w-3/12 text-xl font-semibold">Email :</label>
-            <input id="email" type="email" class="pl-4 py-2 rounded-lg w-full bg-slate-500 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Enter your email here" required autocomplete="email" autofocus>
+        <div class="flex gap-2">
+            <label for="email" class="w-3/12 text-xl font-semibold pt-2">Email :</label>
+            <div class="w-full">
+                <input id="email" type="email" class="pl-4 py-2 rounded-lg w-full bg-slate-500 focus:outline-none tracking-wider @error('email') border-2 border-red-500 @enderror" name="email" value="{{ old('email') }}" placeholder="Enter your email here" required autocomplete="email" autofocus>
+                @error('email')
+                    <span class="mt-2 text-red-600">*** {{ $message }}</span>
+                @enderror
+            </div>
         </div>
         <div class="submit-btn mt-5 text-right">
-            <button type="submit" class="bg-slate-600 px-10 py-2 rounded-lg">Send email</button>
+            <button type="submit" class="bg-slate-600 px-10 py-2 rounded-lg login-btn-2">Send email</button>
         </div>
     </form>
 </div>
