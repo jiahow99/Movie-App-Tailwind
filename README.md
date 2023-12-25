@@ -22,7 +22,7 @@
 
 <h2>Link to demo</h2>
 
-<p><a href="https://clipchamp.com/watch/qM1K84MraJT">https://drive.google.com/file/d/1LfHodyOy_HQza4VYGzn0Jif4JuPYMRjc/view?usp=sharing</a></p>
+<p><a href="[https://clipchamp.com/watch/qM1K84MraJT](https://drive.google.com/file/d/1LfHodyOy_HQza4VYGzn0Jif4JuPYMRjc/view?usp=sharing)">Video Showcase</a></p>
 
 <h2>Installation</h2>
 
